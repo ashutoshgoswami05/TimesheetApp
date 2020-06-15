@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Timesheet Application</title>
+    @*@Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")*@
+<link href="~/bootstrap/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Style.css" rel="stylesheet" />
+</head>
+<body>
+    @RenderPage("~/Views/Shared/_Header.cshtml")
+    <div class="container body-content">
+        @RenderBody()
+
+    </div>
+
+    @RenderPage("~/Views/Shared/_Footer.cshtml")
+
+    <script src="~/bootstrap/jquery-3.5.1.slim.min.js"></script>
+
+    <script src="~/bootstrap/popper.min.js"></script>
+
+    <script src="~/bootstrap/bootstrap.min.js"></script>
+
+
+    @*@Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")*@
+    @RenderSection("scripts", required: false)
+</body>
+</html>
