@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Timesheet_projectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Projects_Table">
+    <Key>
+      <PropertyRef Name="Project_Name" />
+    </Key>
+    <Property Name="Project_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Client" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Project_Manager_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Deadline" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Technology_Id" Type="Int32" />
+    <Property Name="Member_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Subtask" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="is_Deleted" Type="Boolean" />
+    <Property Name="Created_Date" Type="DateTime" Precision="3" />
+    <Property Name="Updated_Date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Users_table" Relationship="Self.FK__Projects___Membe__37A5467C" FromRole="Projects_Table" ToRole="Users_table" />
+    <NavigationProperty Name="Users_table1" Relationship="Self.FK__Projects___Proje__36B12243" FromRole="Projects_Table" ToRole="Users_table" />
+    <NavigationProperty Name="Timesheets_table" Relationship="Self.FK__Timesheet__Proje__3A81B327" FromRole="Projects_Table" ToRole="Timesheets_table" />
+  </EntityType>
+  <EntityType Name="Roles_table">
+    <Key>
+      <PropertyRef Name="Role_Id" />
+    </Key>
+    <Property Name="Role_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Role_Name" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Updated_Date" Type="DateTime" Precision="3" />
+    <Property Name="Created_Date" Type="DateTime" Precision="3" />
+    <Property Name="is_Deleted" Type="Boolean" />
+    <NavigationProperty Name="Users_table" Relationship="Self.FK__Users_tab__Role___173876EA" FromRole="Roles_table" ToRole="Users_table" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Technologies_table">
+    <Key>
+      <PropertyRef Name="Technology_Id" />
+    </Key>
+    <Property Name="Technology_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Technology_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Updated_Date" Type="DateTime" Precision="3" />
+    <Property Name="Created_Date" Type="DateTime" Precision="3" />
+    <Property Name="is_Deleted" Type="Boolean" />
+    <NavigationProperty Name="Users_table" Relationship="Self.FK__Users_tab__Techn__1920BF5C" FromRole="Technologies_table" ToRole="Users_table" />
+  </EntityType>
+  <EntityType Name="Users_table">
+    <Key>
+      <PropertyRef Name="Employee_Id" />
+    </Key>
+    <Property Name="Employee_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Role_Id" Type="Int32" />
+    <Property Name="Technology_Id" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Employee_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Updated_Date" Type="DateTime" Precision="3" />
+    <Property Name="Created_Date" Type="DateTime" Precision="3" />
+    <Property Name="is_Deleted" Type="Boolean" />
+    <NavigationProperty Name="Projects_Table" Relationship="Self.FK__Projects___Membe__37A5467C" FromRole="Users_table" ToRole="Projects_Table" />
+    <NavigationProperty Name="Projects_Table1" Relationship="Self.FK__Projects___Proje__36B12243" FromRole="Users_table" ToRole="Projects_Table" />
+    <NavigationProperty Name="Roles_table" Relationship="Self.FK__Users_tab__Role___173876EA" FromRole="Users_table" ToRole="Roles_table" />
+    <NavigationProperty Name="Technologies_table" Relationship="Self.FK__Users_tab__Techn__1920BF5C" FromRole="Users_table" ToRole="Technologies_table" />
+    <NavigationProperty Name="Timesheets_table" Relationship="Self.FK__Timesheet__User___398D8EEE" FromRole="Users_table" ToRole="Timesheets_table" />
+  </EntityType>
+  <EntityType Name="Timesheets_table">
+    <Key>
+      <PropertyRef Name="User_Id" />
+      <PropertyRef Name="Project_Name" />
+    </Key>
+    <Property Name="User_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Project_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="date" Type="DateTime" Precision="3" />
+    <Property Name="TimeSpent" Type="Time" Precision="7" />
+    <Property Name="Wokrdone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Mode" Type="Boolean" />
+    <Property Name="Timesheet_Status" Type="Boolean" />
+    <Property Name="Updated_Date" Type="DateTime" Precision="3" />
+    <Property Name="Created_Date" Type="DateTime" Precision="3" />
+    <Property Name="is_Deleted" Type="Boolean" />
+    <NavigationProperty Name="Projects_Table" Relationship="Self.FK__Timesheet__Proje__3A81B327" FromRole="Timesheets_table" ToRole="Projects_Table" />
+    <NavigationProperty Name="Users_table" Relationship="Self.FK__Timesheet__User___398D8EEE" FromRole="Timesheets_table" ToRole="Users_table" />
+  </EntityType>
+  <Association Name="FK__Projects___Membe__37A5467C">
+    <End Role="Users_table" Type="Self.Users_table" Multiplicity="0..1" />
+    <End Role="Projects_Table" Type="Self.Projects_Table" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users_table">
+        <PropertyRef Name="Employee_Id" />
+      </Principal>
+      <Dependent Role="Projects_Table">
+        <PropertyRef Name="Member_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Projects___Proje__36B12243">
+    <End Role="Users_table" Type="Self.Users_table" Multiplicity="1" />
+    <End Role="Projects_Table" Type="Self.Projects_Table" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users_table">
+        <PropertyRef Name="Employee_Id" />
+      </Principal>
+      <Dependent Role="Projects_Table">
+        <PropertyRef Name="Project_Manager_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Timesheet__Proje__3A81B327">
+    <End Role="Projects_Table" Type="Self.Projects_Table" Multiplicity="1" />
+    <End Role="Timesheets_table" Type="Self.Timesheets_table" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Projects_Table">
+        <PropertyRef Name="Project_Name" />
+      </Principal>
+      <Dependent Role="Timesheets_table">
+        <PropertyRef Name="Project_Name" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users_tab__Role___173876EA">
+    <End Role="Roles_table" Type="Self.Roles_table" Multiplicity="0..1" />
+    <End Role="Users_table" Type="Self.Users_table" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles_table">
+        <PropertyRef Name="Role_Id" />
+      </Principal>
+      <Dependent Role="Users_table">
+        <PropertyRef Name="Role_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users_tab__Techn__1920BF5C">
+    <End Role="Technologies_table" Type="Self.Technologies_table" Multiplicity="1" />
+    <End Role="Users_table" Type="Self.Users_table" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Technologies_table">
+        <PropertyRef Name="Technology_Id" />
+      </Principal>
+      <Dependent Role="Users_table">
+        <PropertyRef Name="Technology_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Timesheet__User___398D8EEE">
+    <End Role="Users_table" Type="Self.Users_table" Multiplicity="1" />
+    <End Role="Timesheets_table" Type="Self.Timesheets_table" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users_table">
+        <PropertyRef Name="Employee_Id" />
+      </Principal>
+      <Dependent Role="Timesheets_table">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Timesheet_projectEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Projects_Table" EntityType="Self.Projects_Table" />
+    <EntitySet Name="Roles_table" EntityType="Self.Roles_table" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Technologies_table" EntityType="Self.Technologies_table" />
+    <EntitySet Name="Users_table" EntityType="Self.Users_table" />
+    <EntitySet Name="Timesheets_table" EntityType="Self.Timesheets_table" />
+    <AssociationSet Name="FK__Projects___Membe__37A5467C" Association="Self.FK__Projects___Membe__37A5467C">
+      <End Role="Users_table" EntitySet="Users_table" />
+      <End Role="Projects_Table" EntitySet="Projects_Table" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Projects___Proje__36B12243" Association="Self.FK__Projects___Proje__36B12243">
+      <End Role="Users_table" EntitySet="Users_table" />
+      <End Role="Projects_Table" EntitySet="Projects_Table" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Timesheet__Proje__3A81B327" Association="Self.FK__Timesheet__Proje__3A81B327">
+      <End Role="Projects_Table" EntitySet="Projects_Table" />
+      <End Role="Timesheets_table" EntitySet="Timesheets_table" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Users_tab__Role___173876EA" Association="Self.FK__Users_tab__Role___173876EA">
+      <End Role="Roles_table" EntitySet="Roles_table" />
+      <End Role="Users_table" EntitySet="Users_table" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Users_tab__Techn__1920BF5C" Association="Self.FK__Users_tab__Techn__1920BF5C">
+      <End Role="Technologies_table" EntitySet="Technologies_table" />
+      <End Role="Users_table" EntitySet="Users_table" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Timesheet__User___398D8EEE" Association="Self.FK__Timesheet__User___398D8EEE">
+      <End Role="Users_table" EntitySet="Users_table" />
+      <End Role="Timesheets_table" EntitySet="Timesheets_table" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Timesheet_projectModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Timesheet_projectModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="sp_ValidateUser" ReturnType="Collection(Int32)">
+      <Parameter Name="EmployeeId" Mode="In" Type="String" />
+      <Parameter Name="Password" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ValidateUser" ReturnType="Collection(Int32)">
+      <Parameter Name="EmployeeId" Mode="In" Type="String" />
+      <Parameter Name="Password" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

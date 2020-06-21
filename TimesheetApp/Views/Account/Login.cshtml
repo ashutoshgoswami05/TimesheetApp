@@ -1,0 +1,58 @@
+﻿@model TimesheetApp.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="alert alert-primary" style="display:none" id="loginfailed" role="alert">
+    @ViewBag.Message
+</div>
+
+
+
+
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { id = "LoginForm" }))
+{
+<h2 class="text-center">Login</h2>
+
+@Html.DisplayNameFor(x => x.Employee_Id)
+
+@Html.TextBoxFor(x => x.Employee_Id, new { @class = "form-control" })
+
+@Html.ValidationMessageFor(x => x.Password)
+
+<br />
+
+@Html.DisplayNameFor(x => x.Password)
+
+@Html.TextBoxFor(x => x.Password, new { @class = "form-control" })
+
+@Html.ValidationMessageFor(x => x.Password)
+
+<br />
+
+<input  type="submit" value="Login" class="btn btn-info btn-submit" />
+
+
+}
+
+@if (ViewBag.Message != null)
+{
+    <script>
+        $(function () {
+          
+            $('#loginfailed').css("display","block")
+
+        })
+    </script>
+}
+
+
+
+
+@section scripts{
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

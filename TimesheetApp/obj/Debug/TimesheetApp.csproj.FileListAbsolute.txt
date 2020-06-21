@@ -73,3 +73,7 @@ C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\obj\Debug\TimesheetApp.
 C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\obj\Debug\TimesheetApp.csproj.CopyComplete
 C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\obj\Debug\TimesheetApp.dll
 C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\obj\Debug\TimesheetApp.pdb
+C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\EntityFramework.dll
+C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\EntityFramework.SqlServer.dll
+C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\EntityFramework.xml
+C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\EntityFramework.SqlServer.xml

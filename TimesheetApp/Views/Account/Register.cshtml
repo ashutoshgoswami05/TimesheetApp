@@ -1,0 +1,115 @@
+﻿
+@model TimesheetApp.Users_table
+
+@{
+    ViewBag.Title = "Register";
+  
+    
+        SelectList roles = new SelectList(ViewBag.Roles, "Role_Id", "Role_Name", 3);
+        SelectList technologies = new SelectList(ViewBag.Technologies, "Technology_Id", "Technology_Name");
+    
+}
+<div class="alert alert-primary" id="confirmation" style="display:none" role="alert">
+    @ViewBag.Message
+</div>
+
+
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id = "RegistrationForm" }))
+{
+    <h2 style="text-align:center">Register</h2>
+    @Html.DisplayNameFor(x => x.Employee_Id)
+
+    @Html.TextBoxFor(x => x.Employee_Id, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Employee_Id, "", new { @class = "text-danger" })
+
+    <br />
+    @Html.DisplayNameFor(x => x.Employee_Name)
+
+    @Html.TextBoxFor(x => x.Employee_Name, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Employee_Name, "", new { @class = "text-danger" })
+
+    <br />
+
+    @Html.DisplayNameFor(x => x.Phone)
+
+    @Html.TextBoxFor(x => x.Phone, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Phone, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.DisplayNameFor(x => x.Email)
+
+    @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+
+    @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.DisplayName("Role")
+
+    @Html.DropDownListFor(x => x.Role_Id, roles, new { @class = "form-control" })
+
+    @Html.ValidationMessageFor(x => x.Role_Id, "", new { @class = "text-danger" })
+
+    <br />
+
+
+    @Html.DisplayName("Technolgies")
+
+    @Html.ListBoxFor(x => x.Technology_Id, technologies, new { @class = "form-control" })
+
+    @Html.ValidationMessageFor(x => x.Technology_Id, "", new { @class = "text-danger" })
+
+    <br />
+    @Html.DisplayNameFor(x => x.Status)
+
+
+    <br />
+
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="Status" id="exampleRadios1" value="true">
+        <label class="form-check-label" for="exampleRadios1">
+            Enabled
+        </label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="Status" id="exampleRadios2" value="false" checked>
+        <label class="form-check-label" for="exampleRadios2">
+            Disabled
+        </label>
+    </div>
+
+
+    <br />
+    @*@Html.Label("Enabled")
+        @Html.RadioButtonFor(x => x.Status, true)
+        @Html.Label("Disabled")
+        @Html.RadioButtonFor(x => x.Status, false)
+
+
+
+        <br />*@
+<div>
+    <input type="submit" class="btn btn-info btn-submit mx-auto"  value="Register" />
+</div>
+
+}
+
+@if (ViewBag.Message != null)
+{
+    <script>
+        $(function () {
+            $('#confirmation').html("Registration Successful")
+            $('#confirmation').css("display", "block")
+
+        })
+    </script>
+}
+
+
+
+
+@section scripts{
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

@@ -1,5 +1,23 @@
-﻿.footer {
+﻿
+
+.footer {
     width: 100%;
     text-align: center;
    
+}
+
+.btn-submit{
+    width:15rem;
+   
+}
+
+#LoginForm{
+    margin-top:3rem;
+    height:100vh;
+    
+}
+
+#RegistrationForm {
+    margin-top: 3rem;
+    height: 100vh;
 }
