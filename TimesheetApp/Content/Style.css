@@ -1,23 +1,35 @@
-﻿
+﻿html{
+    height:100%;
+}
+
+body{
+    min-height:100%;
+    display:flex;
+    flex-direction:column;
+}
+
+.section-header,.section-footer{
+    flex-shrink:0;
+
+}
+
+.body-content{
+    flex-grow:1;
+}
 
 .footer {
     width: 100%;
     text-align: center;
-   
+    margin-top:auto;
 }
 
 .btn-submit{
-    width:15rem;
+    width:30%;
+    display:block;
+    margin:1rem auto;
    
 }
 
-#LoginForm{
-    margin-top:3rem;
-    height:100vh;
-    
-}
-
-#RegistrationForm {
-    margin-top: 3rem;
-    height: 100vh;
+.commonForm{
+    margin:3rem;
 }

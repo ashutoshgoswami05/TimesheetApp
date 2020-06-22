@@ -8,7 +8,7 @@ using System.Web;
 namespace TimesheetApp
 {
     [MetadataType(typeof(UsersMetaData))]
-    public partial class Users_table
+    public partial class User
     {
 
     }

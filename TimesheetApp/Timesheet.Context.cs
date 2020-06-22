@@ -27,12 +27,13 @@ namespace TimesheetApp
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Projects_Table> Projects_Table { get; set; }
-        public virtual DbSet<Roles_table> Roles_table { get; set; }
+        public virtual DbSet<Project> Projects { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<Technologies_table> Technologies_table { get; set; }
-        public virtual DbSet<Users_table> Users_table { get; set; }
-        public virtual DbSet<Timesheets_table> Timesheets_table { get; set; }
+        public virtual DbSet<Technology> Technologies { get; set; }
+        public virtual DbSet<Timesheets> Timesheets { get; set; }
+        public virtual DbSet<User_Technologies> User_Technologies { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -115,6 +116,19 @@ namespace TimesheetApp
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
         }
     
+        public virtual int sp_insert_User_technologies(string employeeId, Nullable<int> technologyId)
+        {
+            var employeeIdParameter = employeeId != null ?
+                new ObjectParameter("EmployeeId", employeeId) :
+                new ObjectParameter("EmployeeId", typeof(string));
+    
+            var technologyIdParameter = technologyId.HasValue ?
+                new ObjectParameter("TechnologyId", technologyId) :
+                new ObjectParameter("TechnologyId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_insert_User_technologies", employeeIdParameter, technologyIdParameter);
+        }
+    
         public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
         {
             var diagramnameParameter = diagramname != null ?
@@ -148,19 +162,6 @@ namespace TimesheetApp
                 new ObjectParameter("Password", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_ValidateUser", employeeIdParameter, passwordParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<int>> ValidateUser(string employeeId, string password)
-        {
-            var employeeIdParameter = employeeId != null ?
-                new ObjectParameter("EmployeeId", employeeId) :
-                new ObjectParameter("EmployeeId", typeof(string));
-    
-            var passwordParameter = password != null ?
-                new ObjectParameter("Password", password) :
-                new ObjectParameter("Password", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("ValidateUser", employeeIdParameter, passwordParameter);
         }
     }
 }

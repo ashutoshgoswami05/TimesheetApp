@@ -1,0 +1,59 @@
+﻿@model  IEnumerable<TimesheetApp.Timesheets>
+
+@{
+    ViewBag.Title = "View_Timesheet";
+}
+
+
+
+<h2 class="text-center">View Timesheets</h2>
+
+<table>
+    <tr>
+        <th>Project</th>
+        <th>Date</th>
+        <th>Mode</th>
+        <th>Timespent</th>
+        <th>Workdone</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach(var item in Model)
+    {
+<tr>
+    <td>
+        @item.Project_Name
+    </td>
+
+    <td>
+        @item.date
+    </td>
+
+    <td>
+        @item.Mode
+    </td>
+    <td>
+        @item.TimeSpent
+    </td>
+    <td>
+        @item.Wokrdone
+    </td>
+    <td>
+        @if (item.Timesheet_Status == null)
+        {
+            <text>Pending</text>
+        }
+    </td>
+    <td>
+        <input type="button" value="Edit" id="Edit-Timesheet" class="btn btn-primary" />
+        <input type="button" value="Delete" id="Delete-Timesheet" class="btn btn-danger" />
+    </td>
+
+</tr>
+    }
+</table>
+
+
+
+

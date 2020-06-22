@@ -135,11 +135,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\RegisterViewModel.cs" />
-    <Compile Include="Projects_Table.cs">
+    <Compile Include="Project.cs">
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Roles_table.cs">
+    <Compile Include="Role.cs">
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_helpdiagramdefinition_Result.cs">
@@ -151,7 +151,7 @@
     <Compile Include="sysdiagram.cs">
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
-    <Compile Include="Technologies_table.cs">
+    <Compile Include="Technology.cs">
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
     <Compile Include="Timesheet.Context.cs">
@@ -169,15 +169,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Timesheet.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Timesheets_table.cs">
+    <Compile Include="Timesheets.cs">
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
-    <Compile Include="Users_table.cs">
+    <Compile Include="User.cs">
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
     <Compile Include="Users_table1.cs" />
+    <Compile Include="User_Technologies.cs">
+      <DependentUpon>Timesheet.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bootstrap\bootstrap-datepicker.js" />
+    <Content Include="bootstrap\datepicker.css" />
+    <Content Include="bootstrap\sweetalert.min.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -235,6 +241,8 @@
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\New_Timesheet.cshtml" />
     <EntityDeploy Include="Timesheet.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Timesheet.Designer.cs</LastGenOutput>
@@ -242,7 +250,7 @@
     <Content Include="Timesheet.edmx.diagram">
       <DependentUpon>Timesheet.edmx</DependentUpon>
     </Content>
-    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\View_Timesheet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

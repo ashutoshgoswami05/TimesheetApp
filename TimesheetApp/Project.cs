@@ -12,21 +12,28 @@ namespace TimesheetApp
     using System;
     using System.Collections.Generic;
     
-    public partial class Technologies_table
+    public partial class Project
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Technologies_table()
+        public Project()
         {
-            this.Users_table = new HashSet<Users_table>();
+            this.Timesheets_table = new HashSet<Timesheets>();
         }
     
-        public int Technology_Id { get; set; }
-        public string Technology_Name { get; set; }
-        public Nullable<System.DateTime> Updated_Date { get; set; }
-        public Nullable<System.DateTime> Created_Date { get; set; }
+        public string Project_Name { get; set; }
+        public string Client { get; set; }
+        public string Project_Manager_Id { get; set; }
+        public System.DateTime Deadline { get; set; }
+        public Nullable<int> Technology_Id { get; set; }
+        public string Member_Id { get; set; }
+        public string Subtask { get; set; }
         public Nullable<bool> is_Deleted { get; set; }
+        public Nullable<System.DateTime> Created_Date { get; set; }
+        public Nullable<System.DateTime> Updated_Date { get; set; }
     
+        public virtual User Users_table { get; set; }
+        public virtual User Users_table1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Users_table> Users_table { get; set; }
+        public virtual ICollection<Timesheets> Timesheets_table { get; set; }
     }
 }

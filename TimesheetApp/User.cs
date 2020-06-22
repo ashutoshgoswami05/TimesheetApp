@@ -12,21 +12,20 @@ namespace TimesheetApp
     using System;
     using System.Collections.Generic;
     
-    public partial class Users_table
+    public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Users_table()
+        public User()
         {
-            this.Projects_Table = new HashSet<Projects_Table>();
-            this.Projects_Table1 = new HashSet<Projects_Table>();
-            this.Timesheets_table = new HashSet<Timesheets_table>();
+            this.Projects_Table = new HashSet<Project>();
+            this.Projects_Table1 = new HashSet<Project>();
+            this.Timesheets_table = new HashSet<Timesheets>();
         }
     
         public string Employee_Name { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
         public Nullable<int> Role_Id { get; set; }
-        public int Technology_Id { get; set; }
         public Nullable<bool> Status { get; set; }
         public string Password { get; set; }
         public string Employee_Id { get; set; }
@@ -35,12 +34,11 @@ namespace TimesheetApp
         public Nullable<bool> is_Deleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Projects_Table> Projects_Table { get; set; }
+        public virtual ICollection<Project> Projects_Table { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Projects_Table> Projects_Table1 { get; set; }
-        public virtual Roles_table Roles_table { get; set; }
-        public virtual Technologies_table Technologies_table { get; set; }
+        public virtual ICollection<Project> Projects_Table1 { get; set; }
+        public virtual Role Roles_table { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Timesheets_table> Timesheets_table { get; set; }
+        public virtual ICollection<Timesheets> Timesheets_table { get; set; }
     }
 }

@@ -4,15 +4,13 @@
     ViewBag.Title = "Login";
 }
 
-<div class="alert alert-primary" style="display:none" id="loginfailed" role="alert">
-    @ViewBag.Message
-</div>
 
 
 
 
 
-@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { id = "LoginForm" }))
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { id = "LoginForm",@class="commonForm" }))
 {
 <h2 class="text-center">Login</h2>
 

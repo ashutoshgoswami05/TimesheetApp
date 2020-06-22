@@ -1,4 +1,4 @@
-﻿<section name="header">
+﻿<section name="header" class="section-header">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Timesheet</a>
 
@@ -7,7 +7,7 @@
         {
             <ul class="navbar-nav d-flex flex-row ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Hello <span id="Username"></span></a>
+                    <a class="nav-link" href="#">Hello <span id="Username">@User.Identity.Name</span></a>
                 </li>
 
 
@@ -29,6 +29,21 @@
                 </li>
 
             </ul>
+
+        }
+
+        else
+        {
+    <ul class="navbar-nav d-flex flex-row ml-auto">
+        <li class="nav-item ">
+            <a class="nav-link" href="@Url.Action("Login","Account")">Login</a>
+        </li>
+
+        <li class="nav-item ml-3 ">
+            <a class="nav-link" href="@Url.Action("Register","Account")">Register</a>
+        </li>
+
+    </ul>
 
         }
     </nav>
@@ -54,8 +69,10 @@
                             Timesheets
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">New Timesheet</a>
-                            <a class="dropdown-item" href="#">View TimeSheet</a>
+
+                            @Html.ActionLink("New Timesheet", "New_Timesheet", "User", new { @class = "dropdown-item" })
+                            @Html.ActionLink("View Timesheet", "View_Timesheet", "User", new { @class = "dropdown-item" })
+
                         </div>
                     </li>
                     <li class="nav-item dropdown">

@@ -14,21 +14,24 @@
     <script src="~/bootstrap/popper.min.js"></script>
 
     <script src="~/bootstrap/bootstrap.min.js"></script>
-
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/bootstrap/sweetalert.min.js"></script>
 </head>
 <body>
-    @RenderPage("~/Views/Shared/_Header.cshtml")
-    <div class="container body-content">
-        @RenderBody()
+   
+        @RenderPage("~/Views/Shared/_Header.cshtml")
+        <div class="container body-content">
+            @RenderBody()
 
-    </div>
+        </div>
 
-    @RenderPage("~/Views/Shared/_Footer.cshtml")
+        @RenderPage("~/Views/Shared/_Footer.cshtml")
 
-    
 
-  
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+
+
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+   
 </body>
 </html>

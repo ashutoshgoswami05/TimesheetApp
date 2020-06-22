@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="Timesheet_projectModelStoreContainer" CdmEntityContainer="Timesheet_projectEntities">
-    <EntitySetMapping Name="Projects_Table">
-      <EntityTypeMapping TypeName="Timesheet_projectModel.Projects_Table">
+    <EntitySetMapping Name="Projects">
+      <EntityTypeMapping TypeName="Timesheet_projectModel.Project">
         <MappingFragment StoreEntitySet="Projects_Table">
           <ScalarProperty Name="Project_Name" ColumnName="Project_Name" />
           <ScalarProperty Name="Client" ColumnName="Client" />
@@ -17,8 +17,8 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Roles_table">
-      <EntityTypeMapping TypeName="Timesheet_projectModel.Roles_table">
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="Timesheet_projectModel.Role">
         <MappingFragment StoreEntitySet="Roles_table">
           <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
           <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
@@ -39,8 +39,8 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Technologies_table">
-      <EntityTypeMapping TypeName="Timesheet_projectModel.Technologies_table">
+    <EntitySetMapping Name="Technologies">
+      <EntityTypeMapping TypeName="Timesheet_projectModel.Technology">
         <MappingFragment StoreEntitySet="Technologies_table">
           <ScalarProperty Name="Technology_Id" ColumnName="Technology_Id" />
           <ScalarProperty Name="Technology_Name" ColumnName="Technology_Name" />
@@ -50,33 +50,42 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Users_table">
-      <EntityTypeMapping TypeName="Timesheet_projectModel.Users_table">
-        <MappingFragment StoreEntitySet="Users_table">
-          <ScalarProperty Name="Employee_Name" ColumnName="Employee_Name" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
-          <ScalarProperty Name="Technology_Id" ColumnName="Technology_Id" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
-          <ScalarProperty Name="Updated_Date" ColumnName="Updated_Date" />
-          <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
-          <ScalarProperty Name="is_Deleted" ColumnName="is_Deleted" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Timesheets_table">
-      <EntityTypeMapping TypeName="Timesheet_projectModel.Timesheets_table">
+    <EntitySetMapping Name="Timesheets">
+      <EntityTypeMapping TypeName="Timesheet_projectModel.Timesheets">
         <MappingFragment StoreEntitySet="Timesheets_table">
-          <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+          <ScalarProperty Name="User" ColumnName="User" />
           <ScalarProperty Name="Project_Name" ColumnName="Project_Name" />
           <ScalarProperty Name="date" ColumnName="date" />
           <ScalarProperty Name="TimeSpent" ColumnName="TimeSpent" />
           <ScalarProperty Name="Wokrdone" ColumnName="Wokrdone" />
           <ScalarProperty Name="Mode" ColumnName="Mode" />
           <ScalarProperty Name="Timesheet_Status" ColumnName="Timesheet_Status" />
+          <ScalarProperty Name="Updated_Date" ColumnName="Updated_Date" />
+          <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
+          <ScalarProperty Name="is_Deleted" ColumnName="is_Deleted" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User_Technologies">
+      <EntityTypeMapping TypeName="Timesheet_projectModel.User_Technologies">
+        <MappingFragment StoreEntitySet="User_Technologies">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="TechnologyId" ColumnName="TechnologyId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="Timesheet_projectModel.User">
+        <MappingFragment StoreEntitySet="Users_table">
+          <ScalarProperty Name="Employee_Name" ColumnName="Employee_Name" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
           <ScalarProperty Name="Updated_Date" ColumnName="Updated_Date" />
           <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
           <ScalarProperty Name="is_Deleted" ColumnName="is_Deleted" />
@@ -105,9 +114,9 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_insert_User_technologies" FunctionName="Timesheet_projectModel.Store.sp_insert_User_technologies" />
     <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Timesheet_projectModel.Store.sp_renamediagram" />
     <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Timesheet_projectModel.Store.sp_upgraddiagrams" />
     <FunctionImportMapping FunctionImportName="sp_ValidateUser" FunctionName="Timesheet_projectModel.Store.sp_ValidateUser" />
-    <FunctionImportMapping FunctionImportName="ValidateUser" FunctionName="Timesheet_projectModel.Store.sp_ValidateUser" />
   </EntityContainerMapping>
 </Mapping>

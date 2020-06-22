@@ -1,21 +1,19 @@
 ﻿
-@model TimesheetApp.Users_table
+@model TimesheetApp.User
 
 @{
     ViewBag.Title = "Register";
-  
-    
-        SelectList roles = new SelectList(ViewBag.Roles, "Role_Id", "Role_Name", 3);
-        SelectList technologies = new SelectList(ViewBag.Technologies, "Technology_Id", "Technology_Name");
-    
+
+
+    SelectList roles = new SelectList(ViewBag.Roles, "Role_Id", "Role_Name", 3);
+    SelectList technologies = new SelectList(ViewBag.Technologies, "Technology_Id", "Technology_Name");
+
 }
-<div class="alert alert-primary" id="confirmation" style="display:none" role="alert">
-    @ViewBag.Message
-</div>
 
 
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id = "RegistrationForm" }))
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id = "RegistrationForm",@class="commonForm"  }))
 {
     <h2 style="text-align:center">Register</h2>
     @Html.DisplayNameFor(x => x.Employee_Id)
@@ -55,9 +53,9 @@
 
     @Html.DisplayName("Technolgies")
 
-    @Html.ListBoxFor(x => x.Technology_Id, technologies, new { @class = "form-control" })
+    @Html.ListBox("TechnologyIds",technologies,new {@class="form-control" })
 
-    @Html.ValidationMessageFor(x => x.Technology_Id, "", new { @class = "text-danger" })
+    @Html.ValidationMessage("TechnologyIds", new {@class="text-danger" })
 
     <br />
     @Html.DisplayNameFor(x => x.Status)
@@ -88,23 +86,39 @@
 
 
         <br />*@
-<div>
-    <input type="submit" class="btn btn-info btn-submit mx-auto"  value="Register" />
-</div>
+    <div>
+        <input type="button" class="btn btn-info btn-submit" id="btn-register" value="Register" />
+    </div>
 
 }
 
-@if (ViewBag.Message != null)
-{
-    <script>
-        $(function () {
-            $('#confirmation').html("Registration Successful")
-            $('#confirmation').css("display", "block")
 
-        })
-    </script>
-}
 
+<script src="~/bootstrap/sweetalert.min.js"></script>
+
+<script>
+
+    $('#btn-register').click(function () {
+        var formdata = $('#RegistrationForm').serialize();
+        console.log(formdata);
+         $.ajax({
+
+            url: '@Url.Action("Register","Account")',
+             type: "POST",
+             data: formdata,
+             success: function (response) {
+                 if (response.Message === "Success") {
+                     swal("Success!", "Registration Successful!", "success");
+                     console.log(response)
+                 }
+             },
+             failure: function () {
+                 alert('cannot register');
+             }
+
+    })
+    })
+</script>
 
 
 

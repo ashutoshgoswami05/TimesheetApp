@@ -12,9 +12,9 @@ namespace TimesheetApp
     using System;
     using System.Collections.Generic;
     
-    public partial class Timesheets_table
+    public partial class Timesheets
     {
-        public string User_Id { get; set; }
+        public string User { get; set; }
         public string Project_Name { get; set; }
         public Nullable<System.DateTime> date { get; set; }
         public Nullable<System.TimeSpan> TimeSpent { get; set; }
@@ -24,8 +24,9 @@ namespace TimesheetApp
         public Nullable<System.DateTime> Updated_Date { get; set; }
         public Nullable<System.DateTime> Created_Date { get; set; }
         public Nullable<bool> is_Deleted { get; set; }
+        public int Id { get; set; }
     
-        public virtual Projects_Table Projects_Table { get; set; }
-        public virtual Users_table Users_table { get; set; }
+        public virtual Project Projects_Table { get; set; }
+        public virtual User Users_table { get; set; }
     }
 }

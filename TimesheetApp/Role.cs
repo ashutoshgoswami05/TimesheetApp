@@ -12,12 +12,12 @@ namespace TimesheetApp
     using System;
     using System.Collections.Generic;
     
-    public partial class Roles_table
+    public partial class Role
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Roles_table()
+        public Role()
         {
-            this.Users_table = new HashSet<Users_table>();
+            this.Users_table = new HashSet<User>();
         }
     
         public int Role_Id { get; set; }
@@ -27,6 +27,6 @@ namespace TimesheetApp
         public Nullable<bool> is_Deleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Users_table> Users_table { get; set; }
+        public virtual ICollection<User> Users_table { get; set; }
     }
 }

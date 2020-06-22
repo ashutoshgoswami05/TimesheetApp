@@ -18,25 +18,31 @@ namespace TimesheetApp.Controllers
         {
 
 
-            ViewBag.Roles = context.Roles_table;
-            ViewBag.Technologies = context.Technologies_table;
+            ViewBag.Roles = context.Roles;
+            ViewBag.Technologies = context.Technologies;
             return View();
         }
 
 
         [HttpPost]
-        public ActionResult Register(Users_table user)
+        public ActionResult Register(User user,List<int> TechnologyIds)
         {
             Random r = new Random();
             string password = BitConverter.ToString(passwordhash(r.Next().ToString()));
             int length = password.Length;
             user.Password = password;
 
-            context.Users_table.Add(user);
-            context.SaveChanges();
-            ViewBag.Message = "Registraion Successful";
+            foreach (var id in TechnologyIds) 
+            {
+                User_Technologies t1 = new User_Technologies() { EmployeeId = user.Employee_Id, TechnologyId = id };
+                context.User_Technologies.Add(t1);
+            }
 
-            return RedirectToAction("Login");
+            context.Users.Add(user);
+            context.SaveChanges();
+            
+
+            return Json(new {Message="Success",JsonRequestBehavior.AllowGet });
         }
 
         [HttpGet]
@@ -56,9 +62,9 @@ namespace TimesheetApp.Controllers
             string message = string.Empty;
 
 
-            string passfromdb = context.Users_table.Find(model.Employee_Id).Password;
-            string pass = BitConverter.ToString(passwordhash(model.Password));
-            int valid2 = pass == passfromdb ? 1 : 0;
+            //string passfromdb = context.Users_table.Find(model.Employee_Id).Password;
+            //string pass = BitConverter.ToString(passwordhash(model.Password));
+            //int valid2 = pass == passfromdb ? 1 : 0;
 
 
 
@@ -66,7 +72,7 @@ namespace TimesheetApp.Controllers
 
             if(valid == 1)
             {
-                FormsAuthentication.SetAuthCookie(model.Employee_Id, true);
+                FormsAuthentication.SetAuthCookie(model.Employee_Id, false);
                 return RedirectToAction("Index","User",new {Employee_Id=model.Employee_Id });
             }
 

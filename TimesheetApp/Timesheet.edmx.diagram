@@ -4,18 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="04ad6633a5724ac78da5043ac8a805d5" Name="Diagram1">
-        <EntityTypeShape EntityType="Timesheet_projectModel.Projects_Table" Width="1.5" PointX="5.25" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Timesheet_projectModel.Roles_table" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Timesheet_projectModel.sysdiagram" Width="1.5" PointX="5.75" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Timesheet_projectModel.Technologies_table" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Timesheet_projectModel.Users_table" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Timesheet_projectModel.Timesheets_table" Width="1.5" PointX="7.5" PointY="3.125" IsExpanded="true" />
+      <Diagram DiagramId="efb628b2e8f24b99af5ac9ea00ff6582" Name="Diagram1">
+        <EntityTypeShape EntityType="Timesheet_projectModel.Project" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Timesheet_projectModel.Role" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Timesheet_projectModel.sysdiagram" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Timesheet_projectModel.Technology" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Timesheet_projectModel.Timesheets" Width="1.5" PointX="7.5" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Timesheet_projectModel.User_Technologies" Width="1.5" PointX="4.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Timesheet_projectModel.User" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="Timesheet_projectModel.FK__Projects___Membe__37A5467C" ManuallyRouted="false" />
         <AssociationConnector Association="Timesheet_projectModel.FK__Projects___Proje__36B12243" ManuallyRouted="false" />
         <AssociationConnector Association="Timesheet_projectModel.FK__Timesheet__Proje__3A81B327" ManuallyRouted="false" />
         <AssociationConnector Association="Timesheet_projectModel.FK__Users_tab__Role___173876EA" ManuallyRouted="false" />
-        <AssociationConnector Association="Timesheet_projectModel.FK__Users_tab__Techn__1920BF5C" ManuallyRouted="false" />
         <AssociationConnector Association="Timesheet_projectModel.FK__Timesheet__User___398D8EEE" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
