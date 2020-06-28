@@ -27,11 +27,13 @@ namespace TimesheetApp
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Project_Members> Project_Members { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Subtasks_table> Subtasks_table { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Technology> Technologies { get; set; }
-        public virtual DbSet<Timesheets> Timesheets { get; set; }
+        public virtual DbSet<Timesheets> Timesheets1 { get; set; }
         public virtual DbSet<User_Technologies> User_Technologies { get; set; }
         public virtual DbSet<User> Users { get; set; }
     

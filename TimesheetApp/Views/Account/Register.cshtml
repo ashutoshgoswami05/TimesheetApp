@@ -70,7 +70,7 @@
         </label>
     </div>
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="Status" id="exampleRadios2" value="false" checked>
+        <input class="form-check-input" type="radio" name="Status" id="exampleRadios2" value="false" >
         <label class="form-check-label" for="exampleRadios2">
             Disabled
         </label>
@@ -94,7 +94,6 @@
 
 
 
-<script src="~/bootstrap/sweetalert.min.js"></script>
 
 <script>
 
@@ -110,6 +109,7 @@
                  if (response.Message === "Success") {
                      swal("Success!", "Registration Successful!", "success");
                      console.log(response)
+                     $('#RegistrationForm')[0].reset();
                  }
              },
              failure: function () {
@@ -122,8 +122,3 @@
 
 
 
-@section scripts{
-
-    @Scripts.Render("~/bundles/jqueryval")
-
-}

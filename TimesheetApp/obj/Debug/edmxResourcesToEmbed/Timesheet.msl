@@ -1,6 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="Timesheet_projectModelStoreContainer" CdmEntityContainer="Timesheet_projectEntities">
+    <EntitySetMapping Name="Project_Members">
+      <EntityTypeMapping TypeName="Timesheet_projectModel.Project_Members">
+        <MappingFragment StoreEntitySet="Project_Members">
+          <ScalarProperty Name="Project_Name" ColumnName="Project_Name" />
+          <ScalarProperty Name="Member_Id" ColumnName="Member_Id" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Projects">
       <EntityTypeMapping TypeName="Timesheet_projectModel.Project">
         <MappingFragment StoreEntitySet="Projects_Table">
@@ -9,8 +18,6 @@
           <ScalarProperty Name="Project_Manager_Id" ColumnName="Project_Manager_Id" />
           <ScalarProperty Name="Deadline" ColumnName="Deadline" />
           <ScalarProperty Name="Technology_Id" ColumnName="Technology_Id" />
-          <ScalarProperty Name="Member_Id" ColumnName="Member_Id" />
-          <ScalarProperty Name="Subtask" ColumnName="Subtask" />
           <ScalarProperty Name="is_Deleted" ColumnName="is_Deleted" />
           <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
           <ScalarProperty Name="Updated_Date" ColumnName="Updated_Date" />
@@ -25,6 +32,15 @@
           <ScalarProperty Name="Updated_Date" ColumnName="Updated_Date" />
           <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
           <ScalarProperty Name="is_Deleted" ColumnName="is_Deleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Subtasks_table">
+      <EntityTypeMapping TypeName="Timesheet_projectModel.Subtasks_table">
+        <MappingFragment StoreEntitySet="Subtasks_table">
+          <ScalarProperty Name="Project_Name" ColumnName="Project_Name" />
+          <ScalarProperty Name="Subtask" ColumnName="Subtask" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -50,7 +66,7 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Timesheets">
+    <EntitySetMapping Name="Timesheets1">
       <EntityTypeMapping TypeName="Timesheet_projectModel.Timesheets">
         <MappingFragment StoreEntitySet="Timesheets_table">
           <ScalarProperty Name="User" ColumnName="User" />

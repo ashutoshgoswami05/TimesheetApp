@@ -129,13 +129,22 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\RegisterViewModel.cs" />
+    <Compile Include="Models\CreatProjectViewModel.cs" />
+    <Compile Include="Models\DisplayProjectsViewModel.cs" />
+    <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\ManageViewModel.cs" />
+    <Compile Include="Models\ProjectMembersViewModel.cs" />
+    <Compile Include="Pager.cs" />
     <Compile Include="Project.cs">
+      <DependentUpon>Timesheet.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Project_Members.cs">
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -146,6 +155,9 @@
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>Timesheet.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subtasks_table.cs">
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">
@@ -243,6 +255,10 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\New_Timesheet.cshtml" />
+    <Content Include="Views\User\View_Timesheet.cshtml" />
+    <Content Include="Views\User\Edit_Timesheet.cshtml" />
+    <Content Include="Views\User\Manage_Timesheet.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
     <EntityDeploy Include="Timesheet.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Timesheet.Designer.cs</LastGenOutput>
@@ -250,7 +266,11 @@
     <Content Include="Timesheet.edmx.diagram">
       <DependentUpon>Timesheet.edmx</DependentUpon>
     </Content>
-    <Content Include="Views\User\View_Timesheet.cshtml" />
+    <Content Include="Views\Admin\Create_Project.cshtml" />
+    <Content Include="Views\Admin\Display_Projects.cshtml" />
+    <Content Include="Views\Admin\GetProjectsByName.cshtml" />
+    <Content Include="Views\Admin\Add_Users_To_Project.cshtml" />
+    <Content Include="Views\Admin\DisplayMembers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

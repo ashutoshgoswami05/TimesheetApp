@@ -31,6 +31,8 @@ namespace TimesheetApp.Controllers
             string password = BitConverter.ToString(passwordhash(r.Next().ToString()));
             int length = password.Length;
             user.Password = password;
+            user.Updated_Date = DateTime.Now;
+            user.is_Deleted = false;
 
             foreach (var id in TechnologyIds) 
             {
@@ -49,6 +51,7 @@ namespace TimesheetApp.Controllers
         public ActionResult Login()
         {
             LoginViewModel model = new LoginViewModel();
+           
 
           
             return View(model);
@@ -60,6 +63,7 @@ namespace TimesheetApp.Controllers
         {
             int? valid = context.sp_ValidateUser(model.Employee_Id, model.Password).FirstOrDefault();
             string message = string.Empty;
+           
 
 
             //string passfromdb = context.Users_table.Find(model.Employee_Id).Password;
@@ -72,20 +76,28 @@ namespace TimesheetApp.Controllers
 
             if(valid == 1)
             {
+                
                 FormsAuthentication.SetAuthCookie(model.Employee_Id, false);
-                return RedirectToAction("Index","User",new {Employee_Id=model.Employee_Id });
+                message = "Success";
+                return Json(new { Message = message }, JsonRequestBehavior.AllowGet);
+            }
+
+            else if (valid==-1)
+            {
+                message = "Invalid Credentials";
+
+                
+
+
+                return Json(new {Message=message },JsonRequestBehavior.AllowGet);
             }
 
             else
             {
                 message = "Account not activated";
 
-                ViewBag.Message = message;
-
-
-                return View(User);
+                return Json(new { Message = message }, JsonRequestBehavior.AllowGet);
             }
-
 
         }
 
@@ -94,7 +106,7 @@ namespace TimesheetApp.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-
+            Session.Abandon();
             return RedirectToAction("Login");
         }
 

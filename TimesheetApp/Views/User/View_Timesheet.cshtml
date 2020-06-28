@@ -4,56 +4,159 @@
     ViewBag.Title = "View_Timesheet";
 }
 
+<div class="commonForm " style="width:90%">
+    <h2 class="text-center">View Timesheets</h2>
 
+    <table class="mx-auto table table-hover" id="TimesheetTable">
+        <tr>
+            <th>Project</th>
+            <th>Date</th>
+            <th>Mode</th>
+            <th>Timespent</th>
+            <th>Workdone</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
 
-<h2 class="text-center">View Timesheets</h2>
-
-<table>
-    <tr>
-        <th>Project</th>
-        <th>Date</th>
-        <th>Mode</th>
-        <th>Timespent</th>
-        <th>Workdone</th>
-        <th>Status</th>
-        <th>Actions</th>
-    </tr>
-
-    @foreach(var item in Model)
-    {
-<tr>
-    <td>
-        @item.Project_Name
-    </td>
-
-    <td>
-        @item.date
-    </td>
-
-    <td>
-        @item.Mode
-    </td>
-    <td>
-        @item.TimeSpent
-    </td>
-    <td>
-        @item.Wokrdone
-    </td>
-    <td>
-        @if (item.Timesheet_Status == null)
+        @foreach (var item in Model)
         {
-            <text>Pending</text>
+            <tr>
+                <td>
+                    @item.Project_Name
+                </td>
+
+                <td>
+                    @item.date
+                </td>
+
+                <td>
+                    @if (item.Mode == true)
+                    {
+                        <text>Office</text>
+                    }
+                    else
+                    {
+                        <text>WFH</text>
+                    }
+                </td>
+                <td>
+                    @item.TimeSpent
+                </td>
+                <td>
+                    @item.Wokrdone
+                </td>
+                <td>
+                    @if (item.Timesheet_Status == null || item.Timesheet_Status == false)
+                    {
+                        <text>Pending</text>
+                    }
+                    else
+                    {
+                        <text>Approved</text>
+                    }
+                </td>
+                <td>
+                    <input type="button" value="Edit" data-toggle="modal" data-target="#MyModal"  data-id="@item.Id" class="btn btn-primary Edit-Timesheet" />
+                    <input type="button" value="Delete"  data-id="@item.Id"  class="btn btn-danger Delete-Timesheet" />
+                </td>
+
+            </tr>
         }
-    </td>
-    <td>
-        <input type="button" value="Edit" id="Edit-Timesheet" class="btn btn-primary" />
-        <input type="button" value="Delete" id="Delete-Timesheet" class="btn btn-danger" />
-    </td>
+    </table>
 
-</tr>
-    }
-</table>
+</div>
 
 
 
+<!-- Modal -->
+<div class="modal fade" id="MyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Timesheet</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalbody">
+               
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btn-UpdateTimesheet">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+
+
+<script>
+    $('.Edit-Timesheet').click(function () {
+        var dataid = $(this).attr('data-id');
+        console.log(dataid);
+        $.ajax({
+
+            url: '@Url.Action("Edit_Timesheet","User")',
+            data: { Id: dataid },
+            success: function (response) {
+                console.log(response)
+                $('#modalbody').html(response);
+                $('#MyModal').modal("show");
+            },
+            faliure: function () {
+                alert('error');
+            }
+
+
+
+
+        })
+    })
+
+    $('#btn-UpdateTimesheet').click(function () {
+        var formdata = $('#EditTimesheetForm').serialize();
+        console.log(formdata);
+
+        $.ajax({
+            url: '@Url.Action("Edit_Timesheet","User")',
+            type: 'POST',
+            data: formdata,
+            success: function (response) {
+                
+                
+                location.reload();
+                swal("Success!", response.Message, "success");
+                
+
+            },
+            faliure: function () {
+                alert('error');
+            }
+            
+
+        })
+    })
+
+    $('.Delete-Timesheet').click(function () {
+        var dataid=$(this).attr('data-id');
+        console.log(dataid);
+        $.ajax({
+            url: '@Url.Action("Delete_Timesheet","User")',
+            type: 'POST',
+            data: {Id:dataid},
+            success: function (response) {
+                location.reload();
+                swal("Success!", response.Message, "success");
+               
+
+            },
+            faliure: function () {
+                alert('error');
+            }
+            
+
+        })
+    })
+
+</script>

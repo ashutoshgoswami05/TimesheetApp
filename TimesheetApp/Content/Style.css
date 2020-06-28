@@ -33,3 +33,17 @@ body{
 .commonForm{
     margin:3rem;
 }
+
+.spinner{
+    width:100%;
+    display:block;
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    display:none;
+}
+
+.spinner-border{
+    display:block !important;
+    margin:0 auto !important;
+}

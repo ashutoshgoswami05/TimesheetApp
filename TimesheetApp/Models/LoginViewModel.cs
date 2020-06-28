@@ -14,6 +14,7 @@ namespace TimesheetApp.Models
         public string Employee_Id { get; set; }
 
         [Required(ErrorMessage ="Please enter the password")]
+        [StringLength(int.MaxValue,ErrorMessage ="password length should be greater than 6",MinimumLength =6)]
         public string  Password { get; set; }
     }
 }

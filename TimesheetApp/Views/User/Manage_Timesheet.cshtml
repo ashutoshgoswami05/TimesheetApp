@@ -1,0 +1,119 @@
+﻿@model  IEnumerable<TimesheetApp.Models.ManageViewModel>
+
+@{
+    ViewBag.Title = "Manage_Timesheet";
+}
+
+
+<div class="commonForm " style="width:90%">
+    <h2 class="text-center">Member Timesheets</h2>
+
+    <table class="mx-auto table table-hover" id="TimesheetTable">
+        <tr>
+            <th>Employee Name</th>
+            <th>Project</th>
+            <th>Date</th>
+            <th>Mode</th>
+            <th>Timespent</th>
+            <th>Workdone</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+
+        @foreach (var item in Model.Where(x => x.Timesheet_Status==false))
+        {
+            <tr>
+                <td>
+                    @item.Employee_Name
+                </td>
+                <td>
+                    @item.Project_Name
+                </td>
+
+                <td>
+                    @item.date
+                </td>
+
+                <td>
+                    @if (item.Mode == true)
+                    {
+                        <text>Office</text>
+                    }
+                    else
+                    {
+                        <text>WFH</text>
+                    }
+                </td>
+                <td>
+                    @item.TimeSpent
+                </td>
+                <td>
+                    @item.Wokrdone
+                </td>
+                <td>
+                    @if (item.Timesheet_Status == null || item.Timesheet_Status == false)
+                    {
+                        <text>Pending</text>
+                    }
+                    else
+                    {
+                        <text>Approved</text>
+                    }
+                </td>
+                <td>
+                    <input type="button" value="Approve" data-id="@item.Employee_Id" class="btn btn-primary ApproveStatus" />
+                    <input type="button" value="Reject"  data-id="@item.Employee_Id" class="btn btn-danger RejectStatus" />
+                </td>
+
+            </tr>
+        }
+    </table>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.ApproveStatus').click(function () {
+            var data = $('.ApproveStatus').attr('data-id')
+            $.ajax({
+
+                url: '@Url.Action("Manage_Timesheet","User")',
+                type:'POST',
+                data: { EmployeeId: data, Status: true },
+                success: function () {
+                     alert('sucess');
+                },
+                else: function () {
+                    alert('failure')
+                    
+                }
+                })
+
+            })
+
+
+    })
+
+     $(document).ready(function () {
+        $('.RejectStatus').click(function () {
+            var data = $('.ApproveStatus').attr('data-id')
+            $.ajax({
+
+                url: '@Url.Action("Change_Timesheet_Status","User")',
+                data: { EmployeeId: data, Status: false },
+                success: function () {
+                    alert('sucess');
+                },
+                else: function () {
+                    alert('failure')
+                    
+                }
+                })
+
+            })
+
+
+        })
+
+
+</script>

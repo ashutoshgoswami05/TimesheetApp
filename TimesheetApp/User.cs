@@ -17,8 +17,8 @@ namespace TimesheetApp
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
+            this.Project_Members = new HashSet<Project_Members>();
             this.Projects_Table = new HashSet<Project>();
-            this.Projects_Table1 = new HashSet<Project>();
             this.Timesheets_table = new HashSet<Timesheets>();
         }
     
@@ -34,9 +34,9 @@ namespace TimesheetApp
         public Nullable<bool> is_Deleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Project> Projects_Table { get; set; }
+        public virtual ICollection<Project_Members> Project_Members { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Project> Projects_Table1 { get; set; }
+        public virtual ICollection<Project> Projects_Table { get; set; }
         public virtual Role Roles_table { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Timesheets> Timesheets_table { get; set; }

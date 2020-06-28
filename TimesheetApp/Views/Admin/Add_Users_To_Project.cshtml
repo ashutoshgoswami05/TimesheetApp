@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Add_Users_To_Project";
+    SelectList Projects = new SelectList(ViewBag.Projects, "Project_Name", "Project_Name");
+    SelectList Members = new SelectList(ViewBag.Users, "Employee_Id", "Employee_Name");
+}
+
+<h2 class="text-center">User Management</h2>
+
+<form id="AddMemberForm">
+    @Html.Label("Project Name")
+    @Html.DropDownList("Project", Projects,"Select Project", new { @class = "form-control",id="ProjectDropdown" })
+    <br />
+    @Html.Label("Select Member")
+    @Html.DropDownList("Member", Members,"Select Member", new { @class = "form-control" })
+    <br />
+    <button class="btn btn-info btn-submit" type="button" id="AddMemberToProject">Add</button>
+
+
+</form>
+
+<div id="ProjectMembers">
+   
+
+</div>
+
+<script>
+    debugger;
+    $('#ProjectDropdown').change(function () {
+
+        var project = $(this).children("option:selected").val();
+        console.log(project)
+        DisplayMembers(project)
+    })
+
+    function DisplayMembers(ProjectName) {
+        console.log("dsiplay members called");
+        $.ajax({
+
+            url: '@Url.Action("DisplayMembers")',
+            data: { Project_Name: ProjectName },
+            success: function (response) {
+                $('#ProjectMembers').html(response)
+            },
+            failure: function () {
+                alert('failed')
+            }
+
+
+        })
+    }
+
+
+    $('#AddMemberToProject').click(function () {
+        var formdata = $('#AddMemberForm').serialize();
+        
+        $.ajax({
+            
+            url: '@Url.Action("Add_Users_To_Project","Admin")',
+            type: "POST",
+            data: formdata,
+            success: function (response) {
+                console.log(response)
+                $('#ProjectMembers').html(response)
+
+                    
+            },
+            failure: function (response) {
+                alert('error')
+            }
+
+        })
+
+    })
+
+</script>
+

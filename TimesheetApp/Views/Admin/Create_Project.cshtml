@@ -1,0 +1,83 @@
+﻿@model TimesheetApp.Models.CreatProjectViewModel
+
+@{
+    ViewBag.Title = "Create_Project";
+    SelectList managers = new SelectList(ViewBag.Managers, "Employee_Id", "Employee_Name");
+    SelectList technologies = new SelectList(ViewBag.Technologies, "Technology_Id", "Technology_Name");
+}
+<link href="~/bootstrap/datepicker.css" rel="stylesheet" />
+<script src="~/bootstrap/bootstrap-datepicker.js"></script>
+
+
+<form id="CreateProjectForm" class="commonForm">
+    <h2 class="text-center">Create Project</h2>
+    @Html.DisplayNameFor(x => x.Project_Name)
+    @Html.TextBoxFor(x => x.Project_Name, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Project_Name)
+
+    <br />
+
+    @Html.DisplayNameFor(x => x.Client)
+    @Html.TextBoxFor(x => x.Client, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Client)
+
+    <br />
+
+    @Html.DisplayNameFor(x => x.Project_Manager_Id)
+    @Html.DropDownListFor(x => x.Project_Manager_Id, managers, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Project_Manager_Id)
+
+    <br />
+
+    @Html.DisplayNameFor(x => x.Deadline)
+    @Html.TextBoxFor(x => x.Deadline, new { @class = "form-control", id = "selectdate", @readonly = "readonly" })
+    @Html.ValidationMessageFor(x => x.Deadline)
+
+    <br />
+
+    @Html.DisplayNameFor(x => x.Technologies)
+    @Html.ListBoxFor(x => x.Technologies, technologies, new { @class = "form-control" })
+
+    <br />
+
+    <div>
+        <input type="button" class="btn btn-info btn-submit" id="btn-project" value="Create" />
+    </div>
+
+</form>
+
+
+<script>
+    $('#selectdate').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        format: "dd/mm/yyyy",
+        language: "tr"
+    });
+
+    $('#btn-project').click(function () {
+        var formdata = $('#CreateProjectForm').serialize();
+      
+         $.ajax({
+
+            url: '@Url.Action("Create_Project","Admin")',
+             type: "POST",
+             data: formdata,
+             success: function (response) {
+                 if (response.Message === "Success") {
+                     swal("Success!", "Create Successful!", "success");
+
+                     $('#CreateProjectForm')[0].reset();
+                 }
+             },
+             failure: function () {
+                 alert('cannot register');
+             }
+
+    })
+    })
+</script>
+
+
+
+

@@ -18,20 +18,26 @@
     <script src="~/bootstrap/sweetalert.min.js"></script>
 </head>
 <body>
-   
-        @RenderPage("~/Views/Shared/_Header.cshtml")
-        <div class="container body-content">
-            @RenderBody()
 
-        </div>
+    @RenderPage("~/Views/Shared/_Header.cshtml")
+    <div class="container body-content">
+        @RenderBody()
 
-        @RenderPage("~/Views/Shared/_Footer.cshtml")
+    </div>
 
-
+    @RenderPage("~/Views/Shared/_Footer.cshtml")
 
 
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
-   
+
+
+    @Scripts.Render("~/bundles/bootstrap")
+
+  
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    
+    @RenderSection("scripts", required: false)
+
 </body>
 </html>

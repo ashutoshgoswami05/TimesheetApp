@@ -17,6 +17,8 @@ namespace TimesheetApp
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Project()
         {
+            this.Project_Members = new HashSet<Project_Members>();
+            this.Subtasks_table = new HashSet<Subtasks_table>();
             this.Timesheets_table = new HashSet<Timesheets>();
         }
     
@@ -25,14 +27,15 @@ namespace TimesheetApp
         public string Project_Manager_Id { get; set; }
         public System.DateTime Deadline { get; set; }
         public Nullable<int> Technology_Id { get; set; }
-        public string Member_Id { get; set; }
-        public string Subtask { get; set; }
         public Nullable<bool> is_Deleted { get; set; }
         public Nullable<System.DateTime> Created_Date { get; set; }
         public Nullable<System.DateTime> Updated_Date { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Project_Members> Project_Members { get; set; }
         public virtual User Users_table { get; set; }
-        public virtual User Users_table1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Subtasks_table> Subtasks_table { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Timesheets> Timesheets_table { get; set; }
     }

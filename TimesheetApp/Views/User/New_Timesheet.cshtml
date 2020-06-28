@@ -40,7 +40,7 @@
         </label>
     </div>
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="Mode" id="exampleRadios2" value="true" checked>
+        <input class="form-check-input" type="radio" name="Mode" id="exampleRadios2" value="true" >
         <label class="form-check-label" for="exampleRadios2">
             Office
         </label>
@@ -76,6 +76,7 @@
                  if (response.Message === "Success") {
                      swal("Success!", "Timesheet Created!", "success");
                      console.log(response)
+                     $('#TimesheetForm')[0].reset();
                  }
              },
              failure: function () {

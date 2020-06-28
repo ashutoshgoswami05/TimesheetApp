@@ -1,0 +1,47 @@
+﻿@model  IEnumerable<TimesheetApp.Models.DisplayProjectsViewModel>
+
+@{
+    ViewBag.Title = "Display_Projects";
+}
+
+<h2 class="text-center">Projects</h2>
+
+
+<input type="text" class="form-control" placeholder="Project Name" id="ProjectSearch" />
+
+
+
+<div id="DisplayProjectsBody">
+    @{Html.RenderAction("GetProjectsByName", new { Project_Name = "" });}
+
+</div>
+
+<script>
+    $('#ProjectSearch').keyup(function () {
+        var data = $(this).val();
+        $.ajax({
+
+            url: '@Url.Action("GetProjectsByName","Admin")',
+
+            data: {Project_Name:data},
+            success: function (response) {
+                if (response == null) {
+                    $('#DisplayProjectsBody').html("No Projects with search query")
+                }
+
+                else {
+
+                    $('#DisplayProjectsBody').html(response)
+                }
+
+
+            },
+            failure: function (response) {
+                alert('error')
+            }
+
+        })
+
+    })
+
+</script>

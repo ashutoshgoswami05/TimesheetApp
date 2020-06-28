@@ -7,7 +7,7 @@
         {
             <ul class="navbar-nav d-flex flex-row ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Hello <span id="Username">@User.Identity.Name</span></a>
+                    <a class="nav-link" href="#">Hello <span id="Username"></span></a>
                 </li>
 
 
@@ -17,9 +17,9 @@
                         Role
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" role-id="1" href="#">Admin</a>
-                        <a class="dropdown-item" role-id="2" href="#">Manager</a>
-                        <a class="dropdown-item" role-id="3" href="#">User</a>
+                        <a class="dropdown-item role" role-id="1" href="#">Admin</a>
+                        <a class="dropdown-item role" role-id="2" href="#">Manager</a>
+                        <a class="dropdown-item role" role-id="3" href="#">User</a>
                     </div>
 
                 </li>
@@ -63,6 +63,12 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                     </li>
+                    @if (Session["Role"] !=null && (int)Session["Role"] == 2)
+                    {
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Manage_Timesheet","User")">Manage</a>
+                    </li>
+                    }
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -70,8 +76,9 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                            @Html.ActionLink("New Timesheet", "New_Timesheet", "User", new { @class = "dropdown-item" })
-                            @Html.ActionLink("View Timesheet", "View_Timesheet", "User", new { @class = "dropdown-item" })
+                            @Html.ActionLink("New Timesheet", "New_Timesheet", "User",null, new { @class = "dropdown-item" })
+                            @Html.ActionLink("View Timesheet", "View_Timesheet", "User",null,
+                           new { @class = "dropdown-item" })
 
                         </div>
                     </li>
