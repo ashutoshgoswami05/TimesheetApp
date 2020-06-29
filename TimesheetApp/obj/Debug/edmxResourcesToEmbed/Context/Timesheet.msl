@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Timesheet_projectModelStoreContainer" CdmEntityContainer="Timesheet_projectEntities">
+    <EntitySetMapping Name="Project_Members">
+      <EntityTypeMapping TypeName="Timesheet_projectModel.Project_Members">
+        <MappingFragment StoreEntitySet="Project_Members">
+          <ScalarProperty Name="Project_Name" ColumnName="Project_Name" />
+          <ScalarProperty Name="Member_Id" ColumnName="Member_Id" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Projects">
+      <EntityTypeMapping TypeName="Timesheet_projectModel.Project">
+        <MappingFragment StoreEntitySet="Projects_Table">
+          <ScalarProperty Name="Project_Name" ColumnName="Project_Name" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="Project_Manager_Id" ColumnName="Project_Manager_Id" />
+          <ScalarProperty Name="Deadline" ColumnName="Deadline" />
+          <ScalarProperty Name="Technology_Id" ColumnName="Technology_Id" />
+          <ScalarProperty Name="is_Deleted" ColumnName="is_Deleted" />
+          <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
+          <ScalarProperty Name="Updated_Date" ColumnName="Updated_Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="Timesheet_projectModel.Role">
+        <MappingFragment StoreEntitySet="Roles_table">
+          <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
+          <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
+          <ScalarProperty Name="Updated_Date" ColumnName="Updated_Date" />
+          <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
+          <ScalarProperty Name="is_Deleted" ColumnName="is_Deleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Subtasks_table">
+      <EntityTypeMapping TypeName="Timesheet_projectModel.Subtasks_table">
+        <MappingFragment StoreEntitySet="Subtasks_table">
+          <ScalarProperty Name="Project_Name" ColumnName="Project_Name" />
+          <ScalarProperty Name="Subtask" ColumnName="Subtask" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="Timesheet_projectModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Technologies">
+      <EntityTypeMapping TypeName="Timesheet_projectModel.Technology">
+        <MappingFragment StoreEntitySet="Technologies_table">
+          <ScalarProperty Name="Technology_Id" ColumnName="Technology_Id" />
+          <ScalarProperty Name="Technology_Name" ColumnName="Technology_Name" />
+          <ScalarProperty Name="Updated_Date" ColumnName="Updated_Date" />
+          <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
+          <ScalarProperty Name="is_Deleted" ColumnName="is_Deleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Timesheets1">
+      <EntityTypeMapping TypeName="Timesheet_projectModel.Timesheets">
+        <MappingFragment StoreEntitySet="Timesheets_table">
+          <ScalarProperty Name="User" ColumnName="User" />
+          <ScalarProperty Name="Project_Name" ColumnName="Project_Name" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="TimeSpent" ColumnName="TimeSpent" />
+          <ScalarProperty Name="Wokrdone" ColumnName="Wokrdone" />
+          <ScalarProperty Name="Mode" ColumnName="Mode" />
+          <ScalarProperty Name="Timesheet_Status" ColumnName="Timesheet_Status" />
+          <ScalarProperty Name="Updated_Date" ColumnName="Updated_Date" />
+          <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
+          <ScalarProperty Name="is_Deleted" ColumnName="is_Deleted" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User_Technologies">
+      <EntityTypeMapping TypeName="Timesheet_projectModel.User_Technologies">
+        <MappingFragment StoreEntitySet="User_Technologies">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="TechnologyId" ColumnName="TechnologyId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Timesheet_projectModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Timesheet_projectModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Timesheet_projectModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Timesheet_projectModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Timesheet_projectModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Timesheet_projectModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Timesheet_projectModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_insert_User_technologies" FunctionName="Timesheet_projectModel.Store.sp_insert_User_technologies" />
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Timesheet_projectModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Timesheet_projectModel.Store.sp_upgraddiagrams" />
+    <FunctionImportMapping FunctionImportName="sp_ValidateUser" FunctionName="Timesheet_projectModel.Store.sp_ValidateUser" />
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="Timesheet_projectModel.User">
+        <MappingFragment StoreEntitySet="Users_table">
+          <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+          <ScalarProperty Name="is_Deleted" ColumnName="is_Deleted" />
+          <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
+          <ScalarProperty Name="Updated_Date" ColumnName="Updated_Date" />
+          <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Employee_Name" ColumnName="Employee_Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

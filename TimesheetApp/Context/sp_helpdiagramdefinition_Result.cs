@@ -7,17 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TimesheetApp
+namespace TimesheetApp.Context
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Subtasks_table
+    public partial class sp_helpdiagramdefinition_Result
     {
-        public string Project_Name { get; set; }
-        public string Subtask { get; set; }
-        public int Id { get; set; }
-    
-        public virtual Project Projects_Table { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

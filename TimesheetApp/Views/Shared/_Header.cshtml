@@ -1,4 +1,22 @@
-﻿<section name="header" class="section-header">
+﻿@{HttpCookie ck = Request.Cookies["Validation"];
+
+    string name = string.Empty;
+    if(ck != null)
+    {
+
+        name= ck["Name"];
+
+    }
+
+    else
+    {
+        name = HttpContext.Current.User.Identity.Name;
+    }
+
+
+}
+
+<section name="header" class="section-header">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Timesheet</a>
 
@@ -7,7 +25,7 @@
         {
             <ul class="navbar-nav d-flex flex-row ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Hello <span id="Username"></span></a>
+                    <a class="nav-link" href="#">Hello <span id="Username">@name</span></a>
                 </li>
 
 
@@ -17,9 +35,25 @@
                         Role
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item role" role-id="1" href="#">Admin</a>
-                        <a class="dropdown-item role" role-id="2" href="#">Manager</a>
-                        <a class="dropdown-item role" role-id="3" href="#">User</a>
+                        @if (Convert.ToInt32(ck["Role"]) == 1)
+                        {
+                            <a class="dropdown-item active"   href="#">Admin</a>
+                            <a class="dropdown-item"  href="#">Manager</a>
+                            <a class="dropdown-item"  href="#">User</a>
+
+                        }
+                        else if (Convert.ToInt32(ck["Role"]) == 2)
+                        {
+                            <a class="dropdown-item "  href="#">Admin</a>
+                            <a class="dropdown-item active"  href="#">Manager</a>
+                            <a class="dropdown-item "  href="#">User</a>
+                        }
+                        else
+                        {
+                            <a class="dropdown-item "  href="#">Admin</a>
+                            <a class="dropdown-item "  href="#">Manager</a>
+                            <a class="dropdown-item active"   href="#">User</a>
+                        }
                     </div>
 
                 </li>
@@ -34,16 +68,16 @@
 
         else
         {
-    <ul class="navbar-nav d-flex flex-row ml-auto">
-        <li class="nav-item ">
-            <a class="nav-link" href="@Url.Action("Login","Account")">Login</a>
-        </li>
+            <ul class="navbar-nav d-flex flex-row ml-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" href="@Url.Action("Login","Account")">Login</a>
+                </li>
 
-        <li class="nav-item ml-3 ">
-            <a class="nav-link" href="@Url.Action("Register","Account")">Register</a>
-        </li>
+                <li class="nav-item ml-3 ">
+                    <a class="nav-link" href="@Url.Action("Register","Account")">Register</a>
+                </li>
 
-    </ul>
+            </ul>
 
         }
     </nav>
@@ -63,12 +97,18 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                     </li>
-                    @if (Session["Role"] !=null && (int)Session["Role"] == 2)
+
+
+                    @if (ck != null && Convert.ToInt32(ck["Role"]) == 2)
                     {
-                    <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Manage_Timesheet","User")">Manage</a>
-                    </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Manage_Timesheet", "User")">Manage</a>
+                        </li>
                     }
+
+
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -76,8 +116,8 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                            @Html.ActionLink("New Timesheet", "New_Timesheet", "User",null, new { @class = "dropdown-item" })
-                            @Html.ActionLink("View Timesheet", "View_Timesheet", "User",null,
+                            @Html.ActionLink("New Timesheet", "New_Timesheet", "User", null, new { @class = "dropdown-item" })
+                            @Html.ActionLink("View Timesheet", "View_Timesheet", "User", null,
                            new { @class = "dropdown-item" })
 
                         </div>

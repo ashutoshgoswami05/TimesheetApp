@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TimesheetApp
+namespace TimesheetApp.Context
 {
     using System;
     using System.Data.Entity;

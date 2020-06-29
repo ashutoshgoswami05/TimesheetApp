@@ -7,17 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TimesheetApp
+namespace TimesheetApp.Context
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Technology
+    public partial class sp_helpdiagrams_Result
     {
-        public int Technology_Id { get; set; }
-        public string Technology_Name { get; set; }
-        public Nullable<System.DateTime> Updated_Date { get; set; }
-        public Nullable<System.DateTime> Created_Date { get; set; }
-        public Nullable<bool> is_Deleted { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

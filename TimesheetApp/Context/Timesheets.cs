@@ -7,26 +7,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TimesheetApp
+namespace TimesheetApp.Context
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class Timesheets
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Role()
-        {
-            this.Users_table = new HashSet<User>();
-        }
-    
-        public int Role_Id { get; set; }
-        public string Role_Name { get; set; }
+        public string User { get; set; }
+        public string Project_Name { get; set; }
+        public Nullable<System.DateTime> date { get; set; }
+        public Nullable<System.TimeSpan> TimeSpent { get; set; }
+        public string Wokrdone { get; set; }
+        public Nullable<bool> Mode { get; set; }
+        public Nullable<bool> Timesheet_Status { get; set; }
         public Nullable<System.DateTime> Updated_Date { get; set; }
         public Nullable<System.DateTime> Created_Date { get; set; }
         public Nullable<bool> is_Deleted { get; set; }
+        public int Id { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users_table { get; set; }
+        public virtual Project Projects_Table { get; set; }
+        public virtual User Users_table { get; set; }
     }
 }

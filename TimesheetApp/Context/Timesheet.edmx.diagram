@@ -13,15 +13,15 @@
         <EntityTypeShape EntityType="Timesheet_projectModel.Technology" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Timesheet_projectModel.Timesheets" Width="1.5" PointX="10.5" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Timesheet_projectModel.User_Technologies" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Timesheet_projectModel.User" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
-        <AssociationConnector Association="Timesheet_projectModel.FK__Project_M__Membe__04E4BC85" ManuallyRouted="false" />
         <AssociationConnector Association="Timesheet_projectModel.FK__Project_M__Proje__03F0984C" ManuallyRouted="false" />
-        <AssociationConnector Association="Timesheet_projectModel.FK__Projects___Proje__36B12243" ManuallyRouted="false" />
         <AssociationConnector Association="Timesheet_projectModel.FK__Subtasks___Proje__06CD04F7" ManuallyRouted="false" />
         <AssociationConnector Association="Timesheet_projectModel.FK__Timesheet__Proje__3A81B327" ManuallyRouted="false" />
-        <AssociationConnector Association="Timesheet_projectModel.FK__Users_tab__Role___173876EA" ManuallyRouted="false" />
-        <AssociationConnector Association="Timesheet_projectModel.FK__Timesheet__User___398D8EEE" ManuallyRouted="false" />
-      </Diagram>
+        <EntityTypeShape EntityType="Timesheet_projectModel.User" Width="1.5" PointX="3" PointY="3.75" />
+        <AssociationConnector Association="Timesheet_projectModel.FK__Project_M__Membe__04E4BC85" />
+        <AssociationConnector Association="Timesheet_projectModel.FK__Projects___Proje__36B12243" />
+        <AssociationConnector Association="Timesheet_projectModel.FK__Users_tab__Role___173876EA" />
+        <AssociationConnector Association="Timesheet_projectModel.FK__Timesheet__User___398D8EEE" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

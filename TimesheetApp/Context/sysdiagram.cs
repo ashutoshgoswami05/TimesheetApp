@@ -7,18 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TimesheetApp
+namespace TimesheetApp.Context
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Project_Members
+    public partial class sysdiagram
     {
-        public string Project_Name { get; set; }
-        public string Member_Id { get; set; }
-        public int Id { get; set; }
-    
-        public virtual User Users_table { get; set; }
-        public virtual Project Projects_Table { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

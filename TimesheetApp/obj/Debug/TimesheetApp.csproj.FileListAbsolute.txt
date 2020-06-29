@@ -48,6 +48,8 @@ C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\roslyn\vbc.rsp
 C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\roslyn\VBCSCompiler.exe
 C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\Antlr3.Runtime.dll
+C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\EntityFramework.dll
+C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\EntityFramework.SqlServer.dll
 C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\Newtonsoft.Json.dll
@@ -59,6 +61,8 @@ C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\System.Web.WebPages
 C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\System.Web.WebPages.dll
 C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\System.Web.WebPages.Razor.dll
 C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\WebGrease.dll
+C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\EntityFramework.xml
+C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\EntityFramework.SqlServer.xml
 C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\System.Web.Helpers.xml
 C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\System.Web.Mvc.xml
 C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\System.Web.Optimization.xml
@@ -69,11 +73,7 @@ C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\System.Web.WebPages
 C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\Newtonsoft.Json.xml
 C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\Antlr3.Runtime.pdb
 C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\obj\Debug\TimesheetApp.csprojAssemblyReference.cache
 C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\obj\Debug\TimesheetApp.csproj.CopyComplete
 C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\obj\Debug\TimesheetApp.dll
 C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\obj\Debug\TimesheetApp.pdb
-C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\EntityFramework.dll
-C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\EntityFramework.SqlServer.dll
-C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\EntityFramework.xml
-C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\bin\EntityFramework.SqlServer.xml
+C:\Users\Ashutosh\source\repos\TimesheetApp\TimesheetApp\obj\Debug\TimesheetApp.csprojAssemblyReference.cache

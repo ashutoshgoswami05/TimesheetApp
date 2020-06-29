@@ -1,7 +1,7 @@
-﻿@model  IEnumerable<TimesheetApp.Timesheets>
+﻿@model  IEnumerable<TimesheetApp.Context.Timesheets>
 
 @{
-    ViewBag.Title = "View_Timesheet";
+    ViewBag.Title = "View Timesheet";
 }
 
 <div class="commonForm " style="width:90%">
@@ -83,7 +83,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btn-UpdateTimesheet">Save changes</button>
+                <button type="submit" class="btn btn-primary" id="btn-UpdateTimesheet">Save changes</button>
             </div>
         </div>
     </div>
@@ -114,7 +114,7 @@
         })
     })
 
-    $('#btn-UpdateTimesheet').click(function () {
+    @*$('#btn-UpdateTimesheet').click(function () {
         var formdata = $('#EditTimesheetForm').serialize();
         console.log(formdata);
 
@@ -136,7 +136,7 @@
             
 
         })
-    })
+    })*@
 
     $('.Delete-Timesheet').click(function () {
         var dataid=$(this).attr('data-id');

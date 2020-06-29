@@ -128,6 +128,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Context\Timesheets1.cs" />
+    <Compile Include="Context\User1.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -140,55 +142,55 @@
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\ManageViewModel.cs" />
     <Compile Include="Models\ProjectMembersViewModel.cs" />
-    <Compile Include="Pager.cs" />
-    <Compile Include="Project.cs">
+    <Compile Include="Models\RegisterViewModel.cs" />
+    <Compile Include="Paging\Pager.cs" />
+    <Compile Include="Context\Project.cs">
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
-    <Compile Include="Project_Members.cs">
+    <Compile Include="Context\Project_Members.cs">
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Role.cs">
+    <Compile Include="Context\Role.cs">
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
-    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+    <Compile Include="Context\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
-    <Compile Include="sp_helpdiagrams_Result.cs">
+    <Compile Include="Context\sp_helpdiagrams_Result.cs">
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
-    <Compile Include="Subtasks_table.cs">
+    <Compile Include="Context\Subtasks_table.cs">
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagram.cs">
+    <Compile Include="Context\sysdiagram.cs">
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
-    <Compile Include="Technology.cs">
+    <Compile Include="Context\Technology.cs">
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
-    <Compile Include="Timesheet.Context.cs">
+    <Compile Include="Context\Timesheet.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Timesheet.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Timesheet.cs">
+    <Compile Include="Context\Timesheet.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
-    <Compile Include="Timesheet.Designer.cs">
+    <Compile Include="Context\Timesheet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Timesheet.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Timesheets.cs">
+    <Compile Include="Context\Timesheets.cs">
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
-    <Compile Include="User.cs">
+    <Compile Include="Context\User.cs">
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
-    <Compile Include="Users_table1.cs" />
-    <Compile Include="User_Technologies.cs">
+    <Compile Include="Context\User_Technologies.cs">
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -213,7 +215,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-3.5.1.slim.min.js" />
-    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.date.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
@@ -224,13 +226,17 @@
     <Content Include="bootstrap\jquery.dataTables.min.css" />
     <Content Include="bootstrap\jquery.dataTables.min.js" />
     <Content Include="bootstrap\popper.min.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\popper.min.js" />
-    <Content Include="Timesheet.Context.tt">
+    <Content Include="Context\Timesheet.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Timesheet.edmx</DependentUpon>
       <LastGenOutput>Timesheet.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Timesheet.tt">
+    <Content Include="Context\Timesheet.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Timesheet.edmx</DependentUpon>
       <LastGenOutput>Timesheet.cs</LastGenOutput>
@@ -259,11 +265,11 @@
     <Content Include="Views\User\Edit_Timesheet.cshtml" />
     <Content Include="Views\User\Manage_Timesheet.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <EntityDeploy Include="Timesheet.edmx">
+    <EntityDeploy Include="Context\Timesheet.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Timesheet.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Timesheet.edmx.diagram">
+    <Content Include="Context\Timesheet.edmx.diagram">
       <DependentUpon>Timesheet.edmx</DependentUpon>
     </Content>
     <Content Include="Views\Admin\Create_Project.cshtml" />
@@ -271,6 +277,9 @@
     <Content Include="Views\Admin\GetProjectsByName.cshtml" />
     <Content Include="Views\Admin\Add_Users_To_Project.cshtml" />
     <Content Include="Views\Admin\DisplayMembers.cshtml" />
+    <Content Include="Views\Shared\success.cshtml" />
+    <Content Include="Scripts\moment.min.js.map" />
+    <Content Include="Scripts\moment-with-locales.min.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -7,15 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TimesheetApp
+namespace TimesheetApp.Context
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class User_Technologies
+    public partial class Subtasks_table
     {
+        public string Project_Name { get; set; }
+        public string Subtask { get; set; }
         public int Id { get; set; }
-        public string EmployeeId { get; set; }
-        public Nullable<int> TechnologyId { get; set; }
+    
+        public virtual Project Projects_Table { get; set; }
     }
 }

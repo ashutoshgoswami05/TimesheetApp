@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using System.Security.Cryptography;
 using TimesheetApp.Models;
 using System.Web.Security;
+using TimesheetApp.Context;
+using System.Text;
 
 namespace TimesheetApp.Controllers
 {
@@ -16,8 +18,7 @@ namespace TimesheetApp.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-
-
+            
             ViewBag.Roles = context.Roles;
             ViewBag.Technologies = context.Technologies;
             return View();
@@ -25,26 +26,53 @@ namespace TimesheetApp.Controllers
 
 
         [HttpPost]
-        public ActionResult Register(User user,List<int> TechnologyIds)
+        public ActionResult Register(User user, List<int> TechnologyIds)
         {
-            Random r = new Random();
-            string password = BitConverter.ToString(passwordhash(r.Next().ToString()));
-            int length = password.Length;
-            user.Password = password;
-            user.Updated_Date = DateTime.Now;
-            user.is_Deleted = false;
+         
+            ViewBag.Roles = context.Roles;
+            ViewBag.Technologies = context.Technologies;
 
-            foreach (var id in TechnologyIds) 
+            if(context.Users.Where(x => x.Employee_Id == user.Employee_Id).Count() > 0)
             {
-                User_Technologies t1 = new User_Technologies() { EmployeeId = user.Employee_Id, TechnologyId = id };
-                context.User_Technologies.Add(t1);
+                ModelState.AddModelError("Employee_Id", "User with this Id already Exists");
+                return View();
+
+            }
+            else if (context.Users.Where(x => x.Email == user.Email).Count() > 0  )
+            {
+                
+                ModelState.AddModelError("Email", "User with this email already Exists");
+                return View();
+
+            }           
+
+            else if (ModelState.IsValid)
+            {
+
+                user.Updated_Date = DateTime.Now;
+                user.is_Deleted = false;
+                byte[] salt = GetSalt(user.Password);
+                user.PasswordSalt=Convert.ToBase64String(salt);
+                user.Password = Convert.ToBase64String(passwordhash(user.Password, salt));
+
+                foreach (var id in TechnologyIds)
+                {
+                    User_Technologies t1 = new User_Technologies() { EmployeeId = user.Employee_Id, TechnologyId = id };
+                    context.User_Technologies.Add(t1);
+                }
+
+                context.Users.Add(user);
+                context.SaveChanges();
+                return View("success");
+                
             }
 
-            context.Users.Add(user);
-            context.SaveChanges();
-            
+            else
+            {
+                return View();
+            }
 
-            return Json(new {Message="Success",JsonRequestBehavior.AllowGet });
+            
         }
 
         [HttpGet]
@@ -52,8 +80,7 @@ namespace TimesheetApp.Controllers
         {
             LoginViewModel model = new LoginViewModel();
            
-
-          
+         
             return View(model);
         }
 
@@ -61,43 +88,46 @@ namespace TimesheetApp.Controllers
         [AllowAnonymous]
         public ActionResult Login(LoginViewModel model)
         {
-            int? valid = context.sp_ValidateUser(model.Employee_Id, model.Password).FirstOrDefault();
-            string message = string.Empty;
-           
+            User Loggedin = context.Users.Find(model.Employee_Id);
+            string passfromdb = Loggedin.Password;
+            byte[] salt =Convert.FromBase64String(Loggedin.PasswordSalt);
+            string pass = Convert.ToBase64String(passwordhash(model.Password,salt));
+            int valid = pass == passfromdb ? 1 : 0;
 
-
-            //string passfromdb = context.Users_table.Find(model.Employee_Id).Password;
-            //string pass = BitConverter.ToString(passwordhash(model.Password));
-            //int valid2 = pass == passfromdb ? 1 : 0;
-
-
-
-
-
-            if(valid == 1)
+            if (valid == 1)
             {
-                
-                FormsAuthentication.SetAuthCookie(model.Employee_Id, false);
-                message = "Success";
-                return Json(new { Message = message }, JsonRequestBehavior.AllowGet);
+                if (Loggedin.Status == true)
+                {
+                    FormsAuthentication.SetAuthCookie(model.Employee_Id, false);
+
+                    HttpCookie cookie = new HttpCookie("Validation");
+                    cookie["Name"] = Loggedin.Employee_Name;
+                    cookie["Role"] = Loggedin.Role_Id.ToString();
+                    Response.Cookies.Add(cookie);
+
+
+
+                    return RedirectToAction("Index", "User");
+                }
+
+                else
+                {
+                    ModelState.AddModelError("Status", "Account Not Activated");
+                    return View();
+                }
+
+
             }
-
-            else if (valid==-1)
-            {
-                message = "Invalid Credentials";
-
-                
-
-
-                return Json(new {Message=message },JsonRequestBehavior.AllowGet);
-            }
-
             else
             {
-                message = "Account not activated";
+                ModelState.AddModelError("Wrong Password", "Invalid EmployeeId or Password");
+                return View();
 
-                return Json(new { Message = message }, JsonRequestBehavior.AllowGet);
+
             }
+           
+
+           
 
         }
 
@@ -106,20 +136,34 @@ namespace TimesheetApp.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-            Session.Abandon();
+
+
+            string[] mycookies = Request.Cookies.AllKeys;
+            foreach (var item in mycookies)
+            {
+                Response.Cookies[item].Expires = DateTime.Now.AddDays(-1);
+            }
             return RedirectToAction("Login");
         }
 
-
-        private byte[] passwordhash(string password)
+        private byte[] GetSalt(string password)
         {
             const int salt_size = 24;
-            const int hash_size = 24;
-            const int iterations = 10000;
-
             RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
             byte[] salt = new byte[salt_size];
             provider.GetBytes(salt);
+
+            return salt;
+
+        }
+
+        private byte[] passwordhash(string password,byte[] salt)
+        {
+            
+            const int hash_size = 24;
+            const int iterations = 10000;
+
+           
 
             Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations);
             return pbkdf2.GetBytes(hash_size);

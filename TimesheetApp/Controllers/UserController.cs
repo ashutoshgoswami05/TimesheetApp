@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TimesheetApp.Context;
 using TimesheetApp.Models;
 
 namespace TimesheetApp.Controllers
@@ -17,9 +18,9 @@ namespace TimesheetApp.Controllers
         public ActionResult Index()
         {
             
-            User user=context.Users.Find(HttpContext.User.Identity.Name);
-            Session["Role"] = user.Role_Id;
-            return View(user);
+         
+         
+            return View();
         }
 
         [HttpGet]
@@ -32,12 +33,19 @@ namespace TimesheetApp.Controllers
         [HttpPost]
         public ActionResult New_Timesheet(Timesheets timesheet)
         {
-            timesheet.Updated_Date = DateTime.Now;
-            timesheet.is_Deleted = false;
-            timesheet.Timesheet_Status = false;
-            context.Timesheets1.Add(timesheet);
-            context.SaveChanges();
-            return Json(new { Message = "Success", JsonRequestBehavior.AllowGet });
+            if (ModelState.IsValid)
+            {
+                timesheet.Updated_Date = DateTime.Now;
+                timesheet.is_Deleted = false;
+                timesheet.Timesheet_Status = false;
+                context.Timesheets1.Add(timesheet);
+                context.SaveChanges();
+                return View("success");
+            }
+            else
+            {
+                return View("Error");
+            }
         }
 
         [HttpGet]
@@ -104,7 +112,7 @@ namespace TimesheetApp.Controllers
             IEnumerable<Timesheets> timesheets = context.Timesheets1;
 
 
-            IEnumerable<User> users = context.Users;
+            IEnumerable<TimesheetApp.Context.User> users = context.Users;
 
             IEnumerable<ManageViewModel> timesheetdetails = projects.Join(timesheets, p => p.Project_Name, t => t.Project_Name, (p, t) => new { p, t }).Join(users, ppc => ppc.t.User, c => c.Employee_Id, (ppc, c) => new { ppc, c }).Select(m => new ManageViewModel
             {
