@@ -18,7 +18,7 @@ namespace TimesheetApp.Context
         public Project()
         {
             this.Project_Members = new HashSet<Project_Members>();
-            this.Subtasks_table = new HashSet<Subtasks_table>();
+            this.Subtasks_table = new HashSet<Subtasks>();
             this.Timesheets_table = new HashSet<Timesheets>();
         }
     
@@ -26,7 +26,6 @@ namespace TimesheetApp.Context
         public string Client { get; set; }
         public string Project_Manager_Id { get; set; }
         public System.DateTime Deadline { get; set; }
-        public Nullable<int> Technology_Id { get; set; }
         public Nullable<bool> is_Deleted { get; set; }
         public Nullable<System.DateTime> Created_Date { get; set; }
         public Nullable<System.DateTime> Updated_Date { get; set; }
@@ -34,7 +33,7 @@ namespace TimesheetApp.Context
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Project_Members> Project_Members { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Subtasks_table> Subtasks_table { get; set; }
+        public virtual ICollection<Subtasks> Subtasks_table { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Timesheets> Timesheets_table { get; set; }
         public virtual User Users_table { get; set; }

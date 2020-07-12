@@ -35,14 +35,14 @@
                         Role
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        @if (Convert.ToInt32(ck["Role"]) == 1)
+                        @if (User.IsInRole("Admin"))
                         {
                             <a class="dropdown-item active"   href="#">Admin</a>
                             <a class="dropdown-item"  href="#">Manager</a>
                             <a class="dropdown-item"  href="#">User</a>
 
                         }
-                        else if (Convert.ToInt32(ck["Role"]) == 2)
+                        else if (User.IsInRole("Manager"))
                         {
                             <a class="dropdown-item "  href="#">Admin</a>
                             <a class="dropdown-item active"  href="#">Manager</a>
@@ -99,16 +99,10 @@
                     </li>
 
 
-                    @if (ck != null && Convert.ToInt32(ck["Role"]) == 2)
-                    {
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Manage_Timesheet", "User")">Manage</a>
-                        </li>
-                    }
 
 
 
+                    @*TimesheetDropdown*@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -122,6 +116,46 @@
 
                         </div>
                     </li>
+
+                    @if (User.IsInRole("Manager"))
+                    {
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Manage_Timesheet", "User")">Manage</a>
+                        </li>
+                    }
+
+                    else if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                User
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Register</a>
+                                <a class="dropdown-item" href="@Url.Action("UpdateUserDetails","Admin")">Manage</a>
+
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Projects
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="@Url.Action("Create_Project","Admin")">Create</a>
+                                <a class="dropdown-item" href="@Url.Action("Display_Projects","Admin")">Manage</a>
+                                <a class="dropdown-item" href="@Url.Action("Add_Users_To_Project","Admin")">Assign Members</a>
+                                <a class="dropdown-item" href="@Url.Action("Create_Subtask","Admin")">Add Subtasks</a>
+
+                            </div>
+                        </li>
+
+                    }
+
+
+
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

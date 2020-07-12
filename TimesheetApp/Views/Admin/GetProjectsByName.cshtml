@@ -20,9 +20,9 @@
                     <tr>
                         <td>@item.Project_Name</td>
                         <td>@item.Client</td>
-                        <td>@item.Deadline</td>
+                        <td>@item.Deadline.Value.ToShortDateString()</td>
                         <td>@item.Manager_Name</td>
-                        <td class="EditProject"><button class="btn btn-info">Edit</button></td>
+                        <td ><button type="button" data-toggle="modal" data-target="#MyModal" data-id="@item.Project_Name" class="EditProject btn btn-info">Edit</button></td>
                     </tr>
                 }
 
@@ -36,3 +36,30 @@
             }
         </tbody>
     </table>
+
+<script>
+      $('.EditProject').click(function () {
+        var dataid = $(this).attr('data-id');
+       
+        $.ajax({
+
+            url: '@Url.Action("ProjectDetail","Admin")',
+            data: { Project_Name: dataid },
+            success: function (response) {
+              
+                $('#modalbody').html(response);
+                $('#MyModal').modal("show");
+            },
+            failure: function () {
+                alert('error');
+            }
+
+
+
+
+        })
+    })
+
+ 
+
+</script>

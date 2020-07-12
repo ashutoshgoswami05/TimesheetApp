@@ -1,0 +1,138 @@
+﻿@model TimesheetApp.Context.User
+@{ 
+    SelectList roles = new SelectList(ViewBag.Roles, "Role_Id", "Role_Name",Model.Role_Id);
+    SelectList technologies = new SelectList(ViewBag.Technologies, "Technology_Id", "Technology_Name");
+
+}
+
+
+
+@using (Html.BeginForm("EmployeeDetail", "Admin", FormMethod.Post, new { id = "DetailForm", @class = "commonForm" }))
+{
+   
+    @Html.DisplayNameFor(x => x.Employee_Id)
+
+    @Html.TextBoxFor(x => x.Employee_Id, new { @class = "form-control", value = Model.Employee_Id, @readonly = "readonly",id="empid" })
+    @Html.ValidationMessageFor(x => x.Employee_Id, "", new { @class = "text-danger" })
+    <br />
+
+    <br />
+    @Html.DisplayNameFor(x => x.Employee_Name)
+
+    @Html.TextBoxFor(x => x.Employee_Name, new { @class = "form-control", value = Model.Employee_Name })
+    @Html.ValidationMessageFor(x => x.Employee_Name, "", new { @class = "text-danger" })
+
+    <br />
+    <br />
+
+    @Html.DisplayNameFor(x => x.Phone)
+
+    @Html.TextBoxFor(x => x.Phone, new { @class = "form-control", value = Model.Phone })
+    @Html.ValidationMessageFor(x => x.Phone, "", new { @class = "text-danger" })
+    <br />
+    <br />
+
+    @Html.DisplayNameFor(x => x.Email)
+
+    @Html.TextBoxFor(x => x.Email, new { @class = "form-control", value = Model.Email })
+
+    @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
+    <br />
+    <br />
+
+    @Html.DisplayName("Role")
+
+    @Html.DropDownListFor(x => x.Role_Id, roles, "Select Role", new { @class = "form-control" })
+
+    @Html.ValidationMessageFor(x => x.Role_Id, "", new { @class = "text-danger" })
+
+    <br />
+    @*<br />
+
+        @Html.DisplayNameFor(x => x.Password)
+
+        @Html.PasswordFor(x => x.Password, new { @class = "form-control",value=Model.Password })
+
+        @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
+
+        <br />
+        <br />
+        @Html.DisplayNameFor(x => x.ConfirmPassword)
+
+        @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "form-control" })
+
+        @Html.ValidationMessageFor(x => x.ConfirmPassword, "", new { @class = "text-danger" })
+        <br />
+    <br />
+
+
+    @Html.DisplayNameFor(x => x.TechnologyIds)
+
+    @Html.ListBoxFor(x => x.TechnologyIds, technologies, new { @class = "form-control" })
+
+    @Html.ValidationMessageFor(x => x.TechnologyIds, "", new { @class = "text-danger" })
+
+    <br />
+        *@
+    @Html.DisplayNameFor(x => x.Status)
+
+
+    <br />
+    if (Model.Status.Value)
+    {
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="Status" id="inlineRadio1" value="true" checked>
+            <label class="form-check-label" for="inlineRadio1">Enabled</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="Status" id="inlineRadio1" value="false">
+            <label class="form-check-label" for="inlineRadio1">Disabled</label>
+        </div>
+
+    }
+    else
+    {
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="Status" id="inlineRadio1" value="true">
+            <label class="form-check-label" for="inlineRadio1">Enabled</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="Status" id="inlineRadio1" value="false" checked>
+            <label class="form-check-label" for="inlineRadio1">Disabled</label>
+        </div>
+    }
+    <br />
+
+    @Html.ValidationMessageFor(x => x.Status, "", new { @class = "text-danger" })
+    <br />
+    <br />
+
+
+    <div>
+        <input type="submit" class="btn btn-info btn-submit" id="btn-update" value="Save" />
+        <input type="button" class="btn btn-danger btn-submit" id="EmpDelete" value="Delete" />
+    </div>
+
+
+
+}
+
+<script>
+       $('#EmpDelete').click(function () {
+        var data = $('#empid').val();
+        $.ajax({
+            url: '@Url.Action("DeleteEmployee","Admin")',
+            data: { EmployeeId: data },
+            type:"POST",
+            success: function (response) {
+                alert('success');
+                $('#EmpSearch').val('');
+                $('#UserDetails').html(response);
+            },
+            failure: function () {
+                alert('failure');
+            }
+
+        })
+    })
+</script>

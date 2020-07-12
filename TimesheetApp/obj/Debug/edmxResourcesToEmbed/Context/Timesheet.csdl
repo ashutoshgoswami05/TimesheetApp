@@ -9,6 +9,9 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <NavigationProperty Name="Projects_Table" Relationship="Self.FK__Project_M__Proje__03F0984C" FromRole="Project_Members" ToRole="Projects_Table" />
     <NavigationProperty Name="Users_table" Relationship="Timesheet_projectModel.FK__Project_M__Membe__04E4BC85" FromRole="Project_Members" ToRole="Users_table" />
+    <Property Name="is_Deleted" Type="Boolean" />
+    <Property Name="Created_Date" Type="DateTime" Precision="3" />
+    <Property Name="Updated_Date" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="Project">
     <Key>
@@ -18,7 +21,6 @@
     <Property Name="Client" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Project_Manager_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Deadline" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="Technology_Id" Type="Int32" />
     <Property Name="is_Deleted" Type="Boolean" />
     <Property Name="Created_Date" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
     <Property Name="Updated_Date" Type="DateTime" Precision="3" />
@@ -38,7 +40,7 @@
     <Property Name="is_Deleted" Type="Boolean" />
     <NavigationProperty Name="Users_table" Relationship="Timesheet_projectModel.FK__Users_tab__Role___173876EA" FromRole="Role" ToRole="Users_table" />
   </EntityType>
-  <EntityType Name="Subtasks_table">
+  <EntityType Name="Subtasks">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
@@ -107,7 +109,7 @@
   </Association>
   <Association Name="FK__Subtasks___Proje__06CD04F7">
     <End Role="Projects_Table" Type="Timesheet_projectModel.Project" Multiplicity="0..1" />
-    <End Role="Subtasks_table" Type="Self.Subtasks_table" Multiplicity="*" />
+    <End Role="Subtasks_table" Type="Timesheet_projectModel.Subtasks" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Projects_Table">
         <PropertyRef Name="Project_Name" />
@@ -133,7 +135,7 @@
     <EntitySet Name="Project_Members" EntityType="Self.Project_Members" />
     <EntitySet Name="Projects" EntityType="Timesheet_projectModel.Project" />
     <EntitySet Name="Roles" EntityType="Timesheet_projectModel.Role" />
-    <EntitySet Name="Subtasks_table" EntityType="Self.Subtasks_table" />
+    <EntitySet Name="Subtasks" EntityType="Timesheet_projectModel.Subtasks" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="Technologies" EntityType="Timesheet_projectModel.Technology" />
     <EntitySet Name="Timesheets1" EntityType="Timesheet_projectModel.Timesheets" />
@@ -144,7 +146,7 @@
     </AssociationSet>
     <AssociationSet Name="FK__Subtasks___Proje__06CD04F7" Association="Self.FK__Subtasks___Proje__06CD04F7">
       <End Role="Projects_Table" EntitySet="Projects" />
-      <End Role="Subtasks_table" EntitySet="Subtasks_table" />
+      <End Role="Subtasks_table" EntitySet="Subtasks" />
     </AssociationSet>
     <AssociationSet Name="FK__Timesheet__Proje__3A81B327" Association="Self.FK__Timesheet__Proje__3A81B327">
       <End Role="Projects_Table" EntitySet="Projects" />

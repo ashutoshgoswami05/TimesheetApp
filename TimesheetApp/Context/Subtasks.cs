@@ -12,7 +12,7 @@ namespace TimesheetApp.Context
     using System;
     using System.Collections.Generic;
     
-    public partial class Subtasks_table
+    public partial class Subtasks
     {
         public string Project_Name { get; set; }
         public string Subtask { get; set; }

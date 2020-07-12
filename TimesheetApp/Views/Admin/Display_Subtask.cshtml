@@ -1,0 +1,36 @@
+﻿@model IEnumerable<TimesheetApp.Context.Subtasks>
+
+
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Project</th>
+                <th scope="col">Subtask</th>
+                <th scope="col">Action</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count() < 1)
+            {
+                <tr>
+                    <td colspan="3">No Subtasks</td>
+                </tr>
+            }
+            else
+            {
+            foreach (var item in Model)
+            {
+
+                <tr>
+                    
+                    <td>@item.Project_Name</td>
+                    <td>@item.Subtask</td>
+                    <td><input type="button" class="btn btn-info EditSubtaskBtn" value="Edit"   /></td>
+                </tr>
+            }
+
+            }
+        </tbody>
+    </table>

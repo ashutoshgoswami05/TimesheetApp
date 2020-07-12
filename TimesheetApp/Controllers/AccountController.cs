@@ -21,7 +21,12 @@ namespace TimesheetApp.Controllers
             
             ViewBag.Roles = context.Roles;
             ViewBag.Technologies = context.Technologies;
+            //string LastUserId = context.Users.OrderByDescending(x => x.Employee_Id).Select(x => x.Employee_Id).FirstOrDefault();
+            //ViewBag.NewUserId =string.IsNullOrEmpty(LastUserId) ? "R01" : "R"+(Convert.ToInt32(LastUserId.Split('R')[1])+1);
+
+           
             return View();
+            
         }
 
 
@@ -78,57 +83,71 @@ namespace TimesheetApp.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            LoginViewModel model = new LoginViewModel();
-           
-         
-            return View(model);
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                LoginViewModel model = new LoginViewModel();
+
+
+                return View(model);
+            }
         }
 
         [HttpPost]
         [AllowAnonymous]
         public ActionResult Login(LoginViewModel model)
         {
+            
             User Loggedin = context.Users.Find(model.Employee_Id);
-            string passfromdb = Loggedin.Password;
-            byte[] salt =Convert.FromBase64String(Loggedin.PasswordSalt);
-            string pass = Convert.ToBase64String(passwordhash(model.Password,salt));
-            int valid = pass == passfromdb ? 1 : 0;
-
-            if (valid == 1)
-            {
-                if (Loggedin.Status == true)
-                {
-                    FormsAuthentication.SetAuthCookie(model.Employee_Id, false);
-
-                    HttpCookie cookie = new HttpCookie("Validation");
-                    cookie["Name"] = Loggedin.Employee_Name;
-                    cookie["Role"] = Loggedin.Role_Id.ToString();
-                    Response.Cookies.Add(cookie);
-
-
-
-                    return RedirectToAction("Index", "User");
-                }
-
-                else
-                {
-                    ModelState.AddModelError("Status", "Account Not Activated");
-                    return View();
-                }
-
-
-            }
-            else
+            if (Loggedin == null)
             {
                 ModelState.AddModelError("Wrong Password", "Invalid EmployeeId or Password");
                 return View();
+            }
+            else
+            {
+                string passfromdb = Loggedin.Password;
+                byte[] salt = Convert.FromBase64String(Loggedin.PasswordSalt);
+                string pass = Convert.ToBase64String(passwordhash(model.Password, salt));
+                int valid = pass == passfromdb ? 1 : 0;
 
+                if (valid == 1)
+                {
+                    if (Loggedin.Status == true)
+                    {
+                        FormsAuthentication.SetAuthCookie(model.Employee_Id, false);
+
+                        HttpCookie cookie = new HttpCookie("Validation");
+                        cookie["Name"] = Loggedin.Employee_Name;
+                        cookie["Role"] = Loggedin.Role_Id.ToString();
+                        Response.Cookies.Add(cookie);
+
+
+
+                        return RedirectToAction("Index", "User");
+                    }
+
+                    else
+                    {
+                        ModelState.AddModelError("Status", "Account Not Activated");
+                        return View();
+                    }
+
+
+                }
+                else
+                {
+                    ModelState.AddModelError("Wrong Password", "Invalid EmployeeId or Password");
+                    return View();
+
+
+                }
 
             }
            
-
-           
-
         }
 
         //[HttpPost]

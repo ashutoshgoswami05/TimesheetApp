@@ -66,17 +66,19 @@ namespace TimesheetApp.Controllers
         [HttpPost]
         public ActionResult Edit_Timesheet(Timesheets Updatedtimesheet)
         {
-            Timesheets Savedtimesheet= context.Timesheets1.Find(Updatedtimesheet.Id);
+            Timesheets Savedtimesheet = context.Timesheets1.Find(Updatedtimesheet.Id);
             Savedtimesheet.Project_Name = Updatedtimesheet.Project_Name;
             Savedtimesheet.TimeSpent = Updatedtimesheet.TimeSpent;
             Savedtimesheet.Wokrdone = Updatedtimesheet.Wokrdone;
             Savedtimesheet.Mode = Updatedtimesheet.Mode;
             Savedtimesheet.Updated_Date = DateTime.Now;
-            
+
             context.SaveChanges();
-           
-            return Json(new {Message="Successful",JsonRequestBehavior.AllowGet });
-        }
+
+            List<Timesheets> timesheets = context.Timesheets1.Where(x => x.User == HttpContext.User.Identity.Name && x.is_Deleted != true).ToList();
+            return PartialView("_ViewTimesheet", timesheets);
+                
+         }
 
         [HttpPost]
         public ActionResult Delete_Timesheet(int Id)
@@ -85,8 +87,8 @@ namespace TimesheetApp.Controllers
             timesheet.Updated_Date = DateTime.Now;
             timesheet.is_Deleted = true;
             context.SaveChanges();
-
-            return Json(new { Message = "Successful", JsonRequestBehavior.AllowGet });
+            List<Timesheets> timesheets = context.Timesheets1.Where(x => x.User == HttpContext.User.Identity.Name && x.is_Deleted != true).ToList();
+            return PartialView("_ViewTimesheet", timesheets);
         }
 
         [HttpGet]
@@ -97,9 +99,9 @@ namespace TimesheetApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Manage_Timesheet(string EmployeeId, bool Status)
+        public ActionResult Manage_Timesheet(int Id, bool Status)
         {
-            ChangeTimeSheetStatus(EmployeeId, Status);
+            ChangeTimeSheetStatus(Id, Status);
             return View(GetTimehsheets());
         }
 
@@ -123,15 +125,17 @@ namespace TimesheetApp.Controllers
                 TimeSpent = m.ppc.t.TimeSpent,
                 Wokrdone = m.ppc.t.Wokrdone,
                 Timesheet_Status = m.ppc.t.Timesheet_Status,
-                Employee_Id = m.ppc.t.User
-            });
+                Employee_Id = m.ppc.t.User,
+                Id = m.ppc.t.Id
+
+            }) ;
 
             return timesheetdetails;
         }
 
-        private void ChangeTimeSheetStatus(string EmployeeId, bool Status)
+        private void ChangeTimeSheetStatus(int Id, bool Status)
         {
-            Timesheets timesheet = context.Timesheets1.Where(x => x.User == EmployeeId).FirstOrDefault();
+            Timesheets timesheet = context.Timesheets1.Where(x => x.Id == Id).FirstOrDefault();
             timesheet.Timesheet_Status = Status;
             context.SaveChanges();
         }

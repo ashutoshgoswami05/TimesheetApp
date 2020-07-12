@@ -1,0 +1,39 @@
+﻿@model TimesheetApp.Models.CreatProjectViewModel
+
+@{
+   
+    SelectList managers = new SelectList(ViewBag.Managers, "Employee_Id", "Employee_Name");
+    SelectList technologies = new SelectList(ViewBag.Technologies, "Technology_Id", "Technology_Name");
+}
+
+@using (Html.BeginForm("Create_Project", "Admin", FormMethod.Post, new { @class = "commonForm",id="ProjectDetailForm" }))
+{
+    
+    @Html.DisplayNameFor(x => x.Project_Name)
+    @Html.TextBoxFor(x => x.Project_Name, new { @class = "form-control",@readonly = "readonly" })
+    @Html.ValidationMessageFor(x => x.Project_Name, "", new { @class = "text-danger" })
+
+    <br />
+
+    @Html.DisplayNameFor(x => x.Client)
+    @Html.TextBoxFor(x => x.Client, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Client, "", new { @class = "text-danger" })
+
+    <br />
+
+    @Html.DisplayNameFor(x => x.Project_Manager_Id)
+    @Html.DropDownListFor(x => x.Project_Manager_Id, managers, "Select Manager", new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Project_Manager_Id, "", new { @class = "text-danger" })
+
+    <br />
+
+    @Html.DisplayNameFor(x => x.Deadline)
+    @Html.TextBox("Deadline",Model.Deadline.ToShortDateString(),new { @class = "form-control", id = "selectdate", @readonly = "readonly" })
+    @Html.ValidationMessageFor(x => x.Deadline, "", new { @class = "text-danger" })
+
+
+
+    
+
+
+}

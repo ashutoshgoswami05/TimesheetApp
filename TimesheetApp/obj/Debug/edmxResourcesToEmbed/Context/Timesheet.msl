@@ -4,6 +4,9 @@
     <EntitySetMapping Name="Project_Members">
       <EntityTypeMapping TypeName="Timesheet_projectModel.Project_Members">
         <MappingFragment StoreEntitySet="Project_Members">
+          <ScalarProperty Name="Updated_Date" ColumnName="Updated_Date" />
+          <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
+          <ScalarProperty Name="is_Deleted" ColumnName="is_Deleted" />
           <ScalarProperty Name="Project_Name" ColumnName="Project_Name" />
           <ScalarProperty Name="Member_Id" ColumnName="Member_Id" />
           <ScalarProperty Name="Id" ColumnName="Id" />
@@ -17,7 +20,6 @@
           <ScalarProperty Name="Client" ColumnName="Client" />
           <ScalarProperty Name="Project_Manager_Id" ColumnName="Project_Manager_Id" />
           <ScalarProperty Name="Deadline" ColumnName="Deadline" />
-          <ScalarProperty Name="Technology_Id" ColumnName="Technology_Id" />
           <ScalarProperty Name="is_Deleted" ColumnName="is_Deleted" />
           <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
           <ScalarProperty Name="Updated_Date" ColumnName="Updated_Date" />
@@ -35,8 +37,8 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Subtasks_table">
-      <EntityTypeMapping TypeName="Timesheet_projectModel.Subtasks_table">
+    <EntitySetMapping Name="Subtasks">
+      <EntityTypeMapping TypeName="Timesheet_projectModel.Subtasks">
         <MappingFragment StoreEntitySet="Subtasks_table">
           <ScalarProperty Name="Project_Name" ColumnName="Project_Name" />
           <ScalarProperty Name="Subtask" ColumnName="Subtask" />

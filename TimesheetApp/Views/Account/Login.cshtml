@@ -6,38 +6,39 @@
 
 
 
-    <div class="spinner" id="spinner"  > 
-        <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
+<div class="spinner" id="spinner">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
     </div>
+</div>
 
 
-@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { id = "LoginForm",@class="commonForm" }))
+@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { id = "LoginForm", @class = "commonForm" }))
 {
-<h2 class="text-center">Login</h2>
+    <h2 class="text-center">Login</h2>
 
-@Html.DisplayNameFor(x => x.Employee_Id)
+    @Html.DisplayNameFor(x => x.Employee_Id)
 
-@Html.TextBoxFor(x => x.Employee_Id, new { @class = "form-control" })
+    @Html.TextBoxFor(x => x.Employee_Id, new { @class = "form-control" })
 
-@Html.ValidationMessageFor(x => x.Employee_Id,"",new {@class="text-danger" })
+    @Html.ValidationMessageFor(x => x.Employee_Id, "", new { @class = "text-danger" })
 
-<br />
+    <br />
 
-@Html.DisplayNameFor(x => x.Password)
+    @Html.DisplayNameFor(x => x.Password)
 
-@Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+    @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
 
-@Html.ValidationMessageFor(x => x.Password,"",new {@class="text-danger" })
+    @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
 
-<br />
+    <br />
+    @Html.ValidationMessage("Wrong Password",new { @class="text-danger text-center"})
+    <br />
+    <input type="submit" id="btn-Login" value="Login" class="btn btn-info btn-submit" />
 
-<input  type="submit" id="btn-Login" value="Login" class="btn btn-info btn-submit" />
+    <br />
 
-<br />
 
-@Html.ValidationSummary(true,"",new {@class="text-danger" })
 
 }
 
@@ -47,22 +48,22 @@
         var formdata = $('#LoginForm').serialize();
         $('.spinner').css('display', 'block');
         $.ajax({
-            
+
             url: '@Url.Action("Login","Account")',
             type: "POST",
             data: formdata,
             success: function (response) {
                 if (response.Message === 'Success') {
-                   
+
                     window.location = `@Url.Action("Index", "User",new {Employee_Id=HttpContext.Current.User.Identity.Name })`
-                    
+
                 }
                 else {
                     swal("Error!", response.Message, "warning");
                       $('.spinner').css('display', 'none');
                 }
 
-                    
+
             },
             failure: function (response) {
                 alert('error')

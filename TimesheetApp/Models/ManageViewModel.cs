@@ -22,5 +22,7 @@ namespace TimesheetApp.Models
         public Nullable<bool> Timesheet_Status { get; set; }
 
         public string Employee_Id { get; set; }
+
+        public int Id { get; set; }
     }
 }

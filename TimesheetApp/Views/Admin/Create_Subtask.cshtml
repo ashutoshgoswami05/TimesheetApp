@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Add Subtasks";
+    SelectList projects;
+    if (ViewBag.Projects != null)
+    {
+        projects = new SelectList(ViewBag.Projects, "Project_Name", "Project_Name");
+    }
+    else
+    {
+        projects = new SelectList(ViewBag.Projects, "Project_Name", "Project_Name");
+    }
+}
+
+
+@using (Html.BeginForm("Create_Subtask", "Admin", FormMethod.Post, new { id = "CreateSubtaskForm",@class="commonForm" }))
+{
+    <h2 class="text-center">Add Subtasks</h2>
+    <div class="form-group">
+        @Html.Label("Project")
+        @Html.DropDownList("Project", projects, "Select Project", new { @class = "form-control", id = "selectproject" })
+        <br />
+        @Html.Label("Subtask")
+        @Html.TextArea("Subtask", new { @class = "form-control" })
+
+        <br />
+
+        <input type="button" class="btn btn-primary btn-submit" id="btnCreateTask" value="Create" />
+    </div>
+}
+
+
+
+<div id="SubtaskDisplay">
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#selectproject').change(function () {
+            var item = $(this);
+            Display(item.val());
+
+        })
+
+        $('#btnCreateTask').click(function () {
+            $.ajax({
+                url: '@Url.Action("Create_Subtask","Admin")',
+                data: $('#CreateSubtaskForm').serialize(),
+                type: "POST",
+                success: function (response) {
+                    $('#SubtaskDisplay').html(response);
+
+                },
+                failure: function (response) {
+                    alert('failure');
+                }
+
+
+
+            })
+        })
+
+
+        function Display(projectname) {
+            $.ajax({
+                url:'@Url.Action("DisplaySubtask","Admin")',
+                data: { project: projectname },
+                success: function (response) {
+                    $('#SubtaskDisplay').html(response);
+
+                }
+
+
+            })
+        }
+    }
+    )
+
+</script>

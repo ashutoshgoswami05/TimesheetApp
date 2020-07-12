@@ -1,7 +1,7 @@
 ﻿@model TimesheetApp.Models.CreatProjectViewModel
 
 @{
-    ViewBag.Title = "Create_Project";
+    ViewBag.Title = "Create Project";
     SelectList managers = new SelectList(ViewBag.Managers, "Employee_Id", "Employee_Name");
     SelectList technologies = new SelectList(ViewBag.Technologies, "Technology_Id", "Technology_Name");
 }
@@ -9,43 +9,39 @@
 <script src="~/bootstrap/bootstrap-datepicker.js"></script>
 
 
-<form id="CreateProjectForm" class="commonForm">
+@using (Html.BeginForm("Create_Project", "Admin", FormMethod.Post, new { @class = "commonForm" }))
+{
     <h2 class="text-center">Create Project</h2>
     @Html.DisplayNameFor(x => x.Project_Name)
     @Html.TextBoxFor(x => x.Project_Name, new { @class = "form-control" })
-    @Html.ValidationMessageFor(x => x.Project_Name)
+    @Html.ValidationMessageFor(x => x.Project_Name,"",new {@class="text-danger" })
 
     <br />
 
     @Html.DisplayNameFor(x => x.Client)
     @Html.TextBoxFor(x => x.Client, new { @class = "form-control" })
-    @Html.ValidationMessageFor(x => x.Client)
+    @Html.ValidationMessageFor(x => x.Client,"",new {@class="text-danger" })
 
     <br />
 
     @Html.DisplayNameFor(x => x.Project_Manager_Id)
-    @Html.DropDownListFor(x => x.Project_Manager_Id, managers, new { @class = "form-control" })
-    @Html.ValidationMessageFor(x => x.Project_Manager_Id)
+    @Html.DropDownListFor(x => x.Project_Manager_Id, managers,"Select Manager", new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Project_Manager_Id,"",new {@class="text-danger" })
 
     <br />
 
     @Html.DisplayNameFor(x => x.Deadline)
     @Html.TextBoxFor(x => x.Deadline, new { @class = "form-control", id = "selectdate", @readonly = "readonly" })
-    @Html.ValidationMessageFor(x => x.Deadline)
+    @Html.ValidationMessageFor(x => x.Deadline,"",new {@class="text-danger" })
 
-    <br />
-
-    @Html.DisplayNameFor(x => x.Technologies)
-    @Html.ListBoxFor(x => x.Technologies, technologies, new { @class = "form-control" })
-
-    <br />
+   
 
     <div>
-        <input type="button" class="btn btn-info btn-submit" id="btn-project" value="Create" />
+        <input type="submit" class="btn btn-info btn-submit" id="btn-project" value="Create" />
     </div>
 
-</form>
 
+}
 
 <script>
     $('#selectdate').datepicker({
@@ -55,7 +51,7 @@
         language: "tr"
     });
 
-    $('#btn-project').click(function () {
+    @*$('#btn-project').click(function () {
         var formdata = $('#CreateProjectForm').serialize();
       
          $.ajax({
@@ -75,7 +71,7 @@
              }
 
     })
-    })
+    })*@
 </script>
 
 

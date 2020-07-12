@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Add_Users_To_Project";
+    ViewBag.Title = "Add Users to Project";
     SelectList Projects = new SelectList(ViewBag.Projects, "Project_Name", "Project_Name");
     SelectList Members = new SelectList(ViewBag.Users, "Employee_Id", "Employee_Name");
 }
@@ -25,7 +25,7 @@
 </div>
 
 <script>
-    debugger;
+
     $('#ProjectDropdown').change(function () {
 
         var project = $(this).children("option:selected").val();
@@ -60,7 +60,7 @@
             type: "POST",
             data: formdata,
             success: function (response) {
-                console.log(response)
+               
                 $('#ProjectMembers').html(response)
 
                     
@@ -72,6 +72,30 @@
         })
 
     })
+
+    
+$(".btn-remove").click(function () {
+        console.log("cliked");
+        var item = $(this);
+        var empid = item.attr("employee-id");
+        var projname = item.attr("project-name");
+        $.ajax({
+            url: '@Url.Action("RemoveMember", "Admin")',
+            type: "POST",
+            data: { Project_Name: projname, EmployeeId: empid },
+            success: function (response) {
+            $('#ProjectMembers').html(response)
+            },
+            failure: function () {
+            alert('failure');
+            }
+
+
+
+            })
+
+
+})
 
 </script>
 

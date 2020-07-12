@@ -1,11 +1,13 @@
 ﻿@model  IEnumerable<TimesheetApp.Models.ManageViewModel>
 
 @{
-    ViewBag.Title = "Manage_Timesheet";
+    ViewBag.Title = "Manage Timesheet";
 }
 
 
 <div class="commonForm " style="width:90%">
+    @if (Model.Count() > 0 || Model != null)
+    {
     <h2 class="text-center">Member Timesheets</h2>
 
     <table class="mx-auto table table-hover" id="TimesheetTable">
@@ -20,7 +22,7 @@
             <th>Actions</th>
         </tr>
 
-        @foreach (var item in Model.Where(x => x.Timesheet_Status==false))
+        @foreach (var item in Model.Where(x => x.Timesheet_Status == false))
         {
             <tr>
                 <td>
@@ -31,7 +33,7 @@
                 </td>
 
                 <td>
-                    @item.date
+                    @item.date.Value.ToShortDateString()
                 </td>
 
                 <td>
@@ -61,25 +63,30 @@
                     }
                 </td>
                 <td>
-                    <input type="button" value="Approve" data-id="@item.Employee_Id" class="btn btn-primary ApproveStatus" />
-                    <input type="button" value="Reject"  data-id="@item.Employee_Id" class="btn btn-danger RejectStatus" />
+                    <input type="button" value="Approve"  time-id="@item.Id" class="btn btn-primary ApproveStatus" />
+                    <input type="button" value="Reject"   time-id="@item.Id" class="btn btn-danger RejectStatus" />
                 </td>
 
             </tr>
         }
     </table>
-
+    }
+    else
+    {
+        <h4 class="text-center">No timesheets available</h4>
+    }
 </div>
 
 <script>
     $(document).ready(function () {
         $('.ApproveStatus').click(function () {
-            var data = $('.ApproveStatus').attr('data-id')
+            var data = $('.ApproveStatus').attr('time-id')
+            
             $.ajax({
 
                 url: '@Url.Action("Manage_Timesheet","User")',
                 type:'POST',
-                data: { EmployeeId: data, Status: true },
+                data: { Id: data, Status: true },
                 success: function () {
                      alert('sucess');
                 },

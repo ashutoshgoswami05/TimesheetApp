@@ -2,12 +2,13 @@
 
 @{
     SelectList Projects = new SelectList(ViewBag.Projects, "Project_Name", "Project_Name", Model.Project_Name);
+ 
 
 }
 
 
 
-@using (Html.BeginForm("Edit_Timesheet", "User", FormMethod.Post))
+@using (Html.BeginForm("Edit_Timesheet", "User", FormMethod.Post,new {id="EditTimesheetForm"}))
 {
 
     <input type="hidden" value="@HttpContext.Current.User.Identity.Name" name="User" />
@@ -21,12 +22,12 @@
 
     <br />
     @Html.Label("Date")
-    @Html.TextBoxFor(x => x.date, new { @class = "form-control", id = "selectdate", @readonly = "readonly", value = Model.date })
+    @Html.TextBox("date",Model.date.Value.ToShortDateString(), new { @class = "form-control", @readonly = "readonly" })
     @Html.ValidationMessageFor(x => x.Project_Name, "", new { @class = "text-danger" })
     <br />
 
     @Html.Label("Timespent")
-    <input type="time" name="TimeSpent" class="form-control" value="@Model.TimeSpent" />
+    <input type="time" name="TimeSpent" class="form-control" value="@Model.TimeSpent.Value" />
     <br />
 
     @Html.DisplayNameFor(x => x.Wokrdone)

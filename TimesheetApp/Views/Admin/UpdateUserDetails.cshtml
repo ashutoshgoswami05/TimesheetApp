@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Update Details";
+}
+
+<h2 class="text-center commonForm">User Details</h2>
+
+@Html.TextBox("EmployeeId", "", new {@class="form-control",id="EmpId" })
+
+<input type="button" class="btn btn-primary btn-submit" id="EmpSearch" value="Search" />
+
+
+<div id="UserDetails">
+
+</div>
+
+
+
+<script>
+    $('#EmpSearch').click(function () {
+        var data = $('#EmpId').val();
+        $.ajax({
+            url: '@Url.Action("EmployeeDetail","Admin")',
+            data: { EmployeeId: data },
+            success: function (response) {
+                $('#UserDetails').html(response);
+            },
+            failure: function () {
+                alert('failure');
+            }
+
+        })
+    })
+
+  
+</script>

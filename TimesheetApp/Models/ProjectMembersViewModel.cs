@@ -9,6 +9,10 @@ namespace TimesheetApp.Models
     {
         public string Employee_Name { get; set; }
 
+        public bool? IsDeleted { get; set; }
+
+        public string Project_Name { get; set; }
+
         public string Employee_Id { get; set; }
     }
 }
