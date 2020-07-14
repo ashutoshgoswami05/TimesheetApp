@@ -8,6 +8,7 @@ using TimesheetApp.Models;
 using System.Web.Security;
 using TimesheetApp.Context;
 using System.Text;
+using System.IO;
 
 namespace TimesheetApp.Controllers
 {
@@ -163,6 +164,61 @@ namespace TimesheetApp.Controllers
                 Response.Cookies[item].Expires = DateTime.Now.AddDays(-1);
             }
             return RedirectToAction("Login");
+        }
+        [Authorize]
+        [HttpGet]
+        public ActionResult Change_Password()
+        {
+
+            return View();
+        }
+        [Authorize]
+        [HttpPost]
+        public ActionResult Change_Password(ChangePasswordViewModel model)
+        {
+            TimesheetApp.Context.User user = context.Users.Find(model.Employee_Id);
+            byte[] salt = Convert.FromBase64String(user.PasswordSalt);
+
+            string currentpass = Convert.ToBase64String(passwordhash(model.CurrentPassword, salt));
+            string newpass = Convert.ToBase64String(passwordhash(model.CurrentPassword, salt));
+
+            if (model.CurrentPassword == model.NewPassword)
+            {
+                ModelState.AddModelError("Same Password", "New and Current Password cannot be same");
+                return PartialView("_ChangePassword");
+            }
+            else if (currentpass != user.Password)
+            {
+                ModelState.AddModelError("Wrong Password", "Wrong Password");
+                return PartialView("_ChangePassword");
+            }
+            //else if (newpass != user.Password)
+            //{
+            //    ModelState.AddModelError("Wrong Password", "Wrong Password");
+            //}
+            else
+            {
+                var createviewmodel = new ChangePasswordViewModel();          
+                user.Password = Convert.ToBase64String(passwordhash(model.NewPassword, salt));
+                context.SaveChanges();
+                
+                return Json(new { result = true,message=RenderRazorViewToString(ControllerContext,"_ChangePassword",createviewmodel) });
+            }
+
+
+            
+        }
+        public static string RenderRazorViewToString(ControllerContext controllerContext, string viewName, object model)
+        {
+            controllerContext.Controller.ViewData.Model = model;
+            using (var sw = new StringWriter())
+            {
+                var ViewResult = ViewEngines.Engines.FindPartialView(controllerContext, viewName);
+                var ViewContext = new ViewContext(controllerContext, ViewResult.View, controllerContext.Controller.ViewData, controllerContext.Controller.TempData, sw);
+                ViewResult.View.Render(ViewContext, sw);
+                ViewResult.ViewEngine.ReleaseView(controllerContext, ViewResult.View);
+                return sw.GetStringBuilder().ToString();
+            }
         }
 
         private byte[] GetSalt(string password)

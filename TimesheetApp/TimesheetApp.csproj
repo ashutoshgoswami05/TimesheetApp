@@ -140,6 +140,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ChangePasswordViewModel.cs" />
     <Compile Include="Models\CreatProjectViewModel.cs" />
     <Compile Include="Models\DisplayProjectsViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
@@ -287,6 +288,8 @@
     <Content Include="Views\Admin\UpdateUserDetails.cshtml" />
     <Content Include="Views\Admin\EmployeeDetail.cshtml" />
     <Content Include="Views\Admin\ProjectDetail.cshtml" />
+    <Content Include="Views\Account\Change_Password.cshtml" />
+    <Content Include="Views\Account\_ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
