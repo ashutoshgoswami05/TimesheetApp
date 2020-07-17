@@ -13,61 +13,83 @@
         {
             <h2 class="text-center">View Timesheets</h2>
             <table class="mx-auto table table-hover" id="TimesheetTable">
-                <tr>
-                    <th>Project</th>
-                    <th>Date</th>
-                    <th>Mode</th>
-                    <th>Timespent</th>
-                    <th>Workdone</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-
-                @foreach (var item in Model)
-                {
+                <thead>
                     <tr>
-                        <td>
-                            @item.Project_Name
-                        </td>
-
-                        <td>
-
-                            @item.date.Value.ToShortDateString()
-                        </td>
-
-                        <td>
-                            @if (item.Mode == true)
-                            {
-                                <text>Office</text>
-                            }
-                            else
-                            {
-                                <text>WFH</text>
-                            }
-                        </td>
-                        <td>
-                            @item.TimeSpent.Value.ToString()
-                        </td>
-                        <td>
-                            @item.Wokrdone
-                        </td>
-                        <td>
-                            @if (item.Timesheet_Status == null || item.Timesheet_Status == false)
-                            {
-                                <text>Pending</text>
-                            }
-                            else
-                            {
-                                <text>Approved</text>
-                            }
-                        </td>
-                        <td>
-                            <input type="button" value="Edit" data-toggle="modal" data-target="#MyModal" data-id="@item.Id" class="btn btn-primary Edit-Timesheet" />
-                            <input type="button" value="Delete" data-id="@item.Id" class="btn btn-danger Delete-Timesheet" />
-                        </td>
-
+                        <th>Project</th>
+                        <th>Date</th>
+                        <th>Mode</th>
+                        <th>Timespent</th>
+                        <th>Workdone</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
-                }
-            </table>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.Project_Name
+                            </td>
+
+                            <td>
+
+                                @item.date.Value.ToShortDateString()
+                            </td>
+
+                            <td>
+                                @if (item.Mode == true)
+                                {
+                                    <text>Office</text>
+                                }
+                                else
+                                {
+                                    <text>WFH</text>
+                                }
+                            </td>
+                            <td>
+                                @item.TimeSpent.Value.ToString()
+                            </td>
+                            <td>
+                                @item.Workdone
+                            </td>
+                            <td>
+                                @if (item.Status_Id == null || item.Status_Id == 3)
+                                {
+                                    <text>Pending</text>
+                                }
+                                else if (item.Status_Id == 2)
+                                {
+
+                                    <text>Rejected</text>
+                                }
+                                else
+                                {
+                                    <text>Approved</text>
+                                }
+                            </td>
+                            <td>
+                                <input type="button" value="Edit" data-toggle="modal" data-target="#MyModal" data-id="@item.Id" class="btn btn-primary Edit-Timesheet" />
+                                <input type="button" value="Delete" data-id="@item.Id" data-toggle="modal" data-target="#MyDeleteModal" class="btn btn-danger Delete-Timesheet" />
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+              </table>
+            
         }
     </div>
+
+<script>
+    var delid;
+    $('.Delete-Timesheet').click(function () {
+        var button = $(this);
+        delid = button.attr('data-id');
+        $('#MyDeleteModal').show();
+
+    })
+
+    $('#TimesheetTable').DataTable();
+</script>

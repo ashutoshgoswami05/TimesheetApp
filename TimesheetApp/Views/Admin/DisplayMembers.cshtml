@@ -1,77 +1,79 @@
 ﻿@model IEnumerable<TimesheetApp.Models.ProjectMembersViewModel>
 @{
     bool added = false;
-    if(ViewBag.IsAdded!=null)
+    if (ViewBag.IsAdded != null)
     {
         added = true;
     }
+
+    int count = Model.Where(x => x.IsDeleted == false).Count();
 }
+
+
 
 @if (!added)
 {
-    <table class="table table-hover">
-        <thead>
-            <tr>
+    if (count > 0 && Model != null)
+    {
+        <table class="table table-hover" id="ProjectMemberTable">
+            <thead>
+                <tr>
 
-                <th scope="col">Employee Id</th>
-                <th scope="col">Employee Name</th>
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model != null && Model.Count() > 0)
-            {
-                foreach (var item in Model)
+                    <th scope="col">Employee Id</th>
+                    <th scope="col">Employee Name</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
                 {
 
                     if (!item.IsDeleted.Value)
                     {
-                    <tr>
+                        <tr>
 
-                        <td>@item.Employee_Id</td>
-                        <td>@item.Employee_Name</td>
-                        <td><button type="button" class="btn btn-danger btn-remove" employee-id="@item.Employee_Id" project-name="@item.Project_Name">Remove</button></td>
-                    </tr>
-                        }
+                            <td>@item.Employee_Id</td>
+                            <td>@item.Employee_Name</td>
+                            <td><button type="button" class="btn btn-danger btn-remove" data-toggle="modal" data-target="#MyDeleteModal" data-id="@item.Id" project-name="@item.Project_Name" >Remove</button></td>
+                        </tr>
                     }
                 }
 
-                else
-                {
-                <tr><td colspan="5">no members</td></tr>
-                }
-        </tbody>
-    </table>
 
+
+            </tbody>
+        </table>
+    }
+
+    else
+    {
+        <h3 class="text-center">No data available</h3>
+    }
 }
-            else
-            {
+else
+{
 
     <h3>member already added</h3>
 
 }
 <script>
-    
+    var id,projname;
+
 $(".btn-remove").click(function () {
-        console.log("cliked");
+       
         var item = $(this);
-        var empid = item.attr("employee-id");
-        var projname = item.attr("project-name");
-        $.ajax({
-            url: '@Url.Action("RemoveMember", "Admin")',
-            type: "POST",
-            data: { Project_Name: projname, EmployeeId: empid },
-            success: function (response) {
-            $('#ProjectMembers').html(response)
-            },
-            failure: function () {
-            alert('failure');
-            }
+    id = item.attr("data-id");
+    projname = item.attr("project-name");
+
+       
 
 
-
-            })
 
 
 })
+
+    $('#ProjectMemberTable').DataTable();
+
+
 </script>

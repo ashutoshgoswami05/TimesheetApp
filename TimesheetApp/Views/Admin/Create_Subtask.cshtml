@@ -12,8 +12,42 @@
     }
 }
 
+<div style="display:none" class="alert alert-success" id="Deletesubtaskalert" role="alert">
+    <strong>Success!  </strong>Subtask Deleted.
+    <button type="button" class="close" data-hide="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 
-@using (Html.BeginForm("Create_Subtask", "Admin", FormMethod.Post, new { id = "CreateSubtaskForm",@class="commonForm" }))
+<div style="display:none" class="alert alert-success" id="createsubtaskalert" role="alert">
+    <strong>Success!   </strong>Subtask Created.
+    <button type="button" class="close" data-hide="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal fade" id="MyDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Subtask</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalbody">
+                Are you sure you want to delete?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" onclick="DeleteSubtask()" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@using (Html.BeginForm("Create_Subtask", "Admin", FormMethod.Post, new { id = "CreateSubtaskForm", @class = "commonForm" }))
 {
     <h2 class="text-center">Add Subtasks</h2>
     <div class="form-group">
@@ -51,6 +85,11 @@
                 type: "POST",
                 success: function (response) {
                     $('#SubtaskDisplay').html(response);
+                    $('#createsubtaskalert').css("display", "block")
+                    $('#Deletesubtaskalert').css("display", "none")
+                      $('html,body').scrollTop(0);
+                   
+                    
 
                 },
                 failure: function (response) {
@@ -77,5 +116,35 @@
         }
     }
     )
+
+    function DeleteSubtask() {
+        var projectname=$('#selectproject option:selected').text();
+        $.ajax({
+            url: '@Url.Action("DeleteSubtask","Admin")',
+            type: 'POST',
+            data: { Id: data, ProjectName: projectname },
+                success: function (response) {
+                    if (response) {
+                         $('#MyDeleteModal').modal("hide");
+
+                $('body').removeClass('modal-open')
+                $('.modal-backdrop').remove()
+                        $('#createsubtaskalert').css("display", "none")
+                        $('#Deletesubtaskalert').css("display", "block")
+
+                       
+                        $('#SubtaskDisplay').html(response);
+                     
+                        $('body,html').scrollTop(0);
+                    }
+                  
+                },
+                failure: function (response) {
+                    alert('failure');
+                }
+            })
+    }
+
+ 
 
 </script>

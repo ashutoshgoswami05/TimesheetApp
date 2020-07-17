@@ -17,10 +17,15 @@ body{
     flex-grow:1;
 }
 
+#DisplayProjectsBody
+{
+    margin-top:3rem;
+}
+
 .footer {
     width: 100%;
     text-align: center;
-    margin-top:auto;
+    margin-top: auto;
 }
 
 .btn-submit{

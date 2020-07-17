@@ -8,15 +8,18 @@
         @Scripts.Render("~/bundles/modernizr")*@
     <link href="~/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/Style.css" rel="stylesheet" />
+    <link href="~/bootstrap/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/bootstrap/dataTables.bootstrap4.min.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/jquery")
     <script src="~/bootstrap/jquery-3.5.1.slim.min.js"></script>
-
     <script src="~/bootstrap/popper.min.js"></script>
 
     <script src="~/bootstrap/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery-3.3.1.js"></script>
-    <script src="~/bootstrap/sweetalert.min.js"></script>
-  
+    <script src="~/bootstrap/jquery.dataTables.min.js"></script>
+    @*<script src="~/bootstrap/sweetalert.min.js"></script>*@
+
+
 </head>
 <body>
 
@@ -41,7 +44,21 @@
    
     @RenderSection("scripts", required: false)
 
+    <script>
+          $.validator.addMethod('regex', function (value, element, param) {
 
+        return this.optional(element) || value.match(typeof param == 'string' ? new RegExp(param) : param);
+
+
+          })
+
+          $(function () {
+      
+    $("[data-hide]").on("click", function(){
+        $("." + $(this).attr("data-hide")).hide();
+    });
+});
+    </script>
     
 </body>
 </html>

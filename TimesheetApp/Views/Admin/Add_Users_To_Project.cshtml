@@ -4,15 +4,51 @@
     SelectList Projects = new SelectList(ViewBag.Projects, "Project_Name", "Project_Name");
     SelectList Members = new SelectList(ViewBag.Users, "Employee_Id", "Employee_Name");
 }
+<div style="display:none" class="alert alert-success" id="AddUserAlert" role="alert">
+    <strong>Success! </strong>User added successfully.
+    <button type="button" class="close" data-hide="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div style="display:none" class="alert alert-success" id="DeleteUserAlert" role="alert">
+    <strong>Success! </strong>User Deleted.
+    <button type="button" class="close" data-hide="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal fade" id="MyDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalbody">
+                Are you sure you want to delete?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" onclick="DeleteUser()" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
+
 
 <h2 class="text-center">User Management</h2>
 
 <form id="AddMemberForm">
     @Html.Label("Project Name")
-    @Html.DropDownList("Project", Projects,"Select Project", new { @class = "form-control",id="ProjectDropdown" })
+    @Html.DropDownList("Project", Projects, "Select Project", new { @class = "form-control", id = "ProjectDropdown" })
     <br />
     @Html.Label("Select Member")
-    @Html.DropDownList("Member", Members,"Select Member", new { @class = "form-control" })
+    @Html.DropDownList("Member", Members, "Select Member", new { @class = "form-control" })
     <br />
     <button class="btn btn-info btn-submit" type="button" id="AddMemberToProject">Add</button>
 
@@ -20,7 +56,7 @@
 </form>
 
 <div id="ProjectMembers">
-   
+
 
 </div>
 
@@ -29,12 +65,12 @@
     $('#ProjectDropdown').change(function () {
 
         var project = $(this).children("option:selected").val();
-        console.log(project)
+
         DisplayMembers(project)
     })
 
     function DisplayMembers(ProjectName) {
-        console.log("dsiplay members called");
+
         $.ajax({
 
             url: '@Url.Action("DisplayMembers")',
@@ -53,17 +89,23 @@
 
     $('#AddMemberToProject').click(function () {
         var formdata = $('#AddMemberForm').serialize();
-        
+
         $.ajax({
-            
+
             url: '@Url.Action("Add_Users_To_Project","Admin")',
             type: "POST",
             data: formdata,
             success: function (response) {
-               
-                $('#ProjectMembers').html(response)
+                if (response.result == false) {
+                    $('#ProjectMembers').html('<h2 class="text-center">User already Added<h2>')
+                }
+                else {
+                    $('#ProjectMembers').html(response)
+                    $('#AddUserAlert').css('display', 'block');
+                    $('#DeleteUserAlert').css('display', 'none');
+                    $('html,body').scrollTop(0);
+                }
 
-                    
             },
             failure: function (response) {
                 alert('error')
@@ -73,18 +115,24 @@
 
     })
 
-    
-$(".btn-remove").click(function () {
-        console.log("cliked");
-        var item = $(this);
-        var empid = item.attr("employee-id");
-        var projname = item.attr("project-name");
-        $.ajax({
+    function DeleteUser() {
+          $.ajax({
             url: '@Url.Action("RemoveMember", "Admin")',
-            type: "POST",
-            data: { Project_Name: projname, EmployeeId: empid },
+              type: "POST",
+              data: { Id:id, Project_Name:projname },
             success: function (response) {
-            $('#ProjectMembers').html(response)
+                
+                  $('#MyDeleteModal').modal("hide");
+
+                $('body').removeClass('modal-open')
+                $('.modal-backdrop').remove()
+                $('#ProjectMembers').html(response)
+                $('#AddUserAlert').css('display', 'none');
+                $('#DeleteUserAlert').css('display', 'block');
+                $('html,body').scrollTop(0);
+               
+
+
             },
             failure: function () {
             alert('failure');
@@ -93,9 +141,8 @@ $(".btn-remove").click(function () {
 
 
             })
+    }
 
-
-})
 
 </script>
 

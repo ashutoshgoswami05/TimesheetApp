@@ -1,8 +1,13 @@
 ﻿@model IEnumerable<TimesheetApp.Context.Subtasks>
 
+@{
 
+    int count = Model.Where(x => x.is_Deleted == false).Count();
+}
 
-    <table class="table table-hover">
+@if (count > 0)
+{
+    <table class="table table-hover" id="SubtaskTable">
         <thead>
             <tr>
                 <th scope="col">Project</th>
@@ -12,25 +17,40 @@
             </tr>
         </thead>
         <tbody>
-            @if (Model.Count() < 1)
-            {
-                <tr>
-                    <td colspan="3">No Subtasks</td>
-                </tr>
-            }
-            else
-            {
-            foreach (var item in Model)
+            
+               
+            
+            @foreach (var item in Model.Where(x => x.is_Deleted==false))
             {
 
-                <tr>
-                    
-                    <td>@item.Project_Name</td>
-                    <td>@item.Subtask</td>
-                    <td><input type="button" class="btn btn-info EditSubtaskBtn" value="Edit"   /></td>
-                </tr>
+        <tr>
+
+            <td>@item.Project_Name</td>
+            <td>@item.Subtask</td>
+            <td><input type="button" class="btn btn-info EditSubtaskBtn" value="Edit" /><input type="button" data-toggle="modal" data-target="#MyDeleteModal" data-id="@item.Id" class="btn btn-danger DeleteSubtaskBtn ml-3" value="Delete" /></td>
+            
+        </tr>
             }
 
-            }
+            
         </tbody>
     </table>
+}
+
+else
+{
+    <h2 class="text-center">No Data Available</h2>
+}
+
+<script>
+    var data;
+    $('.DeleteSubtaskBtn').click(function () {
+        var button = $(this);
+        data = button.attr('data-id');
+        $('#MyDeleteModal').show();
+        
+    })
+
+    $('#SubtaskTable').DataTable();
+
+</script>

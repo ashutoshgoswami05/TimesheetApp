@@ -24,7 +24,7 @@ namespace TimesheetApp.Context
 
         [Required(ErrorMessage = "Please enter Work done")]
 
-        public string Wokrdone { get; set; }
+        public string Workdone { get; set; }
 
         [Required(ErrorMessage ="Please select Mode of work")]
         public Nullable<bool> Mode { get; set; }

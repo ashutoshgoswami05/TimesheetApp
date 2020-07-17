@@ -36,6 +36,7 @@ namespace TimesheetApp.Context
         public virtual DbSet<Timesheets> Timesheets1 { get; set; }
         public virtual DbSet<User_Technologies> User_Technologies { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<timesheet_status> timesheet_status { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

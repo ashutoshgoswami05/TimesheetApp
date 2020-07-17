@@ -1,104 +1,22 @@
-﻿@model TimesheetApp.Context.Timesheets
+﻿
 
 @{
     ViewBag.Title = "New Timesheet";
-   
-    SelectList Projects = new SelectList(ViewBag.Projects, "Project_Name", "Project_Name");
-}
-<link href="~/bootstrap/datepicker.css" rel="stylesheet" />
-<script src="~/bootstrap/bootstrap-datepicker.js"></script>
-
-
-@using (Html.BeginForm("New_Timesheet", "User", FormMethod.Post, new { id = "TimesheetForm", @class = "commonForm" }))
-{
-    <h2 class="text-center">New Timesheet</h2>
-    <input type="hidden" value="@HttpContext.Current.User.Identity.Name" name="User" />
-
-    @Html.DisplayName("Project")
-
-
-
-    @Html.DropDownListFor(x => x.Project_Name, Projects, "Select Project", new { @class = "form-control" })
-
-    @Html.ValidationMessageFor(x => x.Project_Name, "", new { @class = "text-danger" })
-
-    <br />
-    @Html.Label("Date")
-    @Html.TextBoxFor(x => x.date, new { @class = "form-control", id = "selectdate", @readonly = "readonly" })
-
-    @Html.ValidationMessageFor(x => x.date, "", new { @class = "text-danger" })
-    <br />
-
-    @Html.Label("Timespent")
-    @Html.TextBoxFor(x => x.TimeSpent, new { @class = "form-control", type = "time" })
-    @Html.ValidationMessageFor(x => x.TimeSpent, "", new { @class = "text-danger" })
-
-    <br />
-
-    @Html.DisplayNameFor(x => x.Wokrdone)
-    @Html.TextAreaFor(x => x.Wokrdone, new { @class = "form-control" })
-    @Html.ValidationMessageFor(x => x.Wokrdone, "", new { @class = "text-danger" })
-    <br />
-
-    @Html.DisplayName("Mode")
-    <div class="form-check form-check-inline">
-
-        @Html.RadioButtonFor(x => x.Mode, "true", new { @class = "form-check-input" })
-        @Html.Label("Office", new { @class = "form-check-label" })
-    </div>
-    <div class="form-check form-check-inline">
-
-        @Html.RadioButtonFor(x => x.Mode, "false", new { @class = "form-check-input" })
-        @Html.Label("WFH", new { @class = "form-check-label" })
-
-    </div>
-
-    <br />
-    @Html.ValidationMessageFor(x => x.Mode, "", new { @class = "text-danger" })
-    <br />
-
-
-
-    <input type="submit" id="btn-Timesheet" class="btn btn-info btn-submit" value="Create" />
-
-
-
 
 }
+    <div style="display:none" class="alert alert-success" id="NewTimesheetAlert" role="alert">
+        <strong>Success! </strong>Timesheet Created.
+        <button type="button" class="close" data-hide="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+
+<div id="NewTimesheet">
+    @{Html.RenderPartial("_NewTimesheet") ;}
+</div>
 
 <script>
-    $('#selectdate').datepicker({
-        changeMonth: true,
-        changeYear: true,
-        format: "dd/mm/yyyy",
-        language: "tr"
-    });
-
-
-     @*$('#btn-Timesheet').click(function () {
-        var formdata = $('#TimesheetForm').serialize();
-        console.log(formdata);
-         $.ajax({
-
-            url: '@Url.Action("New_Timesheet","User")',
-             type: "POST",
-             data: formdata,
-             success: function (response) {
-                 if (response.Message === "Success") {
-                     swal("Success!", "Timesheet Created!", "success");
-                     console.log(response)
-                     $('#TimesheetForm')[0].reset();
-                 }
-             },
-             failure: function () {
-                 alert('cannot create');
-             }
-
-    })
-     })*@
-
-
-      
 
 
 </script>

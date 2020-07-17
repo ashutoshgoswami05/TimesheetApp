@@ -18,15 +18,16 @@ namespace TimesheetApp.Context
         public string Project_Name { get; set; }
         public Nullable<System.DateTime> date { get; set; }
         public Nullable<System.TimeSpan> TimeSpent { get; set; }
-        public string Wokrdone { get; set; }
         public Nullable<bool> Mode { get; set; }
-        public Nullable<bool> Timesheet_Status { get; set; }
         public Nullable<System.DateTime> Updated_Date { get; set; }
         public Nullable<System.DateTime> Created_Date { get; set; }
         public Nullable<bool> is_Deleted { get; set; }
         public int Id { get; set; }
+        public Nullable<int> Status_Id { get; set; }
+        public string Workdone { get; set; }
     
         public virtual Project Projects_Table { get; set; }
         public virtual User Users_table { get; set; }
+        public virtual timesheet_status timesheet_status { get; set; }
     }
 }

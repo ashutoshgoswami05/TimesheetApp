@@ -22,8 +22,7 @@ namespace TimesheetApp.Controllers
             
             ViewBag.Roles = context.Roles;
             ViewBag.Technologies = context.Technologies;
-            //string LastUserId = context.Users.OrderByDescending(x => x.Employee_Id).Select(x => x.Employee_Id).FirstOrDefault();
-            //ViewBag.NewUserId =string.IsNullOrEmpty(LastUserId) ? "R01" : "R"+(Convert.ToInt32(LastUserId.Split('R')[1])+1);
+           
 
            
             return View();
@@ -37,24 +36,29 @@ namespace TimesheetApp.Controllers
          
             ViewBag.Roles = context.Roles;
             ViewBag.Technologies = context.Technologies;
+           
 
-            if(context.Users.Where(x => x.Employee_Id == user.Employee_Id).Count() > 0)
+
+            
+
+            if (context.Users.Where(x => x.Employee_Id == user.Employee_Id).Count() > 0)
             {
                 ModelState.AddModelError("Employee_Id", "User with this Id already Exists");
-                return View();
+                return PartialView("_Register");
 
             }
             else if (context.Users.Where(x => x.Email == user.Email).Count() > 0  )
             {
                 
                 ModelState.AddModelError("Email", "User with this email already Exists");
-                return View();
+                return PartialView("_Register");
 
             }           
 
-            else if (ModelState.IsValid)
+            else
             {
-
+                string LastUserId = context.Users.OrderByDescending(x => x.Employee_Id).Select(x => x.Employee_Id).FirstOrDefault();
+                user.Employee_Id = string.IsNullOrEmpty(LastUserId) ? "RS-1" : "RS-" + (Convert.ToInt32(LastUserId.Split('-')[1]) + 1);
                 user.Updated_Date = DateTime.Now;
                 user.is_Deleted = false;
                 byte[] salt = GetSalt(user.Password);
@@ -69,14 +73,12 @@ namespace TimesheetApp.Controllers
 
                 context.Users.Add(user);
                 context.SaveChanges();
-                return View("success");
-                
+                var registermodel = new RegisterViewModel();
+                return Json(new { result = true, message = RenderRazorViewToString(ControllerContext, "_Register", registermodel) });
+
             }
 
-            else
-            {
-                return View();
-            }
+            
 
             
         }

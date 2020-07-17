@@ -40,6 +40,9 @@
     <EntitySetMapping Name="Subtasks">
       <EntityTypeMapping TypeName="Timesheet_projectModel.Subtasks">
         <MappingFragment StoreEntitySet="Subtasks_table">
+          <ScalarProperty Name="is_Deleted" ColumnName="is_Deleted" />
+          <ScalarProperty Name="Updated_date" ColumnName="Updated_date" />
+          <ScalarProperty Name="Created_date" ColumnName="Created_date" />
           <ScalarProperty Name="Project_Name" ColumnName="Project_Name" />
           <ScalarProperty Name="Subtask" ColumnName="Subtask" />
           <ScalarProperty Name="Id" ColumnName="Id" />
@@ -71,13 +74,13 @@
     <EntitySetMapping Name="Timesheets1">
       <EntityTypeMapping TypeName="Timesheet_projectModel.Timesheets">
         <MappingFragment StoreEntitySet="Timesheets_table">
+          <ScalarProperty Name="Workdone" ColumnName="Workdone" />
+          <ScalarProperty Name="Status_Id" ColumnName="Status_Id" />
           <ScalarProperty Name="User" ColumnName="User" />
           <ScalarProperty Name="Project_Name" ColumnName="Project_Name" />
           <ScalarProperty Name="date" ColumnName="date" />
           <ScalarProperty Name="TimeSpent" ColumnName="TimeSpent" />
-          <ScalarProperty Name="Wokrdone" ColumnName="Wokrdone" />
           <ScalarProperty Name="Mode" ColumnName="Mode" />
-          <ScalarProperty Name="Timesheet_Status" ColumnName="Timesheet_Status" />
           <ScalarProperty Name="Updated_Date" ColumnName="Updated_Date" />
           <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
           <ScalarProperty Name="is_Deleted" ColumnName="is_Deleted" />
@@ -134,6 +137,14 @@
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Phone" ColumnName="Phone" />
           <ScalarProperty Name="Employee_Name" ColumnName="Employee_Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="timesheet_status">
+      <EntityTypeMapping TypeName="Timesheet_projectModel.timesheet_status">
+        <MappingFragment StoreEntitySet="timesheet_status">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -6,140 +6,32 @@
 
 
 
-    SelectList roles = new SelectList(ViewBag.Roles, "Role_Id", "Role_Name");
-    SelectList technologies = new SelectList(ViewBag.Technologies, "Technology_Id", "Technology_Name");
+    //SelectList roles = new SelectList(ViewBag.Roles, "Role_Id", "Role_Name");
+    //SelectList technologies = new SelectList(ViewBag.Technologies, "Technology_Id", "Technology_Name");
 
 }
 
 
+<div style="display:none" class="alert alert-success" role="alert">
+    <strong>Success!</strong> Registration Successful.
+    <button type="button" class="close" data-hide="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 
+<div id="DisplayRegisterForm">
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id = "RegistrationForm", @class = "commonForm" }))
-{
-    <h2 style="text-align:center">Register</h2>
-    @Html.DisplayNameFor(x => x.Employee_Id)
+    @{Html.RenderPartial("_Register");}
 
-    @Html.TextBoxFor(x => x.Employee_Id, new { @class = "form-control" })
-    @Html.ValidationMessageFor(x => x.Employee_Id, "", new { @class = "text-danger" })
-    <br />
+</div>
 
-    <br />
-    @Html.DisplayNameFor(x => x.Employee_Name)
-
-    @Html.TextBoxFor(x => x.Employee_Name, new { @class = "form-control" })
-    @Html.ValidationMessageFor(x => x.Employee_Name, "", new { @class = "text-danger" })
-
-    <br />
-    <br />
-
-    @Html.DisplayNameFor(x => x.Phone)
-
-    @Html.TextBoxFor(x => x.Phone, new { @class = "form-control" })
-    @Html.ValidationMessageFor(x => x.Phone, "", new { @class = "text-danger" })
-    <br />
-    <br />
-
-    @Html.DisplayNameFor(x => x.Email)
-
-    @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
-
-    @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
-    <br />
-    <br />
-
-    @Html.DisplayName("Role")
-
-    @Html.DropDownListFor(x => x.Role_Id, roles, "Select Role", new { @class = "form-control" })
-
-    @Html.ValidationMessageFor(x => x.Role_Id, "", new { @class = "text-danger" })
-
-    <br />
-    <br />
-
-    @Html.DisplayNameFor(x => x.Password)
-
-    @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
-
-    @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
-
-    <br />
-    <br />
-    @Html.DisplayNameFor(x => x.ConfirmPassword)
-
-    @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "form-control" })
-
-    @Html.ValidationMessageFor(x => x.ConfirmPassword, "", new { @class = "text-danger" })
-    <br />
-    <br />
-
-
-    @Html.DisplayNameFor(x => x.TechnologyIds)
-
-    @Html.ListBoxFor(x=> x.TechnologyIds, technologies, new { @class = "form-control" })
-
-    @Html.ValidationMessageFor(x => x.TechnologyIds,"", new { @class = "text-danger" })
-
-    <br />
-
-    @Html.DisplayNameFor(x => x.Status)
-
-
-    <br />
-
-    <div class="form-check form-check-inline">
-        
-
-
-        @Html.RadioButtonFor(x => x.Status, "true", new { @class = "form-check-input" })
-        @Html.Label("Enabled",new {@class="form-check-label" })
-
-    </div>
-    <div class="form-check form-check-inline">
-        
-
-        @Html.RadioButtonFor(x => x.Status, "false", new { @class = "form-check-input" })
-        @Html.Label("Disabled", new { @class = "form-check-label" })
-    </div>
-   <br />
-
-    @Html.ValidationMessageFor(x => x.Status, "", new { @class = "text-danger" })
-    <br />
-    <br />
-
-
-    <div>
-        <input type="submit" class="btn btn-info btn-submit" id="btn-register" value="Register" />
-    </div>
-
-}
-
-
-
-
-@*<script>
-
-        $('#btn-register').click(function () {
-            var formdata = $('#RegistrationForm').serialize();
-            console.log(formdata);
-             $.ajax({
-
-                url: '@Url.Action("Register","Account")',
-                 type: "POST",
-                 data: formdata,
-                 success: function (response) {
-                     if (response.Message === "Success") {
-                         swal("Success!", "Registration Successful!", "success");
-                         console.log(response)
-                         $('#RegistrationForm')[0].reset();
-                     }
-                 },
-                 failure: function () {
-                     alert('cannot register');
-                 }
-
-        })
-        })
-    </script>*@
-
+<script>
+      $(function () {
+      
+    $("[data-hide]").on("click", function(){
+        $("." + $(this).attr("data-hide")).hide();
+    });
+});
+</script>
 
 

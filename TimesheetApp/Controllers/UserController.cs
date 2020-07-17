@@ -38,10 +38,11 @@ namespace TimesheetApp.Controllers
             {
                 timesheet.Updated_Date = DateTime.Now;
                 timesheet.is_Deleted = false;
-                timesheet.Timesheet_Status = false;
+                timesheet.Status_Id = 3;
                 context.Timesheets1.Add(timesheet);
                 context.SaveChanges();
-                return View("success");
+                ViewBag.Projects = context.Projects.ToList();
+                return PartialView("_NewTimeSheet");
             }
             else
             {
@@ -69,8 +70,9 @@ namespace TimesheetApp.Controllers
         {
             Timesheets Savedtimesheet = context.Timesheets1.Find(Updatedtimesheet.Id);
             Savedtimesheet.Project_Name = Updatedtimesheet.Project_Name;
+            Savedtimesheet.date = Updatedtimesheet.date;
             Savedtimesheet.TimeSpent = Updatedtimesheet.TimeSpent;
-            Savedtimesheet.Wokrdone = Updatedtimesheet.Wokrdone;
+            Savedtimesheet.Workdone= Updatedtimesheet.Workdone;
             Savedtimesheet.Mode = Updatedtimesheet.Mode;
             Savedtimesheet.Updated_Date = DateTime.Now;
 
@@ -100,10 +102,10 @@ namespace TimesheetApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Manage_Timesheet(int Id, bool Status)
+        public ActionResult Manage_Timesheet(int Id, int Status)
         {
             ChangeTimeSheetStatus(Id, Status);
-            return View(GetTimehsheets());
+            return PartialView("_MemberTimesheets", GetTimehsheets());
         }
 
        
@@ -126,20 +128,21 @@ namespace TimesheetApp.Controllers
                 date = m.ppc.t.date,
                 Mode = m.ppc.t.Mode,
                 TimeSpent = m.ppc.t.TimeSpent,
-                Wokrdone = m.ppc.t.Wokrdone,
-                Timesheet_Status = m.ppc.t.Timesheet_Status,
+                Workdone = m.ppc.t.Workdone,
+                Status_Id = m.ppc.t.Status_Id,
                 Employee_Id = m.ppc.t.User,
-                Id = m.ppc.t.Id
+                Id = m.ppc.t.Id,
+                is_Deleted = m.ppc.t.is_Deleted
 
             }) ;
 
             return timesheetdetails;
         }
 
-        private void ChangeTimeSheetStatus(int Id, bool Status)
+        private void ChangeTimeSheetStatus(int Id, int Status)
         {
             Timesheets timesheet = context.Timesheets1.Where(x => x.Id == Id).FirstOrDefault();
-            timesheet.Timesheet_Status = Status;
+            timesheet.Status_Id = Status;
             context.SaveChanges();
         }
 

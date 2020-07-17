@@ -12,15 +12,18 @@ namespace TimesheetApp.Context
     using System;
     using System.Collections.Generic;
     
-    public partial class Subtasks
+    public partial class timesheet_status
     {
-        public string Project_Name { get; set; }
-        public string Subtask { get; set; }
-        public int Id { get; set; }
-        public Nullable<System.DateTime> Created_date { get; set; }
-        public Nullable<System.DateTime> Updated_date { get; set; }
-        public Nullable<bool> is_Deleted { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public timesheet_status()
+        {
+            this.Timesheets_table = new HashSet<Timesheets>();
+        }
     
-        public virtual Project Projects_Table { get; set; }
+        public int Id { get; set; }
+        public string Status { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Timesheets> Timesheets_table { get; set; }
     }
 }

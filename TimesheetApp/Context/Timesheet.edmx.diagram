@@ -21,6 +21,8 @@
         <AssociationConnector Association="Timesheet_projectModel.FK__Projects___Proje__36B12243" />
         <AssociationConnector Association="Timesheet_projectModel.FK__Users_tab__Role___173876EA" />
         <AssociationConnector Association="Timesheet_projectModel.FK__Timesheet__User___398D8EEE" />
+        <EntityTypeShape EntityType="Timesheet_projectModel.timesheet_status" Width="1.5" PointX="7.375" PointY="0.875" />
+        <AssociationConnector Association="Timesheet_projectModel.FK__Timesheet__Statu__3A4CA8FD" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

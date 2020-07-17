@@ -17,9 +17,11 @@ namespace TimesheetApp.Models
 
         public Nullable<System.TimeSpan> TimeSpent { get; set; }
 
-        public string Wokrdone { get; set; }
+        public string Workdone { get; set; }
 
-        public Nullable<bool> Timesheet_Status { get; set; }
+        public int? Status_Id { get; set; }
+
+        public bool? is_Deleted { get; set; }
 
         public string Employee_Id { get; set; }
 

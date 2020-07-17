@@ -15,5 +15,7 @@ namespace TimesheetApp.Models
 
         public string Manager_Name { get; set; }
 
+        public bool? is_Deleted { get; set; }
+
     }
 }

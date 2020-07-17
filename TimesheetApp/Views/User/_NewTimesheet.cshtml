@@ -1,0 +1,172 @@
+﻿@model TimesheetApp.Context.Timesheets
+@{ 
+    SelectList Projects = new SelectList(ViewBag.Projects, "Project_Name", "Project_Name");
+    
+}
+
+<link href="~/bootstrap/datepicker.css" rel="stylesheet" />
+<script src="~/bootstrap/bootstrap-datepicker.js"></script>
+
+
+@using (Html.BeginForm("New_Timesheet", "User", FormMethod.Post, new { id = "TimesheetForm", @class = "commonForm" }))
+{
+    <h2 class="text-center">New Timesheet</h2>
+    <input type="hidden" value="@HttpContext.Current.User.Identity.Name" name="User" />
+
+    @Html.DisplayName("Project")
+
+
+
+    @Html.DropDownListFor(x => x.Project_Name, Projects, "Select Project", new { @class = "form-control" })
+
+    @Html.ValidationMessageFor(x => x.Project_Name, "", new { @class = "text-danger" })
+
+    <br />
+    @Html.Label("Date")
+    @Html.TextBoxFor(x => x.date, new { @class = "form-control", id = "selectdate", @readonly = "readonly" })
+
+    @Html.ValidationMessageFor(x => x.date, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.Label("Timespent")
+    @Html.TextBoxFor(x => x.TimeSpent, new { @class = "form-control", type = "time" })
+    @Html.ValidationMessageFor(x => x.TimeSpent, "", new { @class = "text-danger" })
+
+    <br />
+
+    @Html.DisplayNameFor(x => x.Workdone)
+    @Html.TextAreaFor(x => x.Workdone, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Workdone, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.DisplayName("Mode")
+<div class="radiobuttons">
+    <div class="form-check form-check-inline">
+
+        @Html.RadioButtonFor(x => x.Mode, "true", new { @class = "form-check-input " })
+        @Html.Label("Office", new { @class = "form-check-label" })
+    </div>
+    <div class="form-check form-check-inline">
+
+        @Html.RadioButtonFor(x => x.Mode, "false", new { @class = "form-check-input " })
+        @Html.Label("WFH", new { @class = "form-check-label" })
+
+    </div>
+
+    <br />
+    @Html.ValidationMessageFor(x => x.Mode, "", new { @class = "text-danger" })
+</div>
+    <br />
+
+
+
+    <input type="submit" id="btn-Timesheet" class="btn btn-info btn-submit" value="Create" />
+
+
+
+
+}
+
+<script>
+    $('#selectdate').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        format: "dd/mm/yyyy",
+        language: "tr"
+    });
+
+
+     @*$('#btn-Timesheet').click(function () {
+        var formdata = $('#TimesheetForm').serialize();
+        console.log(formdata);
+         $.ajax({
+
+            url: '@Url.Action("New_Timesheet","User")',
+             type: "POST",
+             data: formdata,
+             success: function (response) {
+                 if (response.Message === "Success") {
+                     swal("Success!", "Timesheet Created!", "success");
+                     console.log(response)
+                     $('#TimesheetForm')[0].reset();
+                 }
+             },
+             failure: function () {
+                 alert('cannot create');
+             }
+
+    })
+     })*@
+
+
+     $(function () {
+        $('#TimesheetForm').validate({
+
+            rules: {
+                Project_Name: {required:true,regex:"[a-zA-z\s]+"},
+                date: "required",
+
+                TimeSpent: "required",
+                Workdone: "required",
+                Mode:"required"
+
+
+
+
+
+            },
+            messages: {
+                Project_Name: { required: "Please enter project name",regex:"Invalid input format" },
+                date: "Please enter date",
+
+                TimeSpent: "Please enter timespent",
+                Workdone: "Please enter workdone",
+               Mode:"Please enter Mode"
+
+
+
+            },
+            errorClass: "text-danger",
+
+            highlight: function (element, errorClass, validClass) {
+                $(element).removeClass(errorClass);
+            },
+            errorPlacement: function (error, element) {
+                if (element.attr('name') == "Mode")
+                    error.insertAfter('.radiobuttons');
+                else {
+                    error.insertAfter(element);
+                }
+            },
+
+            submitHandler: function (form) {
+                var formdata = $(form).serialize();
+               
+       
+            $.ajax({
+
+            url: '@Url.Action("New_Timesheet","User")',
+             type: "POST",
+             data: formdata,
+             success: function (response) {
+                 if (response) {
+                     $('#NewTimesheet').html(response);
+                     $('.alert').css("display", "block")
+                     $('body,html').scrollTop(0);
+                     $('#TimesheetForm')[0].reset();
+                 }
+             },
+             failure: function () {
+                 alert('cannot create');
+             }
+
+    })
+          
+
+            }
+        })
+    })
+
+
+
+</script>

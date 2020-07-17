@@ -1,0 +1,137 @@
+﻿@model TimesheetApp.Models.CreatProjectViewModel
+
+@{
+    
+    SelectList managers = new SelectList(ViewBag.Managers, "Employee_Id", "Employee_Name");
+    SelectList technologies = new SelectList(ViewBag.Technologies, "Technology_Id", "Technology_Name");
+}
+<link href="~/bootstrap/datepicker.css" rel="stylesheet" />
+<script src="~/bootstrap/bootstrap-datepicker.js"></script>
+
+
+@using (Html.BeginForm("Create_Project", "Admin", FormMethod.Post, new { @class = "commonForm", id = "CreateProjectForm" }))
+{
+    <h2 class="text-center">Create Project</h2>
+    @Html.DisplayNameFor(x => x.Project_Name)
+    @Html.TextBoxFor(x => x.Project_Name, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Project_Name, "", new { @class = "text-danger" })
+
+    <br />
+
+    @Html.DisplayNameFor(x => x.Client)
+    @Html.TextBoxFor(x => x.Client, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Client, "", new { @class = "text-danger" })
+
+    <br />
+
+    @Html.DisplayNameFor(x => x.Project_Manager_Id)
+    @Html.DropDownListFor(x => x.Project_Manager_Id, managers, "Select Manager", new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Project_Manager_Id, "", new { @class = "text-danger" })
+
+    <br />
+
+    @Html.DisplayNameFor(x => x.Deadline)
+    @Html.TextBoxFor(x => x.Deadline, new { @class = "form-control", id = "selectdate", @readonly = "readonly" })
+    @Html.ValidationMessageFor(x => x.Deadline, "", new { @class = "text-danger" })
+
+
+
+    <div>
+        <input type="submit" class="btn btn-info btn-submit" id="btn-project" value="Create" />
+    </div>
+
+
+}
+
+<script>
+    $('#selectdate').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        format: "dd/mm/yyyy",
+        language: "tr"
+    });
+
+    @*$('#btn-project').click(function () {
+        var formdata = $('#CreateProjectForm').serialize();
+
+         $.ajax({
+
+            url: '@Url.Action("Create_Project","Admin")',
+             type: "POST",
+             data: formdata,
+             success: function (response) {
+                 if (response.Message === "Success") {
+                     swal("Success!", "Create Successful!", "success");
+
+                     $('#CreateProjectForm')[0].reset();
+                 }
+             },
+             failure: function () {
+                 alert('cannot register');
+             }
+
+    })
+    })*@
+
+
+    $(function () {
+        $('#CreateProjectForm').validate({
+
+            rules: {
+                Project_Name: {required:true,regex:"[a-zA-z\s]+"},
+                Client: "required",
+
+                Project_Manager_Id: "required",
+                Deadline: "required",
+
+
+
+
+
+            },
+            messages: {
+                Project_Name: { required: "Please enter project name",regex:"Invalid input format" },
+                Client: "Please enter Client ",
+
+                Project_Manager_Id: "Please select project manager",
+                Deadline: "Please enter deadline",
+
+
+
+            },
+            errorClass: "text-danger",
+
+            highlight: function (element, errorClass, validClass) {
+                $(element).removeClass(errorClass);
+            },
+
+            submitHandler: function (form) {
+                var formdata = $(form).serialize();
+              $.ajax({
+                url: '@Url.Action("Create_Project","Admin")',
+                type: 'POST',
+                data: formdata,
+                success: function (response) {
+                    if (response) {
+                        $('.alert').css("display", "block")
+
+                        $('#DisplayCreateProject').html(response);
+                        $('body,html').scrollTop(0);
+                        $(form)[0].reset();
+                        //$('#DisplayCreateProject')[0].reset();
+                    }
+                    else {
+                        $('body,html').scrollTop(0);
+                        alert('failure')
+
+                    }
+                },
+                failure: function (response) {
+                    alert('failure');
+                }
+            })
+
+            }
+        })
+    })
+</script>

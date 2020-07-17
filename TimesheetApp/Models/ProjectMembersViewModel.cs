@@ -14,5 +14,7 @@ namespace TimesheetApp.Models
         public string Project_Name { get; set; }
 
         public string Employee_Id { get; set; }
+
+        public int Id { get; set; }
     }
 }

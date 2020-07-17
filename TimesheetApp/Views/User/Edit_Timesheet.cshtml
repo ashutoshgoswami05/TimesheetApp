@@ -2,13 +2,15 @@
 
 @{
     SelectList Projects = new SelectList(ViewBag.Projects, "Project_Name", "Project_Name", Model.Project_Name);
- 
+
 
 }
 
+<link href="~/bootstrap/datepicker.css" rel="stylesheet" />
+<script src="~/bootstrap/bootstrap-datepicker.js"></script>
 
 
-@using (Html.BeginForm("Edit_Timesheet", "User", FormMethod.Post,new {id="EditTimesheetForm"}))
+@using (Html.BeginForm("Edit_Timesheet", "User", FormMethod.Post, new { id = "EditTimesheetForm" }))
 {
 
     <input type="hidden" value="@HttpContext.Current.User.Identity.Name" name="User" />
@@ -18,11 +20,11 @@
 
 
 
-    @Html.DropDownListFor(x => x.Project_Name, Projects, new { @class = "form-control" })
+    @Html.DropDownListFor(x => x.Project_Name, Projects, new { @class = "form-control", @readonly = "readonly",id="projdrop" })
 
     <br />
     @Html.Label("Date")
-    @Html.TextBox("date",Model.date.Value.ToShortDateString(), new { @class = "form-control", @readonly = "readonly" })
+    @Html.TextBox("date", Model.date.Value.ToShortDateString(), new { @class = "form-control", @readonly = "readonly", id = "selectdate" })
     @Html.ValidationMessageFor(x => x.Project_Name, "", new { @class = "text-danger" })
     <br />
 
@@ -30,8 +32,8 @@
     <input type="time" name="TimeSpent" class="form-control" value="@Model.TimeSpent.Value" />
     <br />
 
-    @Html.DisplayNameFor(x => x.Wokrdone)
-    @Html.TextAreaFor(x => x.Wokrdone, new { @class = "form-control", value = Model.Wokrdone })
+    @Html.DisplayNameFor(x => x.Workdone)
+    @Html.TextAreaFor(x => x.Workdone, new { @class = "form-control", value = Model.Workdone })
     <br />
 
     @Html.DisplayName("Mode")
@@ -70,3 +72,95 @@
     <br />
 }
 
+<script>
+    $('#selectdate').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        format: "dd/mm/yyyy",
+        language: "tr"
+    });
+
+    //$('#projdrop').prop('disabled', true);
+
+       $(function () {
+        $('#EditTimesheetForm').validate({
+
+            rules: {
+
+                date: "required",
+
+                TimeSpent: "required",
+                Workdone: "required",
+                Mode:"required"
+
+
+
+
+
+            },
+            messages: {
+
+                date: "Please enter date",
+
+                TimeSpent: "Please enter timespent",
+                Workdone: "Please enter workdone",
+                Mode:"Please enter Mode"
+
+
+
+            },
+            errorClass: "text-danger",
+
+            highlight: function (element, errorClass, validClass) {
+                $(element).removeClass(errorClass);
+            },
+            errorPlacement: function (error, element) {
+                if (element.attr('name') == "Mode")
+                    error.insertAfter('.radiobuttons');
+                else {
+                    error.insertAfter(element);
+                }
+            },
+
+            submitHandler: function (form) {
+                var formdata = $(form).serialize();
+
+
+            $.ajax({
+            url: '@Url.Action("Edit_Timesheet","User")',
+            type: 'POST',
+
+             data: formdata,
+             success: function (response) {
+                 if (response) {
+                       $('#MyModal').modal("hide");
+                     $('body').removeClass('modal-open')
+                    $('.modal-backdrop').remove()
+                     $('#displaytimesheets').html(response);
+                     $('#DeleteTimesheetAlert').css('display', 'none')
+                     $('#EditTimesheetAlert').css('display','block')
+
+                     $('body,html').scrollTop(0);
+
+                 }
+             },
+             failure: function () {
+                 alert('error');
+             }
+
+    })
+
+
+            }
+        })
+    })
+
+    $('#UpdateBtn').click(function (e) {
+        e.preventDefault();
+        if ($('#EditTimesheetForm').valid()) {
+           
+            $('#EditTimesheetForm').submit();
+        }
+    })
+
+</script>

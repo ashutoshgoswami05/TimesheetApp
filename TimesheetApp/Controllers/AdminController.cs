@@ -27,6 +27,8 @@ namespace TimesheetApp.Controllers
         [HttpPost]
         public ActionResult Create_Project(CreatProjectViewModel model)
         {
+            ViewBag.Managers = context.Users.Where(x => x.Role_Id == 2);
+            ViewBag.Technologies = context.Technologies;
             Project project = new Project();
 
             project.Project_Name = model.Project_Name;
@@ -38,7 +40,7 @@ namespace TimesheetApp.Controllers
             context.Projects.Add(project);
             context.SaveChanges();
 
-            return View("success");
+            return PartialView("_CreateProject");
         }
 
         [HttpGet]
@@ -77,6 +79,7 @@ namespace TimesheetApp.Controllers
             Project fromdb = context.Projects.Find(project.Project_Name);
             fromdb.Project_Manager_Id = project.Project_Manager_Id;
             fromdb.Client = project.Client;
+            fromdb.Updated_Date = DateTime.Now;
             context.SaveChanges();
 
             return RedirectToAction("GetProjectsByName");
@@ -84,13 +87,13 @@ namespace TimesheetApp.Controllers
 
 
         [HttpGet]
-        public ActionResult GetProjectsByName(int? page,string Project_Name)
+        public ActionResult GetProjectsByName(string Project_Name)
         {
 
             
             if (Project_Name == "" || Project_Name == null)
             {
-                IEnumerable<DisplayProjectsViewModel> displayProjects = context.Projects.Join(context.Users, p => p.Project_Manager_Id, u => u.Employee_Id, (p, u) => new DisplayProjectsViewModel { Project_Name = p.Project_Name, Client = p.Client, Deadline = p.Deadline, Manager_Name = u.Employee_Name });
+                IEnumerable<DisplayProjectsViewModel> displayProjects = context.Projects.Join(context.Users, p => p.Project_Manager_Id, u => u.Employee_Id, (p, u) => new DisplayProjectsViewModel { Project_Name = p.Project_Name, Client = p.Client, Deadline = p.Deadline, Manager_Name = u.Employee_Name,is_Deleted=p.is_Deleted });
                 
                 
                 
@@ -111,19 +114,19 @@ namespace TimesheetApp.Controllers
         public ActionResult Add_Users_To_Project()
         {
 
-            ViewBag.Projects = context.Projects;
+            ViewBag.Projects = context.Projects.Where(x => x.is_Deleted==false);
             ViewBag.Users = context.Users;
 
             return View();
         }
-
+        
         [HttpPost]
         public ActionResult Add_Users_To_Project(string project,string Member)
         {
-            if (context.Project_Members.Where(x => x.Project_Name == project && x.Member_Id == Member).Count() > 0 || project==null || project==string.Empty || Member==null || Member==string.Empty)
+            if (context.Project_Members.Where(x => x.Project_Name == project && x.Member_Id == Member && x.is_Deleted==false).Count() > 0 || project==null || project==string.Empty || Member==null || Member==string.Empty)
             {
                 ViewBag.added = true;
-                return PartialView("Error");
+                return Json(new { result = false },JsonRequestBehavior.AllowGet );
             }
             else
             {
@@ -139,6 +142,17 @@ namespace TimesheetApp.Controllers
             }
 
           
+        }
+
+        [HttpPost]
+        public ActionResult DeleteProject(string ProjectName)
+        {
+
+            Project project = context.Projects.Find(ProjectName);
+            project.is_Deleted = true;
+            project.Updated_Date = DateTime.Now;
+            context.SaveChanges();
+            return RedirectToAction("GetProjectsByName");
         }
 
         [HttpGet]
@@ -162,9 +176,10 @@ namespace TimesheetApp.Controllers
             ViewBag.Roles = context.Roles;
             ViewBag.Technologies = context.Technologies;
             User user = context.Users.Find(EmployeeId);
-            if (user == null)
+            if (user == null || user.is_Deleted==true)
             {
-                return PartialView("Error");
+
+                return Json(new { result = false },JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -180,6 +195,8 @@ namespace TimesheetApp.Controllers
 
             if (user != null)
             {
+               
+              
                 user.Employee_Name = model.Employee_Name;
                 user.Email = model.Email;
                 user.Phone = model.Phone;
@@ -187,7 +204,7 @@ namespace TimesheetApp.Controllers
                 user.Status = model.Status;
                 user.Updated_Date = DateTime.Now;
                 context.SaveChanges();
-                return View("success");
+                return Json(new { result = true }, JsonRequestBehavior.AllowGet);
             }
 
             else
@@ -201,11 +218,11 @@ namespace TimesheetApp.Controllers
         {
             User user = context.Users.Find(EmployeeId);
 
-            if (user != null)
+            if (user != null )
             {
                 user.is_Deleted = true;
                 context.SaveChanges();
-                return PartialView("success");
+                return Json(new { result = true }, JsonRequestBehavior.AllowGet);
             }
 
             else
@@ -218,8 +235,8 @@ namespace TimesheetApp.Controllers
         [HttpGet]
         public ActionResult Create_Subtask()
         {
-            ViewBag.Projects = context.Projects;
-           
+            ViewBag.Projects = context.Projects.Where(x => x.is_Deleted == false);
+
             return View();
         }
 
@@ -227,6 +244,8 @@ namespace TimesheetApp.Controllers
         public ActionResult Create_Subtask(string Subtask,string Project)
         {
             Subtasks subtask = new Subtasks();
+            subtask.is_Deleted = false;
+            subtask.Updated_date = DateTime.Now;
             subtask.Project_Name = Project;
             subtask.Subtask = Subtask;
             context.Subtasks.Add(subtask);
@@ -243,12 +262,21 @@ namespace TimesheetApp.Controllers
             return PartialView("Display_Subtask",GetSutask(project));
         }
 
-       
+        [HttpPost]
+        public ActionResult DeleteSubtask(int Id,string ProjectName)
+        {
+
+            Subtasks subtask= context.Subtasks.Find(Id);
+            subtask.is_Deleted = true;
+            context.SaveChanges();
+
+            return PartialView("Display_Subtask", GetSutask(ProjectName));
+        }
 
         [HttpPost]
-        public ActionResult RemoveMember(string Project_Name,string EmployeeId)
+        public ActionResult RemoveMember(int Id,string Project_Name)
         {
-            Project_Members p1 = context.Project_Members.Where(x => x.Project_Name == Project_Name && x.Member_Id == EmployeeId).FirstOrDefault();
+            Project_Members p1 = context.Project_Members.Find(Id);
             p1.is_Deleted = true;
             p1.Updated_Date = DateTime.Now;
             context.SaveChanges();
@@ -271,7 +299,7 @@ namespace TimesheetApp.Controllers
 
         public IEnumerable<ProjectMembersViewModel>  GetMembers(string Project_Name)
         {
-            IEnumerable<ProjectMembersViewModel> members = context.Project_Members.Where(x => x.Project_Name == Project_Name).Join(context.Users, pm => pm.Member_Id, u => u.Employee_Id, (pm, u) => new ProjectMembersViewModel() { Employee_Id = u.Employee_Id, Employee_Name = u.Employee_Name ,Project_Name=pm.Project_Name,IsDeleted=pm.is_Deleted});
+            IEnumerable<ProjectMembersViewModel> members = context.Project_Members.Where(x => x.Project_Name == Project_Name && x.is_Deleted==false).Join(context.Users, pm => pm.Member_Id, u => u.Employee_Id, (pm, u) => new ProjectMembersViewModel() { Employee_Id = u.Employee_Id, Employee_Name = u.Employee_Name ,Project_Name=pm.Project_Name,IsDeleted=pm.is_Deleted,Id=pm.Id});
             return members;
         }
 

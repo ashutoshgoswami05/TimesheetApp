@@ -17,7 +17,7 @@ namespace TimesheetApp.Context
         public string Project_Name { get; set; }
         public string Member_Id { get; set; }
         public int Id { get; set; }
-        public Nullable<bool> is_Deleted { get; set; }
+        public bool is_Deleted { get; set; }
         public Nullable<System.DateTime> Created_Date { get; set; }
         public Nullable<System.DateTime> Updated_Date { get; set; }
     

@@ -110,7 +110,7 @@
 
     <div>
         <input type="submit" class="btn btn-info btn-submit" id="btn-update" value="Save" />
-        <input type="button" class="btn btn-danger btn-submit" id="EmpDelete" value="Delete" />
+        <input type="button" data-toggle="modal" data-target="#MyDeleteModal" class="btn btn-danger btn-submit" id="EmpDelete" value="Delete" />
     </div>
 
 
@@ -118,21 +118,77 @@
 }
 
 <script>
-       $('#EmpDelete').click(function () {
-        var data = $('#empid').val();
-        $.ajax({
-            url: '@Url.Action("DeleteEmployee","Admin")',
-            data: { EmployeeId: data },
-            type:"POST",
-            success: function (response) {
-                alert('success');
-                $('#EmpSearch').val('');
-                $('#UserDetails').html(response);
-            },
-            failure: function () {
-                alert('failure');
-            }
+     
 
+     $(function () {
+        $('#DetailForm').validate({
+
+            rules: {
+                Employee_Name: {required:true,regex:"[a-zA-z\s]+"},
+                Phone: "required",
+                Email: { required: true, email: true },
+                Role_Id: "required",
+               
+                Status:"required"
+
+
+
+
+            },
+            messages: {
+                Employee_Name: { required: "Please enter Employee name",regex:"Invalid input format" },
+                Phone: "Please enter phone number",
+                Email: { required:"Please enter email", email: "Please enter valid Email" },
+                Role_Id: "Please select role",
+             
+                Status:"Please select Status",
+
+             
+
+            },
+            errorClass: "text-danger",
+            errorPlacement: function (error, element) {
+                if (element.attr('name') == "Status")
+                    error.insertAfter('.radiobuttons');
+                else {
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).removeClass(errorClass);
+            },
+
+            submitHandler: function (form) {
+                var formdata = $(form).serialize();
+              $.ajax({
+                url: '@Url.Action("EmployeeDetail","Admin")',
+                type: 'POST',
+                data: formdata,
+                success: function (response) {
+                    if (response.result==true) {
+                         $('#DeleteUserAlert').css('display', 'none')
+                        $('#EditUserAlert').css('display','block')
+                       
+                        $('#UserDetails').html('');
+                        $(form)[0].reset();
+                        
+                        $('body,html').scrollTop(0);
+                    }
+                    else {
+                        $('body,html').scrollTop(0);
+                        alert('failure');
+
+                    }
+                },
+                failure: function (response) {
+                    alert('failure');
+                }
+            })
+
+            }
         })
     })
+
+
+   
 </script>

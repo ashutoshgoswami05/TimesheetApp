@@ -1,0 +1,143 @@
+﻿@model  IEnumerable<TimesheetApp.Models.ManageViewModel>
+
+@{
+    int count = Model.Where(x => x.is_Deleted == false && x.Status_Id!=1).Count();
+    IEnumerable<TimesheetApp.Models.ManageViewModel> data = Model.Where(x => x.is_Deleted == false);
+}
+
+<div class="commonForm " style="width:90%">
+    @if (count>0 && Model != null)
+    {
+        <h2 class="text-center">Member Timesheets</h2>
+
+        <table class="mx-auto table table-hover" id="TimesheetTable">
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Project</th>
+                    <th>Date</th>
+                    <th>Mode</th>
+                    <th>Timespent</th>
+                    <th>Workdone</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            @foreach (var item in data.Where(x => x.Status_Id==2 || x.Status_Id==3))
+            {
+                <tr>
+                    <td>
+                        @item.Employee_Name
+                    </td>
+                    <td>
+                        @item.Project_Name
+                    </td>
+
+                    <td>
+                        @item.date.Value.ToShortDateString()
+                    </td>
+
+                    <td>
+                        @if (item.Mode == true)
+                        {
+                            <text>Office</text>
+                        }
+                        else
+                        {
+                            <text>WFH</text>
+                        }
+                    </td>
+                    <td>
+                        @item.TimeSpent
+                    </td>
+                    <td>
+                        @item.Workdone
+                    </td>
+                    <td>
+                        @if (item.Status_Id == null || item.Status_Id == 3)
+                        {
+                            <text>Pending</text>
+                        }
+                       
+                        else
+                        {
+                            <text>Rejected</text>
+                        }
+                    </td>
+                    <td>
+                        <input type="button" value="Approve" data-id="@item.Id" class="btn btn-primary ApproveStatus" />
+                        <input type="button" value="Reject" data-id="@item.Id" class="btn btn-danger RejectStatus" />
+                    </td>
+
+                </tr>
+            }
+                </tbody>
+        </table>
+    }
+    else
+    {
+        <h4 class="text-center">No timesheets available</h4>
+    }
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#TimesheetTable').DataTable();
+        $('.ApproveStatus').click(function () {
+            var data = $('.ApproveStatus').attr('data-id')
+
+            $.ajax({
+
+                url: '@Url.Action("Manage_Timesheet","User")',
+                type:'POST',
+                data: { Id: data, Status: 1 },
+                success: function (response) {
+                       $('#DisplayMemberTimesheets').html(response);
+                    $('#ApproveAlert').css('display', 'block');
+                    $('#RejectAlert').css('display', 'none');
+                      $('html.body').scrollTop(0);
+
+                },
+                else: function () {
+                    alert('failure')
+
+                }
+                })
+
+            })
+
+
+    })
+
+     $(document).ready(function () {
+        $('.RejectStatus').click(function () {
+            var data = $('.ApproveStatus').attr('data-id')
+            $.ajax({
+
+                url: '@Url.Action("Manage_Timesheet","User")',
+                type:'POST',
+                data: { Id: data, Status: 2 },
+                success: function (response) {
+                    $('#DisplayMemberTimesheets').html(response);
+                    $('#ApproveAlert').css('display', 'none');
+                    $('#RejectAlert').css('display', 'block');
+                    $('html.body').scrollTop(0);
+                },
+                else: function () {
+                    alert('failure')
+
+                }
+                })
+
+            })
+
+
+     })
+
+  
+
+
+</script>
+

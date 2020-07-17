@@ -12,8 +12,8 @@
           <Property Name="Project_Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Member_Id" Type="nvarchar" MaxLength="50" />
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="is_Deleted" Type="bit" />
           <Property Name="Created_Date" Type="datetime" />
+          <Property Name="is_Deleted" Type="bit" Nullable="false" />
           <Property Name="Updated_Date" Type="datetime" />
         </EntityType>
         <EntityType Name="Projects_Table">
@@ -45,6 +45,9 @@
           <Property Name="Project_Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Subtask" Type="nvarchar(max)" />
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Created_date" Type="datetime" StoreGeneratedPattern="Computed" />
+          <Property Name="Updated_date" Type="datetime" />
+          <Property Name="is_Deleted" Type="bit" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -66,6 +69,13 @@
           <Property Name="Created_Date" Type="datetime" StoreGeneratedPattern="Computed" />
           <Property Name="is_Deleted" Type="bit" />
         </EntityType>
+        <EntityType Name="timesheet_status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="10" />
+        </EntityType>
         <EntityType Name="Timesheets_table">
           <Key>
             <PropertyRef Name="Id" />
@@ -74,13 +84,13 @@
           <Property Name="Project_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="date" Type="datetime" />
           <Property Name="TimeSpent" Type="time" Precision="7" />
-          <Property Name="Wokrdone" Type="nvarchar(max)" />
+          <Property Name="Workdone" Type="nvarchar(max)" />
           <Property Name="Mode" Type="bit" />
-          <Property Name="Timesheet_Status" Type="bit" />
           <Property Name="Updated_Date" Type="datetime" />
           <Property Name="Created_Date" Type="datetime" StoreGeneratedPattern="Computed" />
           <Property Name="is_Deleted" Type="bit" />
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status_Id" Type="int" />
         </EntityType>
         <EntityType Name="User_Technologies">
           <Key>
@@ -166,6 +176,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Timesheet__Statu__3A4CA8FD">
+          <End Role="timesheet_status" Type="Self.timesheet_status" Multiplicity="0..1" />
+          <End Role="Timesheets_table" Type="Self.Timesheets_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="timesheet_status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Timesheets_table">
+              <PropertyRef Name="Status_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Timesheet__User___398D8EEE">
           <End Role="Users_table" Type="Self.Users_table" Multiplicity="1" />
           <End Role="Timesheets_table" Type="Self.Timesheets_table" Multiplicity="*" />
@@ -236,6 +258,7 @@
           <EntitySet Name="Subtasks_table" EntityType="Self.Subtasks_table" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Technologies_table" EntityType="Self.Technologies_table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="timesheet_status" EntityType="Self.timesheet_status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Timesheets_table" EntityType="Self.Timesheets_table" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Technologies" EntityType="Self.User_Technologies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users_table" EntityType="Self.Users_table" Schema="dbo" store:Type="Tables" />
@@ -257,6 +280,10 @@
           </AssociationSet>
           <AssociationSet Name="FK__Timesheet__Proje__3A81B327" Association="Self.FK__Timesheet__Proje__3A81B327">
             <End Role="Projects_Table" EntitySet="Projects_Table" />
+            <End Role="Timesheets_table" EntitySet="Timesheets_table" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Timesheet__Statu__3A4CA8FD" Association="Self.FK__Timesheet__Statu__3A4CA8FD">
+            <End Role="timesheet_status" EntitySet="timesheet_status" />
             <End Role="Timesheets_table" EntitySet="Timesheets_table" />
           </AssociationSet>
           <AssociationSet Name="FK__Timesheet__User___398D8EEE" Association="Self.FK__Timesheet__User___398D8EEE">
@@ -281,7 +308,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Projects_Table" Relationship="Self.FK__Project_M__Proje__03F0984C" FromRole="Project_Members" ToRole="Projects_Table" />
           <NavigationProperty Name="Users_table" Relationship="Timesheet_projectModel.FK__Project_M__Membe__04E4BC85" FromRole="Project_Members" ToRole="Users_table" />
-          <Property Name="is_Deleted" Type="Boolean" />
+          <Property Name="is_Deleted" Type="Boolean" Nullable="false" />
           <Property Name="Created_Date" Type="DateTime" Precision="3" />
           <Property Name="Updated_Date" Type="DateTime" Precision="3" />
         </EntityType>
@@ -320,6 +347,9 @@
           <Property Name="Subtask" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Projects_Table" Relationship="Self.FK__Subtasks___Proje__06CD04F7" FromRole="Subtasks_table" ToRole="Projects_Table" />
+          <Property Name="Created_date" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Updated_date" Type="DateTime" Precision="3" />
+          <Property Name="is_Deleted" Type="Boolean" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -349,15 +379,16 @@
           <Property Name="Project_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="date" Type="DateTime" Precision="3" />
           <Property Name="TimeSpent" Type="Time" Precision="7" />
-          <Property Name="Wokrdone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Mode" Type="Boolean" />
-          <Property Name="Timesheet_Status" Type="Boolean" />
           <Property Name="Updated_Date" Type="DateTime" Precision="3" />
           <Property Name="Created_Date" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="is_Deleted" Type="Boolean" />
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Projects_Table" Relationship="Self.FK__Timesheet__Proje__3A81B327" FromRole="Timesheets_table" ToRole="Projects_Table" />
           <NavigationProperty Name="Users_table" Relationship="Timesheet_projectModel.FK__Timesheet__User___398D8EEE" FromRole="Timesheets" ToRole="Users_table" />
+          <Property Name="Status_Id" Type="Int32" />
+          <NavigationProperty Name="timesheet_status" Relationship="Timesheet_projectModel.FK__Timesheet__Statu__3A4CA8FD" FromRole="Timesheets" ToRole="timesheet_status" />
+          <Property Name="Workdone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="User_Technologies">
           <Key>
@@ -479,6 +510,11 @@
             <End Role="Users_table" EntitySet="Users" />
             <End Role="Timesheets" EntitySet="Timesheets1" />
           </AssociationSet>
+          <EntitySet Name="timesheet_status" EntityType="Timesheet_projectModel.timesheet_status" />
+          <AssociationSet Name="FK__Timesheet__Statu__3A4CA8FD" Association="Timesheet_projectModel.FK__Timesheet__Statu__3A4CA8FD">
+            <End Role="timesheet_status" EntitySet="timesheet_status" />
+            <End Role="Timesheets" EntitySet="Timesheets1" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -559,6 +595,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="timesheet_status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Timesheets_table" Relationship="Timesheet_projectModel.FK__Timesheet__Statu__3A4CA8FD" FromRole="timesheet_status" ToRole="Timesheets" />
+        </EntityType>
+        <Association Name="FK__Timesheet__Statu__3A4CA8FD">
+          <End Type="Timesheet_projectModel.timesheet_status" Role="timesheet_status" Multiplicity="0..1" />
+          <End Type="Timesheet_projectModel.Timesheets" Role="Timesheets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="timesheet_status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Timesheets">
+              <PropertyRef Name="Status_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -604,6 +660,9 @@
           <EntitySetMapping Name="Subtasks">
             <EntityTypeMapping TypeName="Timesheet_projectModel.Subtasks">
               <MappingFragment StoreEntitySet="Subtasks_table">
+                <ScalarProperty Name="is_Deleted" ColumnName="is_Deleted" />
+                <ScalarProperty Name="Updated_date" ColumnName="Updated_date" />
+                <ScalarProperty Name="Created_date" ColumnName="Created_date" />
                 <ScalarProperty Name="Project_Name" ColumnName="Project_Name" />
                 <ScalarProperty Name="Subtask" ColumnName="Subtask" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -635,13 +694,13 @@
           <EntitySetMapping Name="Timesheets1">
             <EntityTypeMapping TypeName="Timesheet_projectModel.Timesheets">
               <MappingFragment StoreEntitySet="Timesheets_table">
+                <ScalarProperty Name="Workdone" ColumnName="Workdone" />
+                <ScalarProperty Name="Status_Id" ColumnName="Status_Id" />
                 <ScalarProperty Name="User" ColumnName="User" />
                 <ScalarProperty Name="Project_Name" ColumnName="Project_Name" />
                 <ScalarProperty Name="date" ColumnName="date" />
                 <ScalarProperty Name="TimeSpent" ColumnName="TimeSpent" />
-                <ScalarProperty Name="Wokrdone" ColumnName="Wokrdone" />
                 <ScalarProperty Name="Mode" ColumnName="Mode" />
-                <ScalarProperty Name="Timesheet_Status" ColumnName="Timesheet_Status" />
                 <ScalarProperty Name="Updated_Date" ColumnName="Updated_Date" />
                 <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
                 <ScalarProperty Name="is_Deleted" ColumnName="is_Deleted" />
@@ -698,6 +757,14 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Employee_Name" ColumnName="Employee_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="timesheet_status">
+            <EntityTypeMapping TypeName="Timesheet_projectModel.timesheet_status">
+              <MappingFragment StoreEntitySet="timesheet_status">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -132,6 +132,9 @@
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
     <Compile Include="Context\Timesheets1.cs" />
+    <Compile Include="Context\timesheet_status.cs">
+      <DependentUpon>Timesheet.tt</DependentUpon>
+    </Compile>
     <Compile Include="Context\User1.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -148,7 +151,6 @@
     <Compile Include="Models\ProjectMembersViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\UserRoleProvider.cs" />
-    <Compile Include="Paging\Pager.cs" />
     <Compile Include="Context\Project.cs">
       <DependentUpon>Timesheet.tt</DependentUpon>
     </Compile>
@@ -198,6 +200,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bootstrap\bootstrap-datepicker.js" />
+    <Content Include="bootstrap\dataTables.bootstrap4.min.css" />
     <Content Include="bootstrap\datepicker.css" />
     <Content Include="bootstrap\sweetalert.min.js" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -290,6 +293,10 @@
     <Content Include="Views\Admin\ProjectDetail.cshtml" />
     <Content Include="Views\Account\Change_Password.cshtml" />
     <Content Include="Views\Account\_ChangePassword.cshtml" />
+    <Content Include="Views\Account\_Register.cshtml" />
+    <Content Include="Views\Admin\_CreateProject.cshtml" />
+    <Content Include="Views\User\_MemberTimesheets.cshtml" />
+    <Content Include="Views\User\_NewTimesheet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
