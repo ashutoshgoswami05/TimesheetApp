@@ -288,6 +288,45 @@ namespace TimesheetApp.Controllers
 
         }
 
+        [HttpPost]
+        public ActionResult SaveSubtask(int Id,string Data,string ProjectName)
+        {
+            Subtasks subtask = context.Subtasks.Find(Id);
+            subtask.Subtask = Data;
+            context.SaveChanges();
+
+
+            return PartialView("Display_Subtask", GetSutask(ProjectName));
+        }
+
+
+        [HttpGet]
+        public ActionResult ChangeUserPassword()
+        {
+           
+
+
+            return View();
+            
+            
+        }
+
+        [HttpPost]
+        public ActionResult ChangeUserPassword(string EmployeeId, string Password)
+        {
+            AccountController a = new AccountController();
+            User u1 = context.Users.Find(EmployeeId);
+            byte[] salt = Convert.FromBase64String(u1.PasswordSalt);
+
+            u1.Password = Convert.ToBase64String(a.passwordhash(Password, salt));
+            u1.Updated_Date = DateTime.Now;
+            context.SaveChanges();
+
+
+            return PartialView("_ChangeUserPassword");
+
+
+        }
 
 
         public IEnumerable<Subtasks> GetSutask(string Project_Name)

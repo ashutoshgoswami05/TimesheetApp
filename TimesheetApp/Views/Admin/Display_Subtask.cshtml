@@ -26,8 +26,9 @@
         <tr>
 
             <td>@item.Project_Name</td>
-            <td>@item.Subtask</td>
-            <td><input type="button" class="btn btn-info EditSubtaskBtn" value="Edit" /><input type="button" data-toggle="modal" data-target="#MyDeleteModal" data-id="@item.Id" class="btn btn-danger DeleteSubtaskBtn ml-3" value="Delete" /></td>
+            <td><div class="subtask" >@item.Subtask</div></td>
+            <td><input type="button" class="btn btn-info EditSubtaskBtn" value="Edit" /><input type="button" class="btn btn-info SaveSubtaskBtn" data-id="@item.Id" value="Save" /><input type="button" data-toggle="modal" data-target="#MyDeleteModal" data-id="@item.Id" class="btn btn-danger DeleteSubtaskBtn ml-3" value="Delete" /></td>
+
             
         </tr>
             }
@@ -43,6 +44,7 @@ else
 }
 
 <script>
+
     var data;
     $('.DeleteSubtaskBtn').click(function () {
         var button = $(this);
@@ -52,5 +54,67 @@ else
     })
 
     $('#SubtaskTable').DataTable();
+
+    $('.SaveSubtaskBtn').hide();
+    var elem,data;
+    $('.EditSubtaskBtn').click(function () {
+        var button = $(this);
+        //console.log(button);
+        elem = button.closest('td').prev().find('div');
+        //console.log(elem);
+        elem.attr('contenteditable', 'true');
+        elem.focus();
+        button.hide();
+       
+
+        var save = button.siblings('.SaveSubtaskBtn')
+        save.show();
+      
+
+        $(elem).mouseleave(function () {
+            var dive = $(this);
+            //console.log(dive);
+            data = dive.html();
+            //console.log('data' + data);
+        })
+     
+
+    })
+    
+    
+
+    $('.SaveSubtaskBtn').click(function () 
+    {
+        let data = elem.text();
+         elem.attr('contenteditable', 'false');
+        let button = $(this);
+        let id = button.attr('data-id');
+         var projectname=$('#selectproject option:selected').text();
+        $.ajax({
+            url: '@Url.Action("SaveSubtask","Admin")',
+            data: { Id: id, Data: data,ProjectName:projectname },
+                type: "POST",
+                success: function (response) {
+                    if (response) {
+                      $('#SubtaskDisplay').html(response);
+                    $('#createsubtaskalert').css("display", "none")
+                        $('#Deletesubtaskalert').css("display", "none")
+                        $('#Editsubtaskalert').css("display", "block")
+                      $('html,body').scrollTop(0);
+                      
+                        //$('#DisplayCreateProject')[0].reset();
+                    }
+                    else {
+                        $('body,html').scrollTop(0);
+                        alert('failure')
+
+                    }
+                },
+                failure: function (response) {
+                    alert('failure');
+                }
+            })
+    })
+
 
 </script>

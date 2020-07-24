@@ -223,7 +223,7 @@ namespace TimesheetApp.Controllers
             }
         }
 
-        private byte[] GetSalt(string password)
+        public byte[] GetSalt(string password)
         {
             const int salt_size = 24;
             RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
@@ -234,7 +234,7 @@ namespace TimesheetApp.Controllers
 
         }
 
-        private byte[] passwordhash(string password,byte[] salt)
+        public byte[] passwordhash(string password,byte[] salt)
         {
             
             const int hash_size = 24;
